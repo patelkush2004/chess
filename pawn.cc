@@ -7,10 +7,10 @@
 using namespace std;
 
 Pawn::Pawn(Board *theBoard, string team, char symbol, int row, int col, bool moved)
-    : Piece{board, team, symbol, row, col, }, moved{moved} {}
+    : Piece{theBoard, team, symbol, row, col, }, moved{moved} {}
 
 ~Pawn() {
-    delete Pawn;
+    delete this;
 }
 
 bool Pawn::getMoved() {

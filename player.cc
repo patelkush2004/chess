@@ -11,8 +11,8 @@ Player::Player(string team) :
         else {
             this->myTurn = false;
         }
-        currentCoords = {0, 0};
-        newCoords = {0, 0};
+        currentCoords;
+        newCoords;
         score = 0;
         isCpu = false;
 }

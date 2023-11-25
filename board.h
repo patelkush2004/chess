@@ -7,11 +7,15 @@
 #include "piece.h"
 #include "player.h"
 #include "subject.h"
+#include "observer.h"
+#include "textdisplay.h"
 
 class Board : public Subject {
     vector <vector<Piece*>> theBoard; // The actual board. is a vector of vectors of pieces
-    Player *whitePlayer; // The white player
-    Player *blackPlayer; // The black player
+    Player *p1; // The white player
+    Player *p2; // The black player
+    TextDisplay *td; // The text display
+
 
     public:
         Board(); // Default constructor
@@ -22,15 +26,17 @@ class Board : public Subject {
         void setPiece(int row, int col, Piece *p); // Sets the piece at the given row and column
 
         void changeTurn(); // Changes the turn
-        void getTurn(); // Gets the turn
+        Player *getTurn(); // Gets the player whose turn it is
 
-        void isChedked(); // Checks if the current player is in check
+        void isChecked(); // Checks if the current player is in check
         void isCheckmated(); // Checks if the current player is in checkmate
+        void isStalemated(); // Checks if the current player is in stalemate
 
         void attach(Observer *o); // Attaches an observer   
-        void detach(Observer *o); // Detaches an observer
+        // void detach(Observer *o); // Detaches an observer. Don't think we need this
         void notifyObservers(); // Notifies all observers
 
+        friend ostream &operator<<(ostream &out, const Board &b); // Overloaded output operator
 }
 
 #endif
