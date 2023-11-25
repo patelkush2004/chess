@@ -1,5 +1,7 @@
 #include "subject.h"
 
+class Board;
+
 using namespace std;
 
 Subject::Subject() {};
@@ -19,5 +21,5 @@ void Subject::detach(Observer* o) {
 }
 
 void Subject::notifyObservers() {
-    for (auto &ob : observers) ob->notify(*this);
+
 }

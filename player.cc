@@ -1,18 +1,20 @@
 #include "player.h"
+#include <string>
+#include <vector>
 
 using namespace std;
 
 // Constructor
 Player::Player(string team) : 
     team{team} {
-        if (team = "white" || team == "White") {
+        if (team == "white" || team == "White") {
             this->myTurn = true;
         }
         else {
             this->myTurn = false;
         }
-        currentCoords;
-        newCoords;
+        currentCoord = {0,0};
+        newCoord = {0,0};
         score = 0;
         isCpu = false;
 }
@@ -29,7 +31,7 @@ int Player::getScore() {
     return score;
 }
 
-bool Player::getTurn() {
+bool Player::getMyTurn() {
     return myTurn;
 }
 
@@ -37,12 +39,12 @@ bool Player::getIsCpu() {
     return isCpu;
 }
 
-vector<int> Player::getCurrentCoords() {
-    return currentCoords;
+pair<int, int> Player::getCurrentCoord() {
+    return currentCoord;
 }
 
-vector<int> Player::getNewCoords() {
-    return newCoords;
+pair<int, int> Player::getNewCoord() {
+    return newCoord;
 }
 
 // Setters
@@ -58,17 +60,18 @@ void Player::setMyTurn(bool turn) {
     //this->isCpu = cpu;
 //}
 
-void Player::setCurrentCoords(vector<int> coords) {
-    this->currentCoords = coords;
+void Player::setCurrentCoord(pair<int, int> coords) {
+    this->currentCoord = coords;
 }
 
-void Player::setNewCoords(vector<int> coords) {
-    this->newCoords = coords;
+void Player::setNewCoord(pair<int, int> coords) {
+    this->newCoord = coords;
 }
 
 vector<pair<int, int>> Player::makeMove() {
     vector<pair<int, int>> move;
-    move.emplace_back(this->currentCoords); 
-    move.emplace_back(this->newCoords);
+    move.push_back(this->currentCoord); 
+    move.push_back(this->newCoord);
     return move;
 }
+

@@ -3,6 +3,7 @@
 #include <vector>
 #include "board.h"
 #include "player.h"
+#include "textdisplay.h"
 
 using namespace std;
 
@@ -20,8 +21,10 @@ int main() {
     // read in command
 
     Player *p1 = new Player("white");
-    Plauer *p2 = new Player("black")
-    Board b;
+    Player *p2 = new Player("black");
+    Board b (p1, p2);
+    
+
     b.init();
     cout << b;
     

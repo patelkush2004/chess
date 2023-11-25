@@ -6,10 +6,10 @@
 
 using namespace std;
 
-Pawn::Pawn(Board *theBoard, string team, char symbol, int row, int col, bool moved)
-    : Piece{theBoard, team, symbol, row, col, }, moved{moved} {}
+Pawn::Pawn(Board *theBoard, string team, char symbol, int row, int col, bool blank, bool moved)
+    : Piece{theBoard, team, symbol, row, col, blank}, moved{moved} {}
 
-~Pawn() {
+Pawn::~Pawn() {
     delete this;
 }
 
@@ -24,4 +24,5 @@ void Pawn::setMoved(bool moved) {
 vector<pair<int, int>> Pawn::calculatePossibleMoves() {
     vector<pair<int, int>> moves;
     moves.emplace_back(4,4);
+    return moves;
 }

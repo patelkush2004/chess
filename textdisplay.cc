@@ -3,7 +3,7 @@
 
 using namespace std;
 
-TextDisplay::TextDisplay(): {
+TextDisplay::TextDisplay() {
     // initialize the grid
     vector<char> row1;
     vector<char> row2;
@@ -25,10 +25,10 @@ void TextDisplay::notify(Board &theBoard) {
 
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8 ; j++) {
-            if (theBoard.getPiece(i, j)->blank == true) {
+            if (theBoard.getPiece(i, j)->isBlank() == true) {
                 continue;
             } else {
-                theDisplay[i][j] = theBoard.getPiece(i, j)->symbol;
+                theDisplay[i][j] = theBoard.getPiece(i, j)->getSymbol();
             }
         }
     }
@@ -40,7 +40,7 @@ ostream &operator<<(ostream &out, const TextDisplay &td) {
     // iterate through the grid and print out the grid
 
     // print out the top row
-    out << "  ________" << endl;
+    out << "   ________" << endl;
 
     for (int i = 0; i < 8; i++) {
         // print out the row number
@@ -49,14 +49,12 @@ ostream &operator<<(ostream &out, const TextDisplay &td) {
         for (int j = 0; j < 8; j++) {
             out << td.theDisplay[i][j];
         }
-        out << "|" endl;
+        out << "|" << endl;
     }
     out << endl;
 
     // print out the bottom row
-    out << "  ________" << endl;
+    out << "   abcdefgh" << endl;
 
-    // print out the bottom row
-    out << "  abcdefgh" << endl;
     return out;
 }

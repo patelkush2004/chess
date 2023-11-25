@@ -2,6 +2,7 @@
 #define _PLAYER_H_
 
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -15,6 +16,7 @@ class Player {
 
     public:
         Player(string team);
+        ~Player();
         string getTeam();
         int getScore();
         bool getIsCpu();
@@ -27,7 +29,7 @@ class Player {
         void setCurrentCoord(pair<int, int> currentCoord);
         void setNewCoord(pair<int, int> newCoord);
 
-        void makeMove();
+        vector<pair<int, int>> makeMove();
 
 };
 

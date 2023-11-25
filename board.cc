@@ -11,15 +11,17 @@ using namespace std;
 // Constructor
 Board::Board(Player *p1, Player *p2) : 
     p1{p1}, p2{p2} {
-        this->theBoard = vector<vector<Piece*>>;
+        vector <vector<Piece*>> theBoard = {};
         this->td = nullptr;
         init();
     }
 
 // Destructor
 Board::~Board() {
-    for (auto &p : pieces) {
-        delete p;
+    for (auto &p : theBoard) {
+        for (auto &piece : p) {
+            delete piece;
+        }
     }
     if (td != nullptr) {
         delete td;
@@ -37,7 +39,7 @@ void Board::init() {
 
     // top row of the board. for the sake of pawn testing. leave it blank
     for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece{&this->theBoard, true, i, 0});
+        row.emplace_back(new Piece(this, true, i, 0));
     }
 
     theBoard.emplace_back(row);
@@ -46,7 +48,7 @@ void Board::init() {
     //second row of the board. for the sake of pawn testing. fill it with white pawns
     // White pieces
     for (int i = 0; i < 8; ++i) {
-        pieces.emplace_back(new Pawn{&this->theBoard, "white", P, i, 1, false, false});
+        row.emplace_back(new Pawn(this, "white", 'P', i, 1, false, false));
     }
 
     theBoard.emplace_back(row);
@@ -54,28 +56,28 @@ void Board::init() {
 
     // middle of the board. this should always be initialized with blank pieces
     for (int i = 0; i < 8; ++i) {
-        pieces.emplace_back(new Piece{&this->theBoard, false, i, 2});
+        row.emplace_back(new Piece(this, true, i, 2));
     }
 
     theBoard.emplace_back(row);
     row.clear();
 
     for (int i = 0; i < 8; ++i) {
-        pieces.emplace_back(new Piece{&this->theBoard, false, i, 3});
+        row.emplace_back(new Piece(this, true, i, 3));
     }
 
     theBoard.emplace_back(row);
     row.clear();
 
     for (int i = 0; i < 8; ++i) {
-        pieces.emplace_back(new Piece{&this->theBoard, false, i, 4});
+        row.emplace_back(new Piece(this, true, i, 4));
     }
 
     theBoard.emplace_back(row);
     row.clear();
 
     for (int i = 0; i < 8; ++i) {
-        pieces.emplace_back(new Piece{&this->theBoard, false, i, 5});
+        row.emplace_back(new Piece(this, true, i, 5));
     }
 
     theBoard.emplace_back(row);
@@ -84,7 +86,7 @@ void Board::init() {
     // third row of the board. for the sake of pawn testing. fill it with black pawns
     // Black pieces
     for (int i = 0; i < 8; ++i) {
-        pieces.emplace_back(new Pawn{possibleMoves, black, P, i, 6, false, false});
+        row.emplace_back(new Pawn(this, "black", 'p', i, 6, false, false));
     }
 
     theBoard.emplace_back(row);
@@ -92,13 +94,14 @@ void Board::init() {
 
     // bottom row of the board. for the sake of pawn testing. leave it blank
     for (int i = 0; i < 8; ++i) {
-        pieces.emplace_back(new Piece{&this->theBoard, false, i, 7});
+        row.emplace_back(new Piece(this, true, i, 7));
     }
 
     theBoard.emplace_back(row);
     row.clear();
 
-    theBoard.attach(td);
+    this->attach(td);
+    this->notifyObservers();
 
 }
 
@@ -111,15 +114,15 @@ void Board::setPiece(int x, int y, Piece *p) {
 }
 
 void Board::changeTurn() {
-    if (p1->isTurn()) {
-        p2->setTurn(true);
+    if (p1->getMyTurn()) {
+        p2->setMyTurn(true);
     } else {
-        p1->setTurn(true);
+        p1->setMyTurn(true);
     }
 }
 
 Player *Board::getTurn() {
-    if (p1->isTurn()) {
+    if (p1->getMyTurn()) {
         return p1;
     } else {
         return p2;
@@ -130,11 +133,11 @@ void Board::isChecked() {
 
 }
 
-void Board::isCheckMated() {
+void Board::isCheckmated() {
 
 }
 
-void Board::isStaleMated() {
+void Board::isStalemated() {
 
 }
 
@@ -148,6 +151,7 @@ void Board::attach(Observer *o) {
     observers.emplace_back(o);
 }
 
+/*
 void Board::detach(Observer *o) {
     for (auto &ob : observers) {
         if (ob == o) {
@@ -155,6 +159,7 @@ void Board::detach(Observer *o) {
         }
     }
 }
+*/ // NOT NEEDED TBH
 
 void Board::notifyObservers() {
     for (auto &ob : observers) {

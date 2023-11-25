@@ -1,5 +1,6 @@
 #ifndef _OBSERBER_H_
 #define _OBSERBER_H_
+class Board;
 
 using namespace std;
 
@@ -8,7 +9,7 @@ using namespace std;
 
 class Observer {
     public:
-        virtual void notify() = 0;
+        virtual void notify(Board &b) = 0;
         virtual ~Observer() = default;
 };
 

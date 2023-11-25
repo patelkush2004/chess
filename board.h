@@ -10,15 +10,20 @@
 #include "observer.h"
 #include "textdisplay.h"
 
+class Piece;
+
+using namespace std;
+
 class Board : public Subject {
     vector <vector<Piece*>> theBoard; // The actual board. is a vector of vectors of pieces
+    vector<Observer*> observers; // The observers of the board
     Player *p1; // The white player
     Player *p2; // The black player
     TextDisplay *td; // The text display
 
 
     public:
-        Board(); // Default constructor
+        Board(Player *p1, Player *p2); // Default constructor
         ~Board(); // Destructor
 
         void init(); // Initializes the board
@@ -34,9 +39,9 @@ class Board : public Subject {
 
         void attach(Observer *o); // Attaches an observer   
         // void detach(Observer *o); // Detaches an observer. Don't think we need this
-        void notifyObservers(); // Notifies all observers
+        void notifyObservers() override; // Notifies all observers
 
         friend ostream &operator<<(ostream &out, const Board &b); // Overloaded output operator
-}
+};
 
 #endif
