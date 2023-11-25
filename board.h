@@ -32,3 +32,5 @@ class Board : public Subject {
         void notifyObservers(); // Notifies all observers
 
 }
+
+#endif
