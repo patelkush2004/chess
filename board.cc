@@ -13,6 +13,7 @@ Board::Board(Player *p1, Player *p2) :
     p1{p1}, p2{p2} {
         //vector <vector<Piece*>> theBoard = {};
         this->td = nullptr;
+        this->gd = nullptr;
         init();
     }
 
@@ -26,6 +27,10 @@ Board::~Board() {
     if (td != nullptr) {
         delete td;
     } 
+
+    //if (gd != nullptr) {
+        //delete gd;
+    //}
 }
 
 // init creates the piece and places them on the board. 
@@ -33,6 +38,7 @@ Board::~Board() {
 
 void Board::init() {
     td = new TextDisplay();
+    //gd = new GraphicDisplay();
 
     vector<Piece*> row;
 
@@ -101,6 +107,7 @@ void Board::init() {
     row.clear();
 
     this->attach(td);
+    //this->attach(gd);
     this->notifyObservers();
 
 }

@@ -12,7 +12,6 @@ int main() {
     // testing interface code
 
     Player *p1 = new Player("white");
-    //cout << p1->getMyTurn() << endl;
     Player *p2 = new Player("black");
 
     Board b (p1, p2);

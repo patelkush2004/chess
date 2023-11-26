@@ -9,6 +9,7 @@
 #include "subject.h"
 #include "observer.h"
 #include "textdisplay.h"
+#include "graphicdisplay.h"
 
 class Piece;
 
@@ -20,7 +21,7 @@ class Board : public Subject {
     Player *p1; // The white player
     Player *p2; // The black player
     TextDisplay *td; // The text display
-
+    GraphicDisplay *gd; // The graphic display
 
     public:
         Board(Player *p1, Player *p2); // Default constructor
