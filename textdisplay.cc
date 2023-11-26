@@ -5,13 +5,10 @@ using namespace std;
 
 TextDisplay::TextDisplay() {
     // initialize the grid
-    vector<char> row1;
-    vector<char> row2;
-
-    row1 = {' ', '_', ' ', '_', ' ', '_', ' ', '_'};
-    row2 = {'_', ' ', '_', ' ', '_', ' ', '_', ' '};
 
     for (int i = 0; i < 4; i++) {
+        vector<char> row1 = {' ', '_', ' ', '_', ' ', '_', ' ', '_'};
+        vector<char> row2 = {'_', ' ', '_', ' ', '_', ' ', '_', ' '};
         theDisplay.emplace_back(row1);
         theDisplay.emplace_back(row2);
     }

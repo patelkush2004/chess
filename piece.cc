@@ -13,7 +13,6 @@ Piece::Piece(Board *theBoard, string team, char symbol, int row, int col, bool b
  : theBoard{theBoard}, team{team}, symbol{symbol}, row{row}, col{col}, blank{blank} {}
 
 Piece::~Piece() {
-    delete this;
 }
 
 void Piece::setRow(int row) {

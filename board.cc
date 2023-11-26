@@ -11,7 +11,7 @@ using namespace std;
 // Constructor
 Board::Board(Player *p1, Player *p2) : 
     p1{p1}, p2{p2} {
-        vector <vector<Piece*>> theBoard = {};
+        //vector <vector<Piece*>> theBoard = {};
         this->td = nullptr;
         init();
     }
@@ -26,7 +26,6 @@ Board::~Board() {
     if (td != nullptr) {
         delete td;
     } 
-    delete this;
 }
 
 // init creates the piece and places them on the board. 
@@ -39,29 +38,21 @@ void Board::init() {
 
     // top row of the board. for the sake of pawn testing. leave it blank
     for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece(this, true, i, 0));
+        row.emplace_back(new Piece(this, true, i, 1));
     }
 
     theBoard.emplace_back(row);
     row.clear(); 
     
-    //second row of the board. for the sake of pawn testing. fill it with white pawns
-    // White pieces
+    //second row of the board. filled with pawns when initialized
     for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Pawn(this, "white", 'P', i, 1, false, false));
+        row.emplace_back(new Pawn(this, "black", 'p', i, 2, false, false));
     }
 
     theBoard.emplace_back(row);
     row.clear();
 
-    // middle of the board. this should always be initialized with blank pieces
-    for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece(this, true, i, 2));
-    }
-
-    theBoard.emplace_back(row);
-    row.clear();
-
+    // third row. should always be blank
     for (int i = 0; i < 8; ++i) {
         row.emplace_back(new Piece(this, true, i, 3));
     }
@@ -69,6 +60,7 @@ void Board::init() {
     theBoard.emplace_back(row);
     row.clear();
 
+    // fourth row. should always be blank
     for (int i = 0; i < 8; ++i) {
         row.emplace_back(new Piece(this, true, i, 4));
     }
@@ -76,6 +68,7 @@ void Board::init() {
     theBoard.emplace_back(row);
     row.clear();
 
+    // fifth row. should always be blank
     for (int i = 0; i < 8; ++i) {
         row.emplace_back(new Piece(this, true, i, 5));
     }
@@ -83,10 +76,17 @@ void Board::init() {
     theBoard.emplace_back(row);
     row.clear();
 
-    // third row of the board. for the sake of pawn testing. fill it with black pawns
-    // Black pieces
+    // sixth row. should always be blank
     for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Pawn(this, "black", 'p', i, 6, false, false));
+        row.emplace_back(new Piece(this, true, i, 6));
+    }
+
+    theBoard.emplace_back(row);
+    row.clear();
+
+    // seventh row. filled with pawns when initialized
+    for (int i = 0; i < 8; ++i) {
+        row.emplace_back(new Pawn(this, "white", 'P', i, 7, false, false));
     }
 
     theBoard.emplace_back(row);
@@ -94,7 +94,7 @@ void Board::init() {
 
     // bottom row of the board. for the sake of pawn testing. leave it blank
     for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece(this, true, i, 7));
+        row.emplace_back(new Piece(this, true, i, 8));
     }
 
     theBoard.emplace_back(row);

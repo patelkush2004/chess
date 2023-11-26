@@ -8,24 +8,15 @@
 using namespace std;
 
 int main() {
-    
-    // read in the command "game white-player black-player"
-    // ask: is the white player a human or a computer?
-    // create a new player object based on the answer
-    // it is white's turn, so call use setTurn() to set the turn to white
-    // ask: is the black player a human or a computer?
-    // create a new player object based on the answer
-    // it is not the black's turn so call setTurn() to set the turn to false for black
-    // then start the game
 
-    // read in command
+    // testing interface code
 
     Player *p1 = new Player("white");
+    //cout << p1->getMyTurn() << endl;
     Player *p2 = new Player("black");
+
     Board b (p1, p2);
     
-
-    b.init();
     cout << b;
     
 

@@ -10,7 +10,6 @@ Pawn::Pawn(Board *theBoard, string team, char symbol, int row, int col, bool bla
     : Piece{theBoard, team, symbol, row, col, blank}, moved{moved} {}
 
 Pawn::~Pawn() {
-    delete this;
 }
 
 bool Pawn::getMoved() {
