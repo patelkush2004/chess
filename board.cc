@@ -155,12 +155,12 @@ void Board::movePiece(vector<pair<int, int>> move) {
     if (inArray) {
         this->setPiece(newCoord.first, newCoord.second, p);
         this->setPiece(currentCoord.first, currentCoord.second, temp);
-        //p->setRow(newCoord.first);
-        //p->setCol(newCoord.second);
-        //p->setBlank(false);
-        //temp->setRow(currentCoord.first);
-        //temp->setCol(currentCoord.second);
-        //temp->setBlank(true);
+        p->setRow(newCoord.first);
+        p->setCol(newCoord.second);
+        p->setBlank(false);
+        temp->setRow(currentCoord.first);
+        temp->setCol(currentCoord.second);
+        temp->setBlank(true);
         this->notifyObservers();
         this->changeTurn();
 
