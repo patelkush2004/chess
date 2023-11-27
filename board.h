@@ -34,6 +34,8 @@ class Board : public Subject {
         void changeTurn(); // Changes the turn
         Player *getTurn(); // Gets the player whose turn it is
 
+        void movePiece(vector<pair<int, int>> move); // Moves the piece
+        
         void isChecked(); // Checks if the current player is in check
         void isCheckmated(); // Checks if the current player is in checkmate
         void isStalemated(); // Checks if the current player is in stalemate

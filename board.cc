@@ -136,6 +136,39 @@ Player *Board::getTurn() {
     }
 }
 
+void Board::movePiece(vector<pair<int, int>> move) {
+    pair<int, int> currentCoord = move[0];
+    pair<int, int> newCoord = move[1];
+
+    Piece *p = this->getPiece(currentCoord.first, currentCoord.second);
+    Piece *temp = this->getPiece(newCoord.first, newCoord.second);
+
+    bool inArray = false;
+    vector<pair<int, int>> possibleMoves = p->calculatePossibleMoves();
+    for (auto &coord : possibleMoves) {
+        if (coord == newCoord) {
+            inArray = true;
+            break;
+        }
+    }
+
+    if (inArray) {
+        this->setPiece(newCoord.first, newCoord.second, p);
+        this->setPiece(currentCoord.first, currentCoord.second, temp);
+        //p->setRow(newCoord.first);
+        //p->setCol(newCoord.second);
+        //p->setBlank(false);
+        //temp->setRow(currentCoord.first);
+        //temp->setCol(currentCoord.second);
+        //temp->setBlank(true);
+        this->notifyObservers();
+        this->changeTurn();
+
+    } else {
+        cout << "Invalid move" << endl;
+    }
+}
+
 void Board::isChecked() {
 
 }

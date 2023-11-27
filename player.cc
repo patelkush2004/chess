@@ -68,10 +68,18 @@ void Player::setNewCoord(pair<int, int> coords) {
     this->newCoord = coords;
 }
 
-vector<pair<int, int>> Player::makeMove() {
-    vector<pair<int, int>> move;
-    move.push_back(this->currentCoord); 
-    move.push_back(this->newCoord);
-    return move;
+/*
+pair<int, int> convertToCoord(string notation) {
+    char letter = notation[0];
+    char number = notation[1];
+
+    int y = letter - 'a'; 
+    int x = number - '1';
+
+    return make_pair(x, y);
+} */
+
+vector<pair<int, int>> Player::makeMove(string current, string newCoord) {
+    return vector<pair<int, int>>();
 }
 

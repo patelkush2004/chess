@@ -16,7 +16,7 @@ class Player {
 
     public:
         Player(string team);
-        ~Player();
+        virtual ~Player();
         string getTeam();
         int getScore();
         bool getIsCpu();
@@ -28,8 +28,8 @@ class Player {
         void setMyTurn(bool myTurn);
         void setCurrentCoord(pair<int, int> currentCoord);
         void setNewCoord(pair<int, int> newCoord);
-
-        vector<pair<int, int>> makeMove();
+        //pair<int, int> convertToCoord(string notation);
+        virtual vector<pair<int, int>> makeMove(string current, string newCoord);
 
 };
 

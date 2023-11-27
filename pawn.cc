@@ -22,6 +22,15 @@ void Pawn::setMoved(bool moved) {
 
 vector<pair<int, int>> Pawn::calculatePossibleMoves() {
     vector<pair<int, int>> moves;
+
+    /*
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; i < 8; ++j) {
+            moves.emplace_back(i, j);
+        }
+    }
+    */
+
     moves.emplace_back(4,4);
     return moves;
 }
