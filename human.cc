@@ -14,8 +14,8 @@ pair<int, int> Human::convertToCoord(string notation) {
     char letter = notation[0];
     char number = notation[1];
 
-    int y = letter - 'a'; 
-    int x = number - '1';
+    int x = letter - 'a'; 
+    int y = number - '1';
 
     return make_pair(x, y);
 }

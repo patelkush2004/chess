@@ -15,13 +15,13 @@ class Piece {
     //vector<pair<int, int>> possibleMoves; no need to include this. instead what we can do is call the calculatePossibleMoves() method and it will return the possible moves
     string team;
     char symbol;
-    int row, col;
+    int x, y;
     bool blank;
 
     public:
         //default constructor
-        Piece(Board *theBoard, int row, int col, bool blank);
-        Piece(Board *theBoard, string team, char symbol, int row, int col, bool blank); // Constructor
+        Piece(Board *theBoard, int x, int y, bool blank);
+        Piece(Board *theBoard, string team, char symbol, int x, int y, bool blank); // Constructor
         virtual ~Piece(); // Destructor
         void setRow(int row); // set's the row of the piece
         void setCol(int col); // set's the col of the piece
@@ -32,6 +32,7 @@ class Piece {
         int getRow(); // returns the row of the piece
         int getCol(); // returns the col of the piece
         bool isBlank(); // if the piece is blank, it has been captured, do don't display it
+        Board *getBoard(); // returns the board that the piece is on
 };
 
 #endif

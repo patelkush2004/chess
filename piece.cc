@@ -6,29 +6,29 @@
 using namespace std;
 
 // defauly constructor. used for blank spaces
-Piece::Piece(Board *theBoard, int row, int col, bool blank) 
-    : theBoard{theBoard}, row{row}, col{col}, blank{blank} {}
+Piece::Piece(Board *theBoard, int x, int y, bool blank) 
+    : theBoard{theBoard}, x{x}, y{y}, blank{blank} {}
 
-Piece::Piece(Board *theBoard, string team, char symbol, int row, int col, bool blank)
- : theBoard{theBoard}, team{team}, symbol{symbol}, row{row}, col{col}, blank{blank} {}
+Piece::Piece(Board *theBoard, string team, char symbol, int x, int y, bool blank)
+ : theBoard{theBoard}, team{team}, symbol{symbol}, x{x}, y{y}, blank{blank} {}
 
 Piece::~Piece() {
 }
 
 void Piece::setRow(int row) {
-    this->row = row;
+    this->y = row+1;
 }
 
 void Piece::setCol(int col) {
-    this->col = col;
+    this->x = col;
 }
 
 int Piece::getRow() {
-    return row;
+    return y-1;
 }
 
 int Piece::getCol() {
-    return col;
+    return x;
 }
 
 string Piece::getTeam() {
@@ -50,6 +50,9 @@ void Piece::setBlank(bool blank) {
 
 vector<pair<int, int>> Piece::calculatePossibleMoves() {
     vector<pair<int, int>> moves;
-    moves.emplace_back(4,4);
     return moves;
+}
+
+Board *Piece::getBoard() {
+    return theBoard;
 }

@@ -23,7 +23,11 @@ void TextDisplay::notify(Board &theBoard) {
     for (int i = 0; i < 8; i++) {
         for (int j = 0; j < 8 ; j++) {
             if (theBoard.getPiece(i, j)->isBlank() == true) {
-                continue;
+                if((i + j) % 2 == 0) {
+                    theDisplay[i][j] = '_';
+                } else {
+                    theDisplay[i][j] = ' ';
+                }
             } else {
                 theDisplay[i][j] = theBoard.getPiece(i, j)->getSymbol();
             }

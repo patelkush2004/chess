@@ -112,10 +112,14 @@ void Board::init() {
 
 }
 
+// everytime you get piece, switch the x and y coordinates
+// if coordinate is (4,6), then theBoard[6][4] is the piece
+// thus, pass in getPiece(6,4) to get the piece at (4,6)
 Piece *Board::getPiece(int x, int y) {
     return theBoard[x][y];
 }
 
+// same thing as getPiece
 void Board::setPiece(int x, int y, Piece *p) {
     theBoard[x][y] = p;
 }
@@ -140,8 +144,8 @@ void Board::movePiece(vector<pair<int, int>> move) {
     pair<int, int> currentCoord = move[0];
     pair<int, int> newCoord = move[1];
 
-    Piece *p = this->getPiece(currentCoord.first, currentCoord.second);
-    Piece *temp = this->getPiece(newCoord.first, newCoord.second);
+    Piece *p = this->getPiece(currentCoord.second, currentCoord.first);
+    Piece *temp = this->getPiece(newCoord.second, newCoord.first);
 
     bool inArray = false;
     vector<pair<int, int>> possibleMoves = p->calculatePossibleMoves();
@@ -153,14 +157,12 @@ void Board::movePiece(vector<pair<int, int>> move) {
     }
 
     if (inArray) {
-        this->setPiece(newCoord.first, newCoord.second, p);
-        this->setPiece(currentCoord.first, currentCoord.second, temp);
-        p->setRow(newCoord.first);
-        p->setCol(newCoord.second);
-        p->setBlank(false);
-        temp->setRow(currentCoord.first);
-        temp->setCol(currentCoord.second);
-        temp->setBlank(true);
+        this->setPiece(newCoord.second, newCoord.first, p);
+        this->setPiece(currentCoord.second, currentCoord.first, temp);
+        p->setRow(newCoord.second);
+        p->setCol(newCoord.first);
+        temp->setRow(currentCoord.second);
+        temp->setCol(currentCoord.first);
         this->notifyObservers();
         this->changeTurn();
 
