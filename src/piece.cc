@@ -16,7 +16,7 @@ Piece::~Piece() {
 }
 
 void Piece::setRow(int row) {
-    this->y = row+1;
+    this->y = row; // + 1
 }
 
 void Piece::setCol(int col) {
@@ -24,7 +24,7 @@ void Piece::setCol(int col) {
 }
 
 int Piece::getRow() {
-    return y-1;
+    return y; // -1
 }
 
 int Piece::getCol() {

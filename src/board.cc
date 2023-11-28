@@ -44,7 +44,7 @@ void Board::init() {
 
     // top row of the board. for the sake of pawn testing. leave it blank
     for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece(this, true, i, 1));
+        row.emplace_back(new Piece(this, i, 0, true));
     }
 
     theBoard.emplace_back(row);
@@ -52,7 +52,7 @@ void Board::init() {
     
     //second row of the board. filled with pawns when initialized
     for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Pawn(this, "black", 'p', i, 2, false, false));
+        row.emplace_back(new Pawn(this, "black", 'p', i, 1, false, false));
     }
 
     theBoard.emplace_back(row);
@@ -60,7 +60,7 @@ void Board::init() {
 
     // third row. should always be blank
     for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece(this, true, i, 3));
+        row.emplace_back(new Piece(this, i, 2, true));
     }
 
     theBoard.emplace_back(row);
@@ -68,7 +68,7 @@ void Board::init() {
 
     // fourth row. should always be blank
     for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece(this, true, i, 4));
+        row.emplace_back(new Piece(this, i, 3, true));
     }
 
     theBoard.emplace_back(row);
@@ -76,7 +76,7 @@ void Board::init() {
 
     // fifth row. should always be blank
     for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece(this, true, i, 5));
+        row.emplace_back(new Piece(this, i, 4, true));
     }
 
     theBoard.emplace_back(row);
@@ -84,7 +84,7 @@ void Board::init() {
 
     // sixth row. should always be blank
     for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece(this, true, i, 6));
+        row.emplace_back(new Piece(this, i, 5, true));
     }
 
     theBoard.emplace_back(row);
@@ -92,7 +92,7 @@ void Board::init() {
 
     // seventh row. filled with pawns when initialized
     for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Pawn(this, "white", 'P', i, 7, false, false));
+        row.emplace_back(new Pawn(this, "white", 'P', i, 6, false, false));
     }
 
     theBoard.emplace_back(row);
@@ -100,7 +100,7 @@ void Board::init() {
 
     // bottom row of the board. for the sake of pawn testing. leave it blank
     for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece(this, true, i, 8));
+        row.emplace_back(new Piece(this, i, 7, true));
     }
 
     theBoard.emplace_back(row);
