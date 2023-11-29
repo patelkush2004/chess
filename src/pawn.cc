@@ -91,9 +91,5 @@ vector<pair<int, int>> Pawn::calculatePossibleMoves() {
         }
     }
 
-    for (auto &move : moves) {
-        cout << "pawn moves: " << move.first << " " << move.second << endl;
-    }
-
     return moves;
 }

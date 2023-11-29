@@ -1,6 +1,11 @@
 #include "board.h"
 #include "piece.h"
 #include "pawn.h"
+#include "rook.h"
+#include "bishop.h"
+#include "knight.h"
+#include "queen.h"
+#include "king.h"
 
 #include <vector>
 #include <iostream>
@@ -43,9 +48,14 @@ void Board::init() {
     vector<Piece*> row;
 
     // top row of the board. for the sake of pawn testing. leave it blank
-    for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece(this, i, 0, true));
-    }
+    row.emplace_back(new Rook(this, "black", 'r', 0, 0, false, false));
+    row.emplace_back(new Knight(this, "black", 'n', 1, 0, false));
+    row.emplace_back(new Bishop(this, "black", 'b', 2, 0, false));
+    row.emplace_back(new Queen(this, "black", 'q', 3, 0, false));
+    row.emplace_back(new King(this, "black", 'k', 4, 0, false, false));
+    row.emplace_back(new Bishop(this, "black", 'b', 5, 0, false));
+    row.emplace_back(new Knight(this, "black", 'n', 6, 0, false));
+    row.emplace_back(new Rook(this, "black", 'r', 7, 0, false, false));
 
     theBoard.emplace_back(row);
     row.clear(); 
@@ -99,12 +109,18 @@ void Board::init() {
     row.clear();
 
     // bottom row of the board. for the sake of pawn testing. leave it blank
-    for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece(this, i, 7, true));
-    }
+    row.emplace_back(new Rook(this, "white", 'R', 0, 7, false, false));
+    row.emplace_back(new Knight(this, "white", 'N', 1, 7, false));
+    row.emplace_back(new Bishop(this, "white", 'B', 2, 7, false));
+    row.emplace_back(new Queen(this, "white", 'Q', 3, 7, false));
+    row.emplace_back(new King(this, "white", 'K', 4, 7, false, false));
+    row.emplace_back(new Bishop(this, "white", 'B', 5, 7, false));
+    row.emplace_back(new Knight(this, "white", 'N', 6, 7, false));
+    row.emplace_back(new Rook(this, "white", 'R', 7, 7, false, false));
 
     theBoard.emplace_back(row);
     row.clear();
+
 
     this->attach(td);
     //this->attach(gd);
@@ -145,9 +161,7 @@ void Board::movePiece(vector<pair<int, int>> move) {
     pair<int, int> newCoord = move[1];
 
     Piece *p = this->getPiece(currentCoord.second, currentCoord.first);
-    cout << "Piece: " << p->getSymbol() << " row: " << p->getRow() << "col: " << p->getCol() << endl;
     Piece *temp = this->getPiece(newCoord.second, newCoord.first);
-    cout << "Piece: " << temp->getSymbol() << " row: " << temp->getRow() << "col: " << temp->getCol() << endl;
 
     bool inArray = false;
     vector<pair<int, int>> possibleMoves = p->calculatePossibleMoves();
@@ -169,9 +183,7 @@ void Board::movePiece(vector<pair<int, int>> move) {
         this->notifyObservers();
         this->changeTurn();
 
-    } else {
-        cout << "Invalid move" << endl;
-    }
+    } 
 }
 
 void Board::isChecked() {
