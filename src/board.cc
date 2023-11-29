@@ -145,7 +145,9 @@ void Board::movePiece(vector<pair<int, int>> move) {
     pair<int, int> newCoord = move[1];
 
     Piece *p = this->getPiece(currentCoord.second, currentCoord.first);
+    cout << "Piece: " << p->getSymbol() << " row: " << p->getRow() << "col: " << p->getCol() << endl;
     Piece *temp = this->getPiece(newCoord.second, newCoord.first);
+    cout << "Piece: " << temp->getSymbol() << " row: " << temp->getRow() << "col: " << temp->getCol() << endl;
 
     bool inArray = false;
     vector<pair<int, int>> possibleMoves = p->calculatePossibleMoves();
@@ -163,6 +165,7 @@ void Board::movePiece(vector<pair<int, int>> move) {
         p->setCol(newCoord.first);
         temp->setRow(currentCoord.second);
         temp->setCol(currentCoord.first);
+        temp->setBlank(true);
         this->notifyObservers();
         this->changeTurn();
 
