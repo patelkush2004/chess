@@ -66,14 +66,12 @@ vector<pair<int, int>> Pawn::calculatePossibleMoves() {
         if (this->getBoard()->getPiece(y - 1, x-1)->getTeam() == "black") {
             // white pawns move up the board which is down the vector
             moves.emplace_back(make_pair(x - 1, y - 1));
-            cout << "white pawn attacking" << endl;
         }
     } 
     if ((getTeam() == "white") && (x != 7) && (y != 0)) {
         if (this->getBoard()->getPiece(y - 1, x+1)->getTeam() == "black") {
             // white pawns move up the board which is down the vector
             moves.emplace_back(make_pair(x + 1, y - 1));
-            cout << "white pawn attacking" << endl;
         }
     }
 
@@ -91,5 +89,13 @@ vector<pair<int, int>> Pawn::calculatePossibleMoves() {
         }
     }
 
+    // convert the coordinates to the correct format. //only Kush touches this
+    for (auto &coord : moves) {
+        int temp = coord.first;
+        coord.first = coord.second;
+        coord.second = temp;
+    }
+
     return moves;
 }
+

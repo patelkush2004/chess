@@ -16,7 +16,7 @@ int main() {
     string cmd;
     cin >> cmd;
 
-    bool setupDone = false;
+    //bool setupDone = false;
 
     // create players
     if (cmd == "game") {
@@ -39,16 +39,15 @@ int main() {
 
     Board b (p1, p2);
 
+    //cout << b;
+
     // game loop
     while (cin >> cmd) {
 
         if (cmd == "setup") {
-            setupDone = true;
             b.setup();
         }
-
-        if (!setupDone) {
-            setupDone = true;
+        else {
             b.init();
         }
 

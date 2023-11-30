@@ -127,77 +127,157 @@ void Board::init() {
 
 }
 
+
 void Board::setup() {
 
-    theBoard.resize(8);
+    td = new TextDisplay();
 
+    /*
+    theBoard.resize(8);
     for (int col = 0; col < 8; ++col) {
         theBoard[col].resize(8);
     }
-
     // initialize a board of blank pieces
     for (int row = 0; row < 8; ++row) {
         for (int col = 0; col < 8; ++col) {
             theBoard[row][col] = new Piece(this, col, row, true);          
         }
     }
+    */
+
+    // initialize the board with the pieces
+    vector<Piece*> row;
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            row.emplace_back(new Piece(this, i, j, true));
+        }
+        theBoard.emplace_back(row);
+        row.clear();
+    }
+
+    this->attach(td);
+    this->notifyObservers();
+
+    // done conditions
+    bool kingInCheck = false;      // NEED TO ADD THIS
+    bool kings = false;
+    bool pawnLastRow = false;
+    bool pawnFirstRow = false;
+
+    // loop through theBoard and check for exactly one white king and one black king
+    // if there is more than one of either or none, whiteKing = false or blackKing = false
+    // if there is exactly one of each, whiteKing = true and blackKing = true
     
+    
+    // setup loop
     string op;    
     while (true) {
         cin >> op;
         if (op == "done") {
-            return;
+            int whiteKingCount = 0;
+            int blackKingCount = 0;
+            for (auto &row : theBoard) {
+                for (auto &piece : row) {
+                    if (piece->getSymbol() == 'K') {
+                        whiteKingCount++;
+                    } else if (piece->getSymbol() == 'k') {
+                        blackKingCount++;
+                    }
+                }
+            }
+
+            if (whiteKingCount == 1 && blackKingCount == 1) {
+                kings = true;
+            } 
+            else {
+                cout << "Invalid setup. Need exactly 1 white king and 1 black king" << endl;
+                continue;
+            }
+
+            // loop through theBoard and check for pawns in the first and last row
+            // if there is a pawn in the first or last row, pawnFirstRow = true or pawnLastRow = true
+            // if there is no pawn in the first or last row, pawnFirstRow = false and pawnLastRow = false
+            // if there is a pawn in both the first and last row, pawnFirstRow = true and pawnLastRow = true
+            for (auto &row : theBoard) {
+                for (auto &piece : row) {
+                    if (piece->getSymbol() == 'P') {
+                        if (piece->getRow() == 0) {
+                            pawnFirstRow = true;
+                            cout << "Invalid. There is a pawn in the first row" << endl;
+                        } else if (piece->getRow() == 7) {
+                            pawnLastRow = true;
+                            cout << "Invalid. There is a pawn in the last row" << endl;
+                        }
+                    } else if (piece->getSymbol() == 'p') {
+                        if (piece->getRow() == 0) {
+                            pawnFirstRow = true;
+                            cout << "Invalid. There is a pawn in the first row" << endl;
+                        } else if (piece->getRow() == 7) {
+                            pawnLastRow = true;
+                            cout << "Invalid. There is a pawn in the last row" << endl;
+                        }
+                    }
+                }
+            }
+
+            if (!pawnFirstRow && !pawnLastRow && kings) {
+                return;
+            } else {
+                continue;
+            }
         } else if (op == "+") {
             char pieceType;
             string coord;
             cin >> pieceType >> coord;
 
             pair<int,int> move = p1->convertToCoord(coord);
-            Piece *deletePiece = this->getPiece(move.second, move.first);
+            Piece *deletePiece = this->getPiece(move.first, move.second);
             Piece *newPiece = nullptr;
-
-            // exception handling here
 
             // if pieceType is capital, call p1
 
             if (pieceType == 'K') {
-                newPiece = new King(this, "white", 'K', move.second, move.first, false, false);
+                newPiece = new King(this, "white", 'K', move.first, move.second, false, false);
             } 
             else if (pieceType == 'k') {
-                newPiece = new King(this, "black", 'k', move.second, move.first, false, false);
+                newPiece = new King(this, "black", 'k', move.first, move.second, false, false);
             }
             else if (pieceType == 'Q') {
-                newPiece = new Queen(this, "white", 'Q', move.second, move.first, false);
+                newPiece = new Queen(this, "white", 'Q', move.first, move.second, false);
             } 
             else if (pieceType == 'q') {
-                newPiece = new Queen(this, "black", 'q', move.second, move.first, false);
+                newPiece = new Queen(this, "black", 'q', move.first, move.second, false);
             }
             else if (pieceType == 'N') {
-                newPiece = new Knight(this, "white", 'N', move.second, move.first, false);
+                newPiece = new Knight(this, "white", 'N', move.first, move.second, false);
             } 
             else if (pieceType == 'n') {
-                newPiece = new Knight(this, "black", 'n', move.second, move.first, false);
+                newPiece = new Knight(this, "black", 'n', move.first, move.second, false);
             }
             else if (pieceType == 'B') {
-                newPiece = new Bishop(this, "white", 'B', move.second, move.first, false);
+                newPiece = new Bishop(this, "white", 'B', move.first, move.second, false);
             } 
             else if (pieceType == 'b') {
-                newPiece = new Bishop(this, "black", 'b', move.second, move.first, false);
+                newPiece = new Bishop(this, "black", 'b', move.first, move.second, false);
             }
             else if (pieceType == 'R') {
-                newPiece = new Rook(this, "white", 'R', move.second, move.first, false, false);
+                newPiece = new Rook(this, "white", 'R', move.first, move.second, false, false);
             } 
             else if (pieceType == 'r') {
-                newPiece = new Rook(this, "black", 'r', move.second, move.first, false, false);
+                newPiece = new Rook(this, "black", 'r', move.first, move.second, false, false);
             }
             else if (pieceType == 'P') {
-                newPiece = new Pawn(this, "white", 'P', move.second, move.first, false, false);
+                newPiece = new Pawn(this, "white", 'P', move.first, move.second, false, false);
             } 
             else if (pieceType == 'p') {
-                newPiece = new Pawn(this, "black", 'p', move.second, move.first, false, false);
+                newPiece = new Pawn(this, "black", 'p', move.first, move.second, false, false);
             }
             delete deletePiece;
-            setPiece(move.second, move.first, newPiece);
+            setPiece(move.first, move.second, newPiece);
+
+            this->notifyObservers();
+            cout << *this->td; // print the board
+
         } else if (op == "-") {
             string coord;
             cin >> coord;
@@ -205,11 +285,14 @@ void Board::setup() {
 
             // error handling for input here
 
-            Piece *deletePiece = getPiece(move.second, move.first);
-            Piece *newPiece = new Piece(this, move.second, move.first, true);
+            Piece *deletePiece = getPiece(move.first, move.second);
+            Piece *newPiece = new Piece(this, move.first, move.second, true);
 
             delete deletePiece;
-            setPiece(move.second, move.first, newPiece);
+            setPiece(move.first, move.second, newPiece);
+
+            this->notifyObservers();
+            cout << *this->td; // print the board
 
         } else if (op == "=") {
             string colour;
@@ -224,6 +307,7 @@ void Board::setup() {
         }
     }
 }
+
 
 // everytime you get piece, switch the x and y coordinates
 // if coordinate is (4,6), then theBoard[6][4] is the piece
@@ -257,8 +341,8 @@ void Board::movePiece(vector<pair<int, int>> move) {
     pair<int, int> currentCoord = move[0];
     pair<int, int> newCoord = move[1];
 
-    Piece *p = this->getPiece(currentCoord.second, currentCoord.first);
-    Piece *temp = this->getPiece(newCoord.second, newCoord.first);
+    Piece *p = this->getPiece(currentCoord.first, currentCoord.second);
+    Piece *temp = this->getPiece(newCoord.first, newCoord.second);
 
     bool inArray = false;
     vector<pair<int, int>> possibleMoves = p->calculatePossibleMoves();
@@ -268,18 +352,16 @@ void Board::movePiece(vector<pair<int, int>> move) {
             break;
         }
     }
-
     if (inArray) {
-        this->setPiece(newCoord.second, newCoord.first, p);
-        this->setPiece(currentCoord.second, currentCoord.first, temp);
-        p->setRow(newCoord.second);
-        p->setCol(newCoord.first);
-        temp->setRow(currentCoord.second);
-        temp->setCol(currentCoord.first);
+        this->setPiece(newCoord.first, newCoord.second, p);
+        this->setPiece(currentCoord.first, currentCoord.second, temp);
+        p->setRow(newCoord.first);
+        p->setCol(newCoord.second);
+        temp->setRow(currentCoord.first);
+        temp->setCol(currentCoord.second);
         temp->setBlank(true);
         this->notifyObservers();
         this->changeTurn();
-
     } 
 }
 
@@ -304,16 +386,6 @@ ostream &operator<<(ostream &out, const Board &b) {
 void Board::attach(Observer *o) {
     observers.emplace_back(o);
 }
-
-/*
-void Board::detach(Observer *o) {
-    for (auto &ob : observers) {
-        if (ob == o) {
-            observers.erase(ob);
-        }
-    }
-}
-*/ // NOT NEEDED TBH
 
 void Board::notifyObservers() {
     for (auto &ob : observers) {

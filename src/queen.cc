@@ -133,6 +133,12 @@ vector<pair<int, int>> Queen::calculatePossibleMoves() {
         }
     }
 
+    for (auto &move : moves) {
+        int temp = move.first;
+        move.first = move.second;
+        move.second = temp;
+    }
+
     return moves;
 
 }
