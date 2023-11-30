@@ -16,31 +16,44 @@ int main() {
     string cmd;
     cin >> cmd;
 
+    bool setupDone = false;
+
     // create players
     if (cmd == "game") {
         string player1;
         string player2;
         cin >> player1 >> player2;
-        if(player1 == "human") {
+
+        if (player1 == "human") {
             p1 = new Human("white");
         } else {
             p1 = new Player("white"); // change this to computer after
         }
 
-        if(player2 == "human") {
+        if (player2 == "human") {
             p2 = new Human("black");
         } else {
             p2 = new Player("black"); // change this to computer after
         }
     }
 
-    // create board. 
-    // RIGHT NOW, INIT() IS ADDING PIECES. CHANGE IT SO SETUP ADDS PIECES
     Board b (p1, p2);
-    cout << b;
 
     // game loop
     while (cin >> cmd) {
+
+        if (cmd == "setup") {
+            setupDone = true;
+            b.setup();
+        }
+
+        if (!setupDone) {
+            setupDone = true;
+            b.init();
+        }
+
+        cout << b;
+
         if (cmd == "resign") { // resign CHANGE THIS UP TOO IF NEEDED
             break;
         }

@@ -28,6 +28,7 @@ class Board : public Subject {
         ~Board(); // Destructor
 
         void init(); // Initializes the board
+        void setup(); // Puts the board in setup mode
         Piece *getPiece(int row, int col); // Returns the piece at the given row and column
         void setPiece(int row, int col, Piece *p); // Sets the piece at the given row and column
 

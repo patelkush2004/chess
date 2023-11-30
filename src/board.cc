@@ -19,7 +19,6 @@ Board::Board(Player *p1, Player *p2) :
         //vector <vector<Piece*>> theBoard = {};
         this->td = nullptr;
         this->gd = nullptr;
-        init();
     }
 
 // Destructor
@@ -126,6 +125,104 @@ void Board::init() {
     //this->attach(gd);
     this->notifyObservers();
 
+}
+
+void Board::setup() {
+
+    theBoard.resize(8);
+
+    for (int col = 0; col < 8; ++col) {
+        theBoard[col].resize(8);
+    }
+
+    // initialize a board of blank pieces
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            theBoard[row][col] = new Piece(this, col, row, true);          
+        }
+    }
+    
+    string op;    
+    while (true) {
+        cin >> op;
+        if (op == "done") {
+            return;
+        } else if (op == "+") {
+            char pieceType;
+            string coord;
+            cin >> pieceType >> coord;
+
+            pair<int,int> move = p1->convertToCoord(coord);
+            Piece *deletePiece = this->getPiece(move.second, move.first);
+            Piece *newPiece = nullptr;
+
+            // exception handling here
+
+            // if pieceType is capital, call p1
+
+            if (pieceType == 'K') {
+                newPiece = new King(this, "white", 'K', move.second, move.first, false, false);
+            } 
+            else if (pieceType == 'k') {
+                newPiece = new King(this, "black", 'k', move.second, move.first, false, false);
+            }
+            else if (pieceType == 'Q') {
+                newPiece = new Queen(this, "white", 'Q', move.second, move.first, false);
+            } 
+            else if (pieceType == 'q') {
+                newPiece = new Queen(this, "black", 'q', move.second, move.first, false);
+            }
+            else if (pieceType == 'N') {
+                newPiece = new Knight(this, "white", 'N', move.second, move.first, false);
+            } 
+            else if (pieceType == 'n') {
+                newPiece = new Knight(this, "black", 'n', move.second, move.first, false);
+            }
+            else if (pieceType == 'B') {
+                newPiece = new Bishop(this, "white", 'B', move.second, move.first, false);
+            } 
+            else if (pieceType == 'b') {
+                newPiece = new Bishop(this, "black", 'b', move.second, move.first, false);
+            }
+            else if (pieceType == 'R') {
+                newPiece = new Rook(this, "white", 'R', move.second, move.first, false, false);
+            } 
+            else if (pieceType == 'r') {
+                newPiece = new Rook(this, "black", 'r', move.second, move.first, false, false);
+            }
+            else if (pieceType == 'P') {
+                newPiece = new Pawn(this, "white", 'P', move.second, move.first, false, false);
+            } 
+            else if (pieceType == 'p') {
+                newPiece = new Pawn(this, "black", 'p', move.second, move.first, false, false);
+            }
+            delete deletePiece;
+            setPiece(move.second, move.first, newPiece);
+        } else if (op == "-") {
+            string coord;
+            cin >> coord;
+            pair<int,int> move = p1->convertToCoord(coord);
+
+            // error handling for input here
+
+            Piece *deletePiece = getPiece(move.second, move.first);
+            Piece *newPiece = new Piece(this, move.second, move.first, true);
+
+            delete deletePiece;
+            setPiece(move.second, move.first, newPiece);
+
+        } else if (op == "=") {
+            string colour;
+            cin >> colour;
+            if (colour == "white") {
+                p1->setMyTurn(true);
+                p2->setMyTurn(false);
+            } else if (colour == "black") {
+                p1->setMyTurn(false);
+                p2->setMyTurn(true);
+            }
+        }
+    }
 }
 
 // everytime you get piece, switch the x and y coordinates
