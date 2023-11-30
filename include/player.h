@@ -28,7 +28,7 @@ class Player {
         void setMyTurn(bool myTurn);
         void setCurrentCoord(pair<int, int> currentCoord);
         void setNewCoord(pair<int, int> newCoord);
-        //pair<int, int> convertToCoord(string notation);
+        pair<int, int> convertToCoord(string notation);
         virtual vector<pair<int, int>> makeMove(string current, string newCoord);
 
 };
