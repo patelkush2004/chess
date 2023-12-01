@@ -47,11 +47,10 @@ int main() {
         if (cmd == "setup") {
             b.setup();
         }
-        else {
+        else if (cmd == "done") {
             b.init();
+            cout << b;
         }
-
-        cout << b;
 
         if (cmd == "resign") { // resign CHANGE THIS UP TOO IF NEEDED
             break;
