@@ -1,6 +1,7 @@
 #include "computer.h"
 #include "player.h"
 #include "board.h"
+#include "piece.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -24,38 +25,56 @@ pair<int, int> Computer::convertToCoord(string notation) {
 
 
 vector<pair<int, int>> Computer::makeComputerMove(Board& b)  {
-    vector<pair<int, int>> move = levelOne(b);
-    return move;
-}
+    cout << "Am I HERE" << endl;
 
-
-vector<pair<int, int>> Computer::levelOne(Board& b) {
-
-    vector<Piece> availablePieces;
+    // do NOT ever use Piece by value, this causes seg faults. Use pointer to Piece instead.
+    vector<Piece*> availablePieces;
+    std::vector<std::pair<int, int>> moves;
+    int randomIndex;
+    Piece *selectedPiece = nullptr;
     
-    // finds all available team pieces 
-    // Nit: this should be handled by board or a vector in player!
-    for(int x = 0; x < 8; x++) {
-        for (int y = 0; y < 8; y++) {
-            if (b.getPiece(x, y)->getTeam() == this->getTeam()) {
-                availablePieces.emplace_back(*b.getPiece(x, y));
+    while (true) {
+
+        // finds all available team pieces 
+        // Nit: this should be handled by board or a vector in player!
+        for(int x = 0; x < 8; x++) {
+            for (int y = 0; y < 8; y++) {
+                if (b.getPiece(x, y)->getTeam() == this->getTeam() && !b.getPiece(x, y)->isBlank()) {
+                    availablePieces.emplace_back(b.getPiece(x, y));
+                }
             }
         }
+
+        // seed-safe random index generation for availabliePieces
+        randomIndex = randomGenerator(0, availablePieces.size() - 1);
+
+        //selectedPiece = availablePieces[randomIndex];
+        selectedPiece = b.getPiece(6,1);
+
+        moves = selectedPiece->calculatePossibleMoves();
+
+        for (auto move : moves) {
+            int temp = move.first;
+            move.first = move.second;
+            move.second = temp;
+        }
+
+        // this checks if the piece has any possible moves, if not, it will clear the availablePieces vector and moves vector and try again
+        if (moves.size() == 0) {
+            availablePieces.clear();
+            moves.clear();
+            continue;
+        };
+
+        break;
     }
-
-    // seed-safe random index generation for availabliePieces
-    int randomIndex = randomGenerator(0, availablePieces.size() - 1);
-
-    Piece selectedPiece = availablePieces[randomIndex];
-
-    std::vector<std::pair<int, int>> moves = selectedPiece.calculatePossibleMoves();
 
     // seed-safe random move generation for availabliePieces
     randomIndex = randomGenerator(0, moves.size() - 1);
 
     pair<int, int> move = moves[randomIndex];
 
-    pair<int, int> current(selectedPiece.getCol(), selectedPiece.getRow());
+    pair<int, int> current(selectedPiece->getCol(), selectedPiece->getRow());
     
     vector<pair<int, int>> fromToMove;
 
@@ -64,3 +83,7 @@ vector<pair<int, int>> Computer::levelOne(Board& b) {
 
     return fromToMove;
 }
+
+
+//vector<pair<int, int>> Computer::levelOne(Board& b) {
+//}

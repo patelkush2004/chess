@@ -28,3 +28,9 @@ vector<pair<int, int>> Human::makeMove(string current, string newCoordString)  {
     move.emplace_back(newCoord);
     return move;
 }
+
+vector<pair<int, int>> Human::makeComputerMove(Board& b)  {
+    cout << "this is running" << endl;
+    return vector<pair<int, int>>();
+}
+

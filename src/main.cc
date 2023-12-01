@@ -70,7 +70,13 @@ int main() {
             cout << b;
 
             move = p2->makeComputerMove(b);
-            b.movePiece(move);
+            cout << "Current" << move[0].first << move[0].second << endl;
+            cout << b.getPiece(move[0].first, move[0].second)->getSymbol() << endl;
+            cout << b.getPiece(move[0].first, move[0].second)->isBlank() << endl;
+            cout << "new" << move[1].first << move[1].second << endl;
+            cout << move.size() << endl;
+            b.movePiece(p2->makeComputerMove(b));
+
             cout << b;
         }
 

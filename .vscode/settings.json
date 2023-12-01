@@ -51,6 +51,9 @@
         "fstream": "cpp",
         "mutex": "cpp",
         "sstream": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "cstdarg": "cpp",
+        "cstring": "cpp",
+        "optional": "cpp"
     }
 }

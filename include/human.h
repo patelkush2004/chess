@@ -14,6 +14,7 @@ class Human : public Player {
         ~Human();
         pair<int, int> convertToCoord(string notation);
         vector<pair<int, int>> makeMove(string current, string newCoord) override;
+        vector<pair<int, int>> makeComputerMove(Board& b) override;
 };
 
 #endif

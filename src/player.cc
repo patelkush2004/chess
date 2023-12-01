@@ -81,7 +81,3 @@ pair<int, int> Player::convertToCoord(string notation) {
 vector<pair<int, int>> Player::makeMove(string current, string newCoord) {
     return vector<pair<int, int>>();
 }
-
-vector<pair<int, int>> Player::makeComputerMove(Board& b) {
-    return vector<pair<int, int>>();
-}

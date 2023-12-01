@@ -312,13 +312,13 @@ void Board::setup() {
 // everytime you get piece, switch the x and y coordinates
 // if coordinate is (4,6), then theBoard[6][4] is the piece
 // thus, pass in getPiece(6,4) to get the piece at (4,6)
-Piece *Board::getPiece(int x, int y) {
-    return theBoard[x][y];
+Piece *Board::getPiece(int row, int col) {
+    return theBoard[row][col];
 }
 
 // same thing as getPiece
-void Board::setPiece(int x, int y, Piece *p) {
-    theBoard[x][y] = p;
+void Board::setPiece(int row, int col, Piece *p) {
+    theBoard[row][col] = p;
 }
 
 void Board::changeTurn() {

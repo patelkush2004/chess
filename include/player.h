@@ -32,7 +32,7 @@ class Player {
         void setNewCoord(pair<int, int> newCoord);
         pair<int, int> convertToCoord(string notation);
         virtual vector<pair<int, int>> makeMove(string current, string newCoord);
-        virtual vector<pair<int, int>> makeComputerMove(Board& b);
+        virtual vector<pair<int, int>> makeComputerMove(Board& b) = 0;
 
 };
 
