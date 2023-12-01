@@ -9,7 +9,8 @@
 
 using namespace std;
 
-Computer::Computer(string team) : Player(team) {}
+Computer::Computer(string team, bool isCpu, bool myTurn) : 
+    Player(team, isCpu, myTurn) {}
 
 Computer::~Computer() {}
 
@@ -25,16 +26,14 @@ pair<int, int> Computer::convertToCoord(string notation) {
 
 
 vector<pair<int, int>> Computer::makeComputerMove(Board& b)  {
-    cout << "Am I HERE" << endl;
 
     // do NOT ever use Piece by value, this causes seg faults. Use pointer to Piece instead.
     vector<Piece*> availablePieces;
-    std::vector<std::pair<int, int>> moves;
+    vector<pair<int, int>> moves;
     int randomIndex;
     Piece *selectedPiece = nullptr;
     
     while (true) {
-
         // finds all available team pieces 
         // Nit: this should be handled by board or a vector in player!
         for(int x = 0; x < 8; x++) {
@@ -43,21 +42,15 @@ vector<pair<int, int>> Computer::makeComputerMove(Board& b)  {
                     availablePieces.emplace_back(b.getPiece(x, y));
                 }
             }
-        }
+        } // this is working perfectly, traverses through each row. 
 
         // seed-safe random index generation for availabliePieces
         randomIndex = randomGenerator(0, availablePieces.size() - 1);
 
-        //selectedPiece = availablePieces[randomIndex];
-        selectedPiece = b.getPiece(6,1);
+        selectedPiece = availablePieces[randomIndex];
+        //selectedPiece = b.getPiece(6,1);
 
         moves = selectedPiece->calculatePossibleMoves();
-
-        for (auto move : moves) {
-            int temp = move.first;
-            move.first = move.second;
-            move.second = temp;
-        }
 
         // this checks if the piece has any possible moves, if not, it will clear the availablePieces vector and moves vector and try again
         if (moves.size() == 0) {
@@ -73,9 +66,8 @@ vector<pair<int, int>> Computer::makeComputerMove(Board& b)  {
     randomIndex = randomGenerator(0, moves.size() - 1);
 
     pair<int, int> move = moves[randomIndex];
+    pair<int, int> current(selectedPiece->getRow(), selectedPiece->getCol());
 
-    pair<int, int> current(selectedPiece->getCol(), selectedPiece->getRow());
-    
     vector<pair<int, int>> fromToMove;
 
     fromToMove.emplace_back(current);

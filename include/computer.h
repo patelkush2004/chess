@@ -11,7 +11,7 @@ using namespace std;
 
 class Computer : public Player {
     public:
-        Computer(string team);
+        Computer(string team, bool isCpu, bool myTurn);
         ~Computer();
         pair<int, int> convertToCoord(string notation);
         vector<pair<int, int>> makeComputerMove(Board& b) override;

@@ -1,23 +1,13 @@
 #include "player.h"
-#include "board.h"*
+#include "board.h"
 #include <string>
 #include <vector>
 
 using namespace std;
 
 // Constructor
-Player::Player(string team) : 
-    team{team} {
-        if (team == "white" || team == "White") {
-            this->myTurn = true;
-        }
-        else {
-            this->myTurn = false;
-        }
-        currentCoord = {0,0};
-        newCoord = {0,0};
-        score = 0;
-        isCpu = false;
+Player::Player(string team, bool isCpu, bool myTurn) : 
+    team{team}, score{0} , isCpu{isCpu} , myTurn{myTurn} {
 }
 
 // Destructor
@@ -40,14 +30,6 @@ bool Player::getIsCpu() {
     return isCpu;
 }
 
-pair<int, int> Player::getCurrentCoord() {
-    return currentCoord;
-}
-
-pair<int, int> Player::getNewCoord() {
-    return newCoord;
-}
-
 // Setters
 void Player::updateScore() {
     this->score++;
@@ -61,13 +43,6 @@ void Player::setMyTurn(bool turn) {
     //this->isCpu = cpu;
 //}
 
-void Player::setCurrentCoord(pair<int, int> coords) {
-    this->currentCoord = coords;
-}
-
-void Player::setNewCoord(pair<int, int> coords) {
-    this->newCoord = coords;
-}
 pair<int, int> Player::convertToCoord(string notation) {
     char letter = notation[0];
     char number = notation[1];

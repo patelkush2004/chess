@@ -26,15 +26,15 @@ int main() {
         cin >> player1 >> player2;
 
         if (player1 == "human") {
-            p1 = new Human("white");
+            p1 = new Human("white", false, true);
         } else {
-            p1 = new Computer("white"); // change this to computer after
+            p1 = new Computer("white", true, true); 
         }
 
         if (player2 == "human") {
-            p2 = new Human("black");
+            p2 = new Human("black", false, false);
         } else {
-            p2 = new Computer("black"); // change this to computer after
+            p2 = new Computer("black", true, false); 
         }
     }
 
@@ -45,22 +45,39 @@ int main() {
     // game loop
     while (cin >> cmd) {
 
+        //if (p1->getMyTurn()) {
+         //   cout << "White's turn" << endl;
+        //}
+        //else {
+        //    cout << "Black's turn" << endl;
+        //}
+
         if (cmd == "setup") {
             b.setup();
+            if (p1->getIsCpu()) {
+                cout << "White Computer Turn" << endl;
+            }
+            else {
+                cout << "White Turn" << endl;
+            }
         }
-        else {
+        else if (cmd == "done") {
             b.init();
+            cout << b;
+            if (p1->getIsCpu()) {
+                cout << "White Computer Turn" << endl;
+            }
+            else {
+                cout << "White Turn" << endl;
+            }
         }
-
-        cout << b;
 
         if (cmd == "resign") { // resign CHANGE THIS UP TOO IF NEEDED
             break;
         }
 
         // make move
-        if (cmd == "move") {
-
+        if (cmd == "move" && !p1->getIsCpu() && p1->getMyTurn()) {
             // ADD CONDITION TO SEE IF VALID TEAM IS MOVING VALID PIECE 
             string current;
             string newCoord;
@@ -68,16 +85,48 @@ int main() {
             vector<pair<int, int>> move = p1->makeMove(current, newCoord);
             b.movePiece(move);
             cout << b;
-
-            move = p2->makeComputerMove(b);
-            cout << "Current" << move[0].first << move[0].second << endl;
-            cout << b.getPiece(move[0].first, move[0].second)->getSymbol() << endl;
-            cout << b.getPiece(move[0].first, move[0].second)->isBlank() << endl;
-            cout << "new" << move[1].first << move[1].second << endl;
-            cout << move.size() << endl;
-            b.movePiece(p2->makeComputerMove(b));
-
+            if (p2->getIsCpu()) {
+                cout << "Black Computer Turn" << endl;
+            }
+            else {
+                cout << "Black Turn" << endl;
+            }
+        }
+        else if (cmd == "move" && p1->getIsCpu() && p1->getMyTurn()) {
+            vector<pair<int, int>> move = p1->makeComputerMove(b);
+            b.movePiece(move);
             cout << b;
+            if (p2->getIsCpu()) {
+                cout << "Black Computer Turn" << endl;
+            }
+            else {
+                cout << "Black Turn" << endl;
+            }
+        }
+        else if (cmd == "move" && p2->getIsCpu() && p2->getMyTurn()) {
+            vector<pair<int, int>> move = p2->makeComputerMove(b);
+            b.movePiece(move);
+            cout << b;
+            if (p1->getIsCpu()) {
+                cout << "White Computer Turn" << endl;
+            }
+            else {
+                cout << "White Turn" << endl;
+            }
+        }
+        else if (cmd == "move" && !p2->getIsCpu() && p2->getMyTurn()) {
+            string current;
+            string newCoord;
+            cin >> current >> newCoord;
+            vector<pair<int, int>> move = p2->makeMove(current, newCoord);
+            b.movePiece(move);
+            cout << b;
+            if (p1->getIsCpu()) {
+                cout << "White Computer Turn" << endl;
+            }
+            else {
+                cout << "White Turn" << endl;
+            }
         }
 
         if (cin.fail()) {

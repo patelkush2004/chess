@@ -6,7 +6,8 @@
 
 using namespace std;
 
-Human::Human(string team) : Player(team) {}
+Human::Human(string team, bool isCpu, bool myTurn) : 
+    Player(team, isCpu, myTurn) {}
 
 Human::~Human() {}
 

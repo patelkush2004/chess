@@ -324,8 +324,10 @@ void Board::setPiece(int row, int col, Piece *p) {
 void Board::changeTurn() {
     if (p1->getMyTurn()) {
         p2->setMyTurn(true);
+        p1->setMyTurn(false);
     } else {
         p1->setMyTurn(true);
+        p2->setMyTurn(false);
     }
 }
 
