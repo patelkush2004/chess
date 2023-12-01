@@ -366,7 +366,7 @@ void Board::movePiece(vector<pair<int, int>> move) {
 }
 
 void Board::isChecked() {
-
+ 
 }
 
 void Board::isCheckmated() {

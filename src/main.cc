@@ -4,6 +4,7 @@
 #include "board.h"
 #include "player.h"
 #include "human.h"
+#include "computer.h"
 #include "textdisplay.h"
 
 using namespace std;
@@ -27,13 +28,13 @@ int main() {
         if (player1 == "human") {
             p1 = new Human("white");
         } else {
-            p1 = new Player("white"); // change this to computer after
+            p1 = new Computer("white"); // change this to computer after
         }
 
         if (player2 == "human") {
             p2 = new Human("black");
         } else {
-            p2 = new Player("black"); // change this to computer after
+            p2 = new Computer("black"); // change this to computer after
         }
     }
 
@@ -65,6 +66,10 @@ int main() {
             string newCoord;
             cin >> current >> newCoord;
             vector<pair<int, int>> move = p1->makeMove(current, newCoord);
+            b.movePiece(move);
+            cout << b;
+
+            move = p2->makeComputerMove(b);
             b.movePiece(move);
             cout << b;
         }
