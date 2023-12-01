@@ -45,7 +45,6 @@ vector<pair<int, int>> Pawn::calculatePossibleMoves() {
                 moves.emplace_back(make_pair(x, y+2));
             }
         }
-        this->setMoved(true);
     } else {
         if (getTeam() == "white") {
             // white pawns move up the board which is down the vector

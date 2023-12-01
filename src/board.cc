@@ -341,7 +341,26 @@ void Board::movePiece(vector<pair<int, int>> move) {
     pair<int, int> currentCoord = move[0];
     pair<int, int> newCoord = move[1];
 
+
+    bool hasMovedFieldP = false;
+    bool hasMovedFieldR = false;
+    bool hasMovedFieldK = false;
     Piece *p = this->getPiece(currentCoord.first, currentCoord.second);
+    Pawn *piece = nullptr;  
+    Rook *piece2 = nullptr;
+    King *piece3 = nullptr;
+    if (typeid(*p) == typeid(Pawn)) {
+        piece = dynamic_cast<Pawn*>(p); 
+        hasMovedFieldP = true;
+    } 
+    else if (typeid(*p) == typeid(Rook)) {
+        piece2 = dynamic_cast<Rook*>(p);
+        hasMovedFieldR = true;
+    }
+    else if (typeid(*p) == typeid(King)) {
+        piece3 = dynamic_cast<King*>(p);
+        hasMovedFieldK = true;
+    }
     Piece *temp = this->getPiece(newCoord.first, newCoord.second);
 
     bool inArray = false;
@@ -360,7 +379,17 @@ void Board::movePiece(vector<pair<int, int>> move) {
         temp->setRow(currentCoord.first);
         temp->setCol(currentCoord.second);
         temp->setBlank(true);
+
+        if (hasMovedFieldP) {
+            piece->setMoved(true);
+        } else if (hasMovedFieldR) {
+            piece2->setMoved(true);
+        } else if (hasMovedFieldK) {
+            piece3->setMoved(true);
+        }
+
         this->notifyObservers();
+        //this->notifyGraphic(old cord, newcord)
         this->changeTurn();
     } 
 }
