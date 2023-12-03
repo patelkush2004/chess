@@ -99,6 +99,18 @@ int main() {
             else {
                 cout << "Black Turn" << endl;
             }
+
+            b.isChecked();
+            if (p2->getIsCheck()) {
+                cout << "Black is in check." << endl;
+            }
+
+            b.isCheckmated();
+            if (p2->getIsCheckmate()) {
+                cout << "Checkmate! White wins!" << endl;
+                p1->updateScore();
+                // MAKE THE GAME CONTINUE
+            }
         }
         else if (cmd == "move" && p1->getIsCpu() && p1->getMyTurn()) {
             vector<pair<int, int>> move = p1->makeComputerMove(b);
@@ -110,6 +122,18 @@ int main() {
             else {
                 cout << "Black Turn" << endl;
             }
+
+            b.isChecked();
+            if (p2->getIsCheck()) {
+                cout << "Black is in check." << endl;
+            }
+
+            b.isCheckmated();
+            if (p2->getIsCheckmate()) {
+                cout << "Checkmate! White wins!" << endl;
+                p1->updateScore();
+                // MAKE THE GAME CONTINUE
+            }
         }
         else if (cmd == "move" && p2->getIsCpu() && p2->getMyTurn()) {
             vector<pair<int, int>> move = p2->makeComputerMove(b);
@@ -120,6 +144,18 @@ int main() {
             }
             else {
                 cout << "White Turn" << endl;
+            }
+
+            b.isChecked();
+            if (p1->getIsCheck()) {
+                cout << "White is in check." << endl;
+            }
+
+            b.isCheckmated();
+            if (p1->getIsCheckmate()) {
+                cout << "Checkmate! Black wins!" << endl;
+                p2->updateScore();
+                // MAKE THE GAME CONTINUE
             }
         }
         else if (cmd == "move" && !p2->getIsCpu() && p2->getMyTurn()) {
@@ -136,28 +172,17 @@ int main() {
                 cout << "White Turn" << endl;
             }
 
-
             b.isChecked();
-            if (p1->getIsCheck()) {
-                cout << "White is in check." << endl;
-            }
             if (p2->getIsCheck()) {
-                cout << "Black is in check." << endl;
+                cout << "Blac is in check." << endl;
             }
-
+            
             b.isCheckmated();
             if (p1->getIsCheckmate()) {
                 cout << "Checkmate! Black wins!" << endl;
                 p2->updateScore();
-                break;
+                // MAKE THE GAME CONTINUE
             }
-            if (p2->getIsCheckmate()) {
-                cout << "Checkmate! White wins!" << endl;
-                p1->updateScore();
-                break;
-            }
-
-
         }
 
         if (cin.fail()) {

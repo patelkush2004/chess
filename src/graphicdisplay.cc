@@ -5,6 +5,7 @@
 #include "graphicdisplay.h"
 #include "window.h"
 
+#include "player.h"
 #include "pawn.h"
 #include "bishop.h"
 #include "knight.h"
@@ -23,7 +24,7 @@ GraphicDisplay::GraphicDisplay() {
     // draw the title board and title
     // theGDisplay->fillRectangle(800, 0, 400, 250, Xwindow::Black);
     theGDisplay->fillRectangle(800, 0, 400, 800, Xwindow::Black);
-    theGDisplay->fillRectangle(805, 5, 390, 240, Xwindow::Gray);
+    theGDisplay->fillRectangle(805, 5, 390, 250, Xwindow::Gray);
     theGDisplay->drawTitle();
 
     // create the top row of the board. 10 squares, 100 pixels each. all black

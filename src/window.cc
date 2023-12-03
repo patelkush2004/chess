@@ -6,6 +6,7 @@
 #include <vector>
 #include <unistd.h>
 #include "window.h"
+#include "piece.h"
 
 using namespace std;
 
@@ -107,8 +108,9 @@ void Xwindow::drawTitle() {
   setFont("lucidasans-bold-24");
   // XLoadFont(d, "-misc-seravek-medium-r-normal--0-0-0-0-p-0-iso10646-1");
   string msg = "CHESS";
-  drawString(950, 120, msg);
+  drawString(957, 120, msg);
   setFont("lucidasans-bold-18");
+  drawBitMap(80, 12.5, 2, icon, Xwindow::Black);
 
 }
 
