@@ -306,6 +306,9 @@ void Board::setup() {
             delete deletePiece;
             this->setPiece(move.first, move.second, newPiece);
 
+            this->gdCurrentCoord = {move.first, move.second};
+            this->gdNewCoord = {move.first, move.second};
+
             this->notifyObservers();
             cout << *this->td; // print the board
 
@@ -321,6 +324,9 @@ void Board::setup() {
 
             delete deletePiece;
             this->setPiece(move.first, move.second, newPiece);
+
+            this->gdCurrentCoord = {move.first, move.second};
+            this->gdNewCoord = {move.first, move.second};
 
             this->notifyObservers();
             cout << *this->td; // print the board
