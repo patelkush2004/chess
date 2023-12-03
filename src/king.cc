@@ -99,6 +99,8 @@ vector<pair<int, int>> King::calculatePossibleMoves() {
         }
     }
 
+    // ADD CASTLINE STUFF HERE. IF NOT MOVES, ADD THE COORDINATES TO THE MOVES VECTOR
+
     for (auto &move : moves) {
         int temp = move.first;
         move.first = move.second;

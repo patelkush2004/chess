@@ -16,6 +16,7 @@ Player::Player(string team) :
         currentCoord = {0,0};
         newCoord = {0,0};
         score = 0;
+        isCheck = false;
         isCpu = false;
 }
 
@@ -59,6 +60,22 @@ void Player::setMyTurn(bool turn) {
 //void Player::setIsCpu(bool cpu) {
     //this->isCpu = cpu;
 //}
+
+void Player::setCheck(bool check) {
+    this->isCheck = check;
+}
+
+bool Player::getIsCheck() {
+    return isCheck;
+}
+
+void Player::setCheckmate(bool checkmate) {
+    this->isCheckmate = checkmate;
+}
+
+bool Player::getIsCheckmate() {
+    return isCheckmate;
+}
 
 void Player::setCurrentCoord(pair<int, int> coords) {
     this->currentCoord = coords;

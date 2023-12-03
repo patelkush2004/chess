@@ -46,6 +46,7 @@ int main() {
 
         if (cmd == "setup") {
             b.setup();
+            cout << b;
         }
         else if (cmd == "done") {
             b.init();
@@ -66,6 +67,28 @@ int main() {
             vector<pair<int, int>> move = p1->makeMove(current, newCoord);
             b.movePiece(move);
             cout << b;
+
+            b.isChecked();
+            if (p1->getIsCheck()) {
+                cout << "White is in check." << endl;
+            }
+            if (p2->getIsCheck()) {
+                cout << "Black is in check." << endl;
+            }
+
+            b.isCheckmated();
+            if (p1->getIsCheckmate()) {
+                cout << "Checkmate! Black wins!" << endl;
+                p2->updateScore();
+                break;
+            }
+            if (p2->getIsCheckmate()) {
+                cout << "Checkmate! White wins!" << endl;
+                p1->updateScore();
+                break;
+            }
+
+
         }
 
         if (cin.fail()) {
