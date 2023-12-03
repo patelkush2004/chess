@@ -1,20 +1,21 @@
-#ifndef _HUMAN_H_
-#define _HUMAN_H_
+#ifndef _COMPUTER_H_
+#define _COMPUTER_H_
 
 #include <string>
 #include <vector>
 
 #include "player.h"
+#include "board.h"
 
 using namespace std;
 
-class Human : public Player {
+class Computer : public Player {
     public:
-        Human(string team, bool isCpu, bool myTurn);
-        ~Human();
+        Computer(string team, bool isCpu, bool myTurn);
+        ~Computer();
         pair<int, int> convertToCoord(string notation);
-        vector<pair<int, int>> makeMove(string current, string newCoord) override;
         vector<pair<int, int>> makeComputerMove(Board& b) override;
+        vector<pair<int, int>> levelOne(Board& b);
 };
 
 #endif

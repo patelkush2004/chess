@@ -530,6 +530,7 @@ void Board::movePiece(vector<pair<int, int>> move) {
 }
 
 void Board::isChecked() {
+ 
     // if it is player 1's turn, check if white king is in check.
     // if it is player 2's turn, check if black king is in check.
 

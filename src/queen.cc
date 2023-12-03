@@ -139,6 +139,7 @@ vector<pair<int, int>> Queen::calculatePossibleMoves() {
         move.second = temp;
     }
 
+
     return moves;
 
 }

@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 
+class Board;
+
 using namespace std;
 
 class Player {
@@ -17,7 +19,7 @@ class Player {
     pair<int, int> newCoord; // new coordinate of the piece player is trying to move
 
     public:
-        Player(string team);
+        Player(string team, bool isCpu, bool myTurn);
         virtual ~Player();
         string getTeam();
         int getScore();
@@ -32,10 +34,11 @@ class Player {
         void updateScore();
         //void setIsCpu(bool isCpu);
         void setMyTurn(bool myTurn);
-        void setCurrentCoord(pair<int, int> currentCoord);
-        void setNewCoord(pair<int, int> newCoord);
+        //void setCurrentCoord(pair<int, int> currentCoord);
+        //void setNewCoord(pair<int, int> newCoord);
         pair<int, int> convertToCoord(string notation);
         virtual vector<pair<int, int>> makeMove(string current, string newCoord);
+        virtual vector<pair<int, int>> makeComputerMove(Board& b) = 0;
 
 };
 

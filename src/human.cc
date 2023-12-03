@@ -6,7 +6,8 @@
 
 using namespace std;
 
-Human::Human(string team) : Player(team) {}
+Human::Human(string team, bool isCpu, bool myTurn) : 
+    Player(team, isCpu, myTurn) {}
 
 Human::~Human() {}
 
@@ -28,3 +29,9 @@ vector<pair<int, int>> Human::makeMove(string current, string newCoordString)  {
     move.emplace_back(newCoord);
     return move;
 }
+
+vector<pair<int, int>> Human::makeComputerMove(Board& b)  {
+    cout << "this is running" << endl;
+    return vector<pair<int, int>>();
+}
+
