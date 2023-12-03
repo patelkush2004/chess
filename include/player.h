@@ -13,8 +13,10 @@ class Player {
     int score; // score of the player
     bool isCpu; // true if the player is a cpu
     bool myTurn; // true if it is the player's turn
-    //pair<int, int> currentCoord; // current coordinate of the piece player is trying to move
-    //pair<int, int> newCoord; // new coordinate of the piece player is trying to move
+    bool isCheck;
+    bool isCheckmate;
+    pair<int, int> currentCoord; // current coordinate of the piece player is trying to move
+    pair<int, int> newCoord; // new coordinate of the piece player is trying to move
 
     public:
         Player(string team, bool isCpu, bool myTurn);
@@ -23,8 +25,12 @@ class Player {
         int getScore();
         bool getIsCpu();
         bool getMyTurn();
-        //pair<int, int> getCurrentCoord();
-        //pair<int, int> getNewCoord();
+        bool getIsCheck();
+        bool getIsCheckmate();
+        void setCheck(bool check);
+        void setCheckmate(bool checkmate);
+        pair<int, int> getCurrentCoord();
+        pair<int, int> getNewCoord();
         void updateScore();
         //void setIsCpu(bool isCpu);
         void setMyTurn(bool myTurn);

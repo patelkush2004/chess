@@ -55,5 +55,6 @@
         "cstdarg": "cpp",
         "cstring": "cpp",
         "optional": "cpp"
+        "deque": "cpp"
     }
 }

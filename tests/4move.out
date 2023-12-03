@@ -1,0 +1,101 @@
+   ________
+1 |rnbqkbnr|
+2 |pppppppp|
+3 |_ _ _ _ |
+4 | _ _ _ _|
+5 |_ _ _ _ |
+6 | _ _ _ _|
+7 |PPPPPPPP|
+8 |RNBQKBNR|
+
+   abcdefgh
+   ________
+1 |rnbqkbnr|
+2 |pppppppp|
+3 |_ _ _ _ |
+4 | _ _ _ _|
+5 |_ _ P _ |
+6 | _ _ _ _|
+7 |PPPP_PPP|
+8 |RNBQKBNR|
+
+   abcdefgh
+   ________
+1 |rnbqkbnr|
+2 |pppp ppp|
+3 |_ _ _ _ |
+4 | _ _p_ _|
+5 |_ _ P _ |
+6 | _ _ _ _|
+7 |PPPP_PPP|
+8 |RNBQKBNR|
+
+   abcdefgh
+   ________
+1 |rnbqkbnr|
+2 |pppp ppp|
+3 |_ _ _ _ |
+4 | _ _p_ _|
+5 |_ _ P _ |
+6 | _ _ _ P|
+7 |PPPP_PP |
+8 |RNBQKBNR|
+
+   abcdefgh
+   ________
+1 |rnbqk nr|
+2 |pppp ppp|
+3 |_ _ _ _ |
+4 | _ _p_ _|
+5 |_b_ P _ |
+6 | _ _ _ P|
+7 |PPPP_PP |
+8 |RNBQKBNR|
+
+   abcdefgh
+   ________
+1 |rnbqk nr|
+2 |pppp ppp|
+3 |_ _ _ _ |
+4 | _ _p_ _|
+5 |_b_ P _ |
+6 |P_ _ _ P|
+7 |_PPP_PP |
+8 |RNBQKBNR|
+
+   abcdefgh
+   ________
+1 |rnb k nr|
+2 |pppp ppp|
+3 |_ _ _ _ |
+4 | _ _p_q_|
+5 |_b_ P _ |
+6 |P_ _ _ P|
+7 |_PPP_PP |
+8 |RNBQKBNR|
+
+   abcdefgh
+   ________
+1 |rnb k nr|
+2 |pppp ppp|
+3 |_ _ _ _ |
+4 | _ _p_q_|
+5 |Pb_ P _ |
+6 | _ _ _ P|
+7 |_PPP_PP |
+8 |RNBQKBNR|
+
+   abcdefgh
+   ________
+1 |rnb k nr|
+2 |pppp ppp|
+3 |_ _ _ _ |
+4 | _ _p_ _|
+5 |Pb_ P _ |
+6 | _ _ _ P|
+7 |_PPq_PP |
+8 |RNBQKBNR|
+
+   abcdefgh
+White is in check.
+Checkmate! Black wins!

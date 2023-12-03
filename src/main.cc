@@ -54,22 +54,29 @@ int main() {
 
         if (cmd == "setup") {
             b.setup();
+
             if (p1->getIsCpu()) {
                 cout << "White Computer Turn" << endl;
             }
             else {
                 cout << "White Turn" << endl;
             }
+
+            cout << b;
+
         }
         else if (cmd == "done") {
             b.init();
             cout << b;
+
             if (p1->getIsCpu()) {
                 cout << "White Computer Turn" << endl;
             }
             else {
                 cout << "White Turn" << endl;
             }
+
+
         }
 
         if (cmd == "resign") { // resign CHANGE THIS UP TOO IF NEEDED
@@ -85,6 +92,7 @@ int main() {
             vector<pair<int, int>> move = p1->makeMove(current, newCoord);
             b.movePiece(move);
             cout << b;
+
             if (p2->getIsCpu()) {
                 cout << "Black Computer Turn" << endl;
             }
@@ -127,6 +135,29 @@ int main() {
             else {
                 cout << "White Turn" << endl;
             }
+
+
+            b.isChecked();
+            if (p1->getIsCheck()) {
+                cout << "White is in check." << endl;
+            }
+            if (p2->getIsCheck()) {
+                cout << "Black is in check." << endl;
+            }
+
+            b.isCheckmated();
+            if (p1->getIsCheckmate()) {
+                cout << "Checkmate! Black wins!" << endl;
+                p2->updateScore();
+                break;
+            }
+            if (p2->getIsCheckmate()) {
+                cout << "Checkmate! White wins!" << endl;
+                p1->updateScore();
+                break;
+            }
+
+
         }
 
         if (cin.fail()) {

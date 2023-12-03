@@ -75,37 +75,6 @@ vector<pair<int, int>> Rook::calculatePossibleMoves() {
         }
     }
 
-    /*
-
-    // if the rook hasn't moved yet, check if it can castle
-    if (!moved) {
-        // check if the king is in check
-
-        // check if the squares between the rook and king are blank
-        if (this->getBoard()->getPiece(y, x+1)->isBlank() && this->getBoard()->getPiece(y, x+2)->isBlank()) {
-            if (this->getBoard()->getPiece(y, x+3)->getSymbol() == 'K') {
-                if (this->getBoard()->getPiece(y, x+3)->getTeam() == getTeam()) {
-                    if (!this->getBoard()->getPiece(y, x+3)->getMoved()) { // check if the king has moved
-                        moves.emplace_back(make_pair(x+2, y));
-                    }
-                }
-            }
-        }
-
-        // check if the squares between the rook and king are blank
-        if (this->getBoard()->getPiece(y, x-1)->isBlank() && this->getBoard()->getPiece(y, x-2)->isBlank() && this->getBoard()->getPiece(y, x-3)->isBlank()) {
-            if (this->getBoard()->getPiece(y, x-4)->getSymbol() == 'K') {
-                if (this->getBoard()->getPiece(y, x-4)->getTeam() == getTeam()) {
-                    if (!this->getBoard()->getPiece(y, x-4)->getMoved()) { // check if the king has moved
-                        moves.emplace_back(make_pair(x-2, y));
-                    }
-                }
-            }
-        }
-    }
-
-    */
-
    for (auto &move : moves) {
         int temp = move.first;
         move.first = move.second;

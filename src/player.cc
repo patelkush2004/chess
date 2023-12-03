@@ -6,6 +6,7 @@
 using namespace std;
 
 // Constructor
+
 Player::Player(string team, bool isCpu, bool myTurn) : 
     team{team}, score{0} , isCpu{isCpu} , myTurn{myTurn} {
 }
@@ -42,6 +43,31 @@ void Player::setMyTurn(bool turn) {
 //void Player::setIsCpu(bool cpu) {
     //this->isCpu = cpu;
 //}
+
+
+void Player::setCheck(bool check) {
+    this->isCheck = check;
+}
+
+bool Player::getIsCheck() {
+    return isCheck;
+}
+
+void Player::setCheckmate(bool checkmate) {
+    this->isCheckmate = checkmate;
+}
+
+bool Player::getIsCheckmate() {
+    return isCheckmate;
+}
+
+void Player::setCurrentCoord(pair<int, int> coords) {
+    this->currentCoord = coords;
+}
+
+void Player::setNewCoord(pair<int, int> coords) {
+    this->newCoord = coords;
+}
 
 pair<int, int> Player::convertToCoord(string notation) {
     char letter = notation[0];
