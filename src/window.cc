@@ -70,7 +70,7 @@ Xwindow::Xwindow(int width, int height) {
   usleep(1000);
 
   // XLoadFont(d, "-misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso8859-1")
-  XLoadFont(d, "-misc-fixed-medium-r-semicondensed--13-100-100-100-c-60-iso8859-1");
+  // XLoadFont(d, "-misc-fixed-medium-r-semicondensed--13-100-100-100-c-60-iso8859-1");
 
   XEvent ev;
   while(1) {
