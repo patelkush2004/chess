@@ -262,46 +262,47 @@ void Board::setup() {
             cin >> pieceType >> coord;
 
             pair<int,int> move = p1->convertToCoord(coord);
+            cout << move.first << " " << move.second << endl;
             Piece *deletePiece = this->getPiece(move.first, move.second);
             Piece *newPiece = nullptr;
 
             // if pieceType is capital, call p1
 
             if (pieceType == 'K') {
-                newPiece = new King(this, "white", 'K', move.first, move.second, false, false);
+                newPiece = new King(this, "white", 'K', move.second, move.first, false, false);
             } 
             else if (pieceType == 'k') {
-                newPiece = new King(this, "black", 'k', move.first, move.second, false, false);
+                newPiece = new King(this, "black", 'k', move.second, move.first, false, false);
             }
             else if (pieceType == 'Q') {
-                newPiece = new Queen(this, "white", 'Q', move.first, move.second, false);
+                newPiece = new Queen(this, "white", 'Q', move.second, move.first, false);
             } 
             else if (pieceType == 'q') {
-                newPiece = new Queen(this, "black", 'q', move.first, move.second, false);
+                newPiece = new Queen(this, "black", 'q', move.second, move.first, false);
             }
             else if (pieceType == 'N') {
-                newPiece = new Knight(this, "white", 'N', move.first, move.second, false);
+                newPiece = new Knight(this, "white", 'N', move.second, move.first, false);
             } 
             else if (pieceType == 'n') {
-                newPiece = new Knight(this, "black", 'n', move.first, move.second, false);
+                newPiece = new Knight(this, "black", 'n', move.second, move.first, false);
             }
             else if (pieceType == 'B') {
-                newPiece = new Bishop(this, "white", 'B', move.first, move.second, false);
+                newPiece = new Bishop(this, "white", 'B', move.second, move.first, false);
             } 
             else if (pieceType == 'b') {
-                newPiece = new Bishop(this, "black", 'b', move.first, move.second, false);
+                newPiece = new Bishop(this, "black", 'b', move.second, move.first, false);
             }
             else if (pieceType == 'R') {
-                newPiece = new Rook(this, "white", 'R', move.first, move.second, false, false);
+                newPiece = new Rook(this, "white", 'R', move.second, move.first, false, false);
             } 
             else if (pieceType == 'r') {
-                newPiece = new Rook(this, "black", 'r', move.first, move.second, false, false);
+                newPiece = new Rook(this, "black", 'r', move.second, move.first, false, false);
             }
             else if (pieceType == 'P') {
-                newPiece = new Pawn(this, "white", 'P', move.first, move.second, false, false);
+                newPiece = new Pawn(this, "white", 'P', move.second, move.first, false, false);
             } 
             else if (pieceType == 'p') {
-                newPiece = new Pawn(this, "black", 'p', move.first, move.second, false, false);
+                newPiece = new Pawn(this, "black", 'p', move.second, move.first, false, false);
             }
             delete deletePiece;
             this->setPiece(move.first, move.second, newPiece);
@@ -349,13 +350,13 @@ void Board::setup() {
 // everytime you get piece, switch the x and y coordinates
 // if coordinate is (4,6), then theBoard[6][4] is the piece
 // thus, pass in getPiece(6,4) to get the piece at (4,6)
-Piece *Board::getPiece(int x, int y) {
-    return theBoard[x][y];
+Piece *Board::getPiece(int row, int col) {
+    return theBoard[row][col];
 }
 
 // same thing as getPiece
-void Board::setPiece(int x, int y, Piece *p) {
-    theBoard[x][y] = p;
+void Board::setPiece(int row, int col, Piece *p) {
+    theBoard[row][col] = p;
 }
 
 void Board::changeTurn() {
