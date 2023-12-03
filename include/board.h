@@ -16,7 +16,7 @@ class Piece;
 using namespace std;
 
 class Board : public Subject {
-    vector <vector<Piece*>> theBoard; // The actual board. is a vector of vectors of pieces
+    vector<vector<Piece*>> theBoard; // The actual board. is a vector of vectors of pieces
     vector<Observer*> observers; // The observers of the board
     Player *p1; // The white player
     Player *p2; // The black player
@@ -26,6 +26,9 @@ class Board : public Subject {
     public:
         Board(Player *p1, Player *p2); // Default constructor
         ~Board(); // Destructor
+
+        pair<int,int> gdCurrentCoord; // old coordinate for the graphicdisplay
+        pair<int,int> gdNewCoord; // new coordinate for the graphicdisplay
 
         void init(); // Initializes the board
         void setup(); // Puts the board in setup mode

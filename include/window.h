@@ -15,7 +15,8 @@ class Xwindow {
   Xwindow(int width=500, int height=500);  // Constructor; displays the window.
   ~Xwindow();                              // Destructor; destroys the window.
 
-  enum {White=0, Black, Red, Green, Blue}; // Available colours.
+  // enum {White=0, Black, Red, Green, Blue}; // Available colours.
+  enum {White=0, Black, Red, Khaki, DarkOliveGreen, Transparent, Gray};
 
   // Draws a rectangle
   void fillRectangle(int x, int y, int width, int height, int colour=Black);
@@ -23,6 +24,20 @@ class Xwindow {
   // Draws a string
   void drawString(int x, int y, std::string msg);
 
+  // Draws the title of the board
+  void drawTitle();
+
+  // Code for loading up custom fonts was taken from:
+  // https://github.com/QMonkey/Xlib-demo/blob/master/src/load_font.c
+  void setFont(const char * fontname);
+
+  // Draws a BitMap
+  // Documentation used from:
+  // https://tronche.com/gui/x/xlib/graphics/XGetImage.html
+  void drawBitMap(int cellDim, int row, int col, const int bitmap[80][80], int cellColour);
+
 };
+
+enum colors {White=0, Black, Red, Khaki, DarkOliveGreen, Transparent, Gray};
 
 #endif

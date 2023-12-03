@@ -28,13 +28,9 @@ Board::~Board() {
             delete piece;
         }
     }
-    if (td != nullptr) {
-        delete td;
-    } 
 
-    //if (gd != nullptr) {
-        //delete gd;
-    //}
+    delete td;
+    delete gd;
 }
 
 // init creates the piece and places them on the board. 
@@ -42,7 +38,7 @@ Board::~Board() {
 
 void Board::init() {
     td = new TextDisplay();
-    //gd = new GraphicDisplay();
+    gd = new GraphicDisplay();
 
     vector<Piece*> row;
 
@@ -120,9 +116,8 @@ void Board::init() {
     theBoard.emplace_back(row);
     row.clear();
 
-
     this->attach(td);
-    //this->attach(gd);
+    this->attach(gd);
     this->notifyObservers();
 
 }
@@ -131,6 +126,7 @@ void Board::init() {
 void Board::setup() {
 
     td = new TextDisplay();
+    gd = new GraphicDisplay();
 
     // initialize the board with the pieces
     vector<Piece*> row;
@@ -143,6 +139,7 @@ void Board::setup() {
     }
 
     this->attach(td);
+    this->attach(gd);
     this->notifyObservers();
 
     // done conditions
@@ -153,7 +150,6 @@ void Board::setup() {
     // loop through theBoard and check for exactly one white king and one black king
     // if there is more than one of either or none, whiteKing = false or blackKing = false
     // if there is exactly one of each, whiteKing = true and blackKing = true
-    
     
     // setup loop
     string op;    
@@ -519,8 +515,9 @@ void Board::movePiece(vector<pair<int, int>> move) {
             piece3->setMoved(true);
         }
 
+        this->gdCurrentCoord = currentCoord;
+        this->gdNewCoord = newCoord;
         this->notifyObservers();
-        //this->notifyGraphic(old cord, newcord)
         this->changeTurn();
     } 
 }
