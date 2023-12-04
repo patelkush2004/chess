@@ -31,7 +31,6 @@ vector<pair<int, int>> Human::makeMove(string current, string newCoordString)  {
 }
 
 vector<pair<int, int>> Human::makeComputerMove(Board& b)  {
-    cout << "this is running" << endl;
     return vector<pair<int, int>>();
 }
 

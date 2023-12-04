@@ -23,76 +23,68 @@ void Pawn::setMoved(bool moved) {
 vector<pair<int, int>> Pawn::calculatePossibleMoves() {
     vector<pair<int, int>> moves;
 
-    int y = getRow();
-    int x = getCol();
+    int row = getRow();
+    int col = getCol();
     bool moved = getMoved();
 
     if (!moved) { // if the pawn hasn't moved yet, it can move 2 spaces
         if (getTeam() == "white") {
             // white pawns move up the board which is down the vector
-            if (y > 0 && this->getBoard()->getPiece(y-1, x)->isBlank()) {
-                moves.emplace_back(make_pair(x, y-1)); 
+            if (row > 0 && this->getBoard()->getPiece(row-1, col)->isBlank()) {
+                moves.emplace_back(make_pair(row-1, col)); 
             }
-            if (y > 1 && this->getBoard()->getPiece(y-2, x)->isBlank()) {
-                moves.emplace_back(make_pair(x, y-2));
+            if (row > 1 && this->getBoard()->getPiece(row-2, col)->isBlank()) {
+                moves.emplace_back(make_pair(row-2, col));
             }
         } else {
             // black pawns move down the board which is up the vector
-            if (y < 7 && this->getBoard()->getPiece(y+1, x)->isBlank()) {
-                moves.emplace_back(make_pair(x, y+1));
+            if (row < 7 && this->getBoard()->getPiece(row+1, col)->isBlank()) {
+                moves.emplace_back(make_pair(row+1, col));
             }
-            if (y < 6 && this->getBoard()->getPiece(y+2, x)->isBlank()) {
-                moves.emplace_back(make_pair(x, y+2));
+            if (row < 6 && this->getBoard()->getPiece(row+2, col)->isBlank()) {
+                moves.emplace_back(make_pair(row+2, col));
             }
         }
     } else {
         if (getTeam() == "white") {
             // white pawns move up the board which is down the vector
-            if (y > 0 && this->getBoard()->getPiece(y-1, x)->isBlank()) {
-                moves.emplace_back(make_pair(x, y-1)); 
+            if (row > 0 && this->getBoard()->getPiece(row-1, col)->isBlank()) {
+                moves.emplace_back(make_pair(row-1, col)); 
             }
         } else {
             // black pawns move down the board which is up the vector
-            if (y < 7 && this->getBoard()->getPiece(y+1, x)->isBlank()) {
-                moves.emplace_back(make_pair(x, y+1));
+            if (row < 7 && this->getBoard()->getPiece(row+1, col)->isBlank()) {
+                moves.emplace_back(make_pair(row+1, col));
             }
         }
     }
 
-
     // attacking opponent's piece
-    if ((getTeam() == "white") && (x != 0) && (y != 0)) {
-        if (this->getBoard()->getPiece(y - 1, x-1)->getTeam() == "black") {
+    if ((getTeam() == "white") && (row != 0) && (col != 0)) {
+        if (this->getBoard()->getPiece(row-1, col-1)->getTeam() == "black") {
             // white pawns move up the board which is down the vector
-            moves.emplace_back(make_pair(x - 1, y - 1));
+            moves.emplace_back(make_pair(row-1, col-1));
         }
     } 
-    if ((getTeam() == "white") && (x != 7) && (y != 0)) {
-        if (this->getBoard()->getPiece(y - 1, x+1)->getTeam() == "black") {
+    if ((getTeam() == "white") && (row != 0) && (col != 7)) {
+        if (this->getBoard()->getPiece(row - 1, col+1)->getTeam() == "black") {
             // white pawns move up the board which is down the vector
-            moves.emplace_back(make_pair(x + 1, y - 1));
+            moves.emplace_back(make_pair(row-1, col + 1));
         }
     }
 
     // attacking opponent's piece
-    if ((getTeam() == "black") && (x != 0) && (y != 7)) {
-        if (this->getBoard()->getPiece(y + 1, x-1)->getTeam() == "white") {
+    if ((getTeam() == "black") && (row != 7) && (col != 0)) {
+        if (this->getBoard()->getPiece(row+1, col-1)->getTeam() == "white") {
             // black pawns move down the board which is up the vector
-            moves.emplace_back(make_pair(x-1, y + 1));
+            moves.emplace_back(make_pair(row+1, col-1));
         }
     }
-    if ((getTeam() == "black") && (x != 7) && (y != 7)) {
-        if (this->getBoard()->getPiece(y + 1, x+1)->getTeam() == "white") {
+    if ((getTeam() == "black") && (row != 7) && (col != 7)) {
+        if (this->getBoard()->getPiece(row + 1, col+1)->getTeam() == "white") {
             // black pawns move down the board which is up the vector
-            moves.emplace_back(make_pair(x + 1, y + 1));
+            moves.emplace_back(make_pair(row + 1, col + 1));
         }
-    }
-
-    // convert the coordinates to the correct format. //only Kush touches this
-    for (auto &coord : moves) {
-        int temp = coord.first;
-        coord.first = coord.second;
-        coord.second = temp;
     }
 
     return moves;

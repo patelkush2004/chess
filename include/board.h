@@ -49,6 +49,7 @@ class Board : public Subject {
         void notifyObservers() override; // Notifies all observers
 
         friend ostream &operator<<(ostream &out, const Board &b); // Overloaded output operator
+
 };
 
 #endif

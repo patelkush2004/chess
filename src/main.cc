@@ -11,15 +11,14 @@ using namespace std;
 
 int main() {
 
-    Player *p1;
-    Player *p2;
+    // create players. set the pointer to nullptr
+    Player *p1 = nullptr; 
+    Player *p2 = nullptr;
 
     string cmd;
     cin >> cmd;
 
-    //bool setupDone = false;
-
-    // create players
+    // create specific players
     if (cmd == "game") {
         string player1;
         string player2;
@@ -38,31 +37,22 @@ int main() {
         }
     }
 
-    Board b (p1, p2);
-
-    //cout << b;
+    Board b (p1, p2); // create board stack allocated
 
     // game loop
     while (cin >> cmd) {
 
-        //if (p1->getMyTurn()) {
-         //   cout << "White's turn" << endl;
-        //}
-        //else {
-        //    cout << "Black's turn" << endl;
-        //}
-
         if (cmd == "setup") {
             b.setup();
+            cout << b;
 
+            // White player always goes first
             if (p1->getIsCpu()) {
                 cout << "White Computer Turn" << endl;
             }
             else {
                 cout << "White Turn" << endl;
             }
-
-            cout << b;
 
         }
         else if (cmd == "done") {
@@ -100,12 +90,12 @@ int main() {
                 cout << "Black Turn" << endl;
             }
 
-            b.isChecked();
+            //b.isChecked();
             if (p2->getIsCheck()) {
                 cout << "Black is in check." << endl;
             }
 
-            b.isCheckmated();
+            //b.isCheckmated();
             if (p2->getIsCheckmate()) {
                 cout << "Checkmate! White wins!" << endl;
                 p1->updateScore();
@@ -123,12 +113,12 @@ int main() {
                 cout << "Black Turn" << endl;
             }
 
-            b.isChecked();
+            //b.isChecked();
             if (p2->getIsCheck()) {
                 cout << "Black is in check." << endl;
             }
 
-            b.isCheckmated();
+            //b.isCheckmated();
             if (p2->getIsCheckmate()) {
                 cout << "Checkmate! White wins!" << endl;
                 p1->updateScore();
@@ -146,12 +136,12 @@ int main() {
                 cout << "White Turn" << endl;
             }
 
-            b.isChecked();
+            //b.isChecked();
             if (p1->getIsCheck()) {
                 cout << "White is in check." << endl;
             }
 
-            b.isCheckmated();
+            //b.isCheckmated();
             if (p1->getIsCheckmate()) {
                 cout << "Checkmate! Black wins!" << endl;
                 p2->updateScore();
@@ -172,12 +162,12 @@ int main() {
                 cout << "White Turn" << endl;
             }
 
-            b.isChecked();
+            //b.isChecked();
             if (p2->getIsCheck()) {
                 cout << "Blac is in check." << endl;
             }
             
-            b.isCheckmated();
+            //b.isCheckmated();
             if (p1->getIsCheckmate()) {
                 cout << "Checkmate! Black wins!" << endl;
                 p2->updateScore();

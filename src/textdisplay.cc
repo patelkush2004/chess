@@ -20,16 +20,16 @@ void TextDisplay::notify(Board &theBoard) {
     // if it is blank, then set the grid to be unchanged
     // if it is not blank, then set the grid to be the piece character
 
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8 ; j++) {
-            if (theBoard.getPiece(i, j)->isBlank()) {
-                if((i + j) % 2 == 0) {
-                    theDisplay[i][j] = '_';
+    for (int row = 0; row < 8; row++) {
+        for (int col = 0; col < 8 ; col++) {
+            if (theBoard.getPiece(row, col)->isBlank()) {
+                if((row + col) % 2 == 0) {
+                    theDisplay[row][col] = '_';
                 } else {
-                    theDisplay[i][j] = ' ';
+                    theDisplay[row][col] = ' ';
                 }
             } else {
-                theDisplay[i][j] = theBoard.getPiece(i, j)->getSymbol();
+                theDisplay[row][col] = theBoard.getPiece(row, col)->getSymbol();
             }
         }
     }
