@@ -45,7 +45,7 @@ ostream &operator<<(ostream &out, const TextDisplay &td) {
 
     for (int i = 0; i < 8; i++) {
         // print out the row number
-        out << i + 1 << " |";
+        out << 8 - i << " |";
 
         for (int j = 0; j < 8; j++) {
             out << td.theDisplay[i][j];
