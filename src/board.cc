@@ -16,15 +16,15 @@ using namespace std;
 // Constructor
 Board::Board(Player *p1, Player *p2) : 
     p1{p1}, p2{p2} {
-        //vector <vector<Piece*>> theBoard = {};
+        vector <vector<Piece*>> theBoard = {};
         this->td = nullptr;
         this->gd = nullptr;
     }
 
 // Destructor
 Board::~Board() {
-    for (auto &p : theBoard) {
-        for (auto &piece : p) {
+    for (auto &row : theBoard) {
+        for (auto &piece : row) {
             delete piece;
         }
     }
@@ -33,129 +33,103 @@ Board::~Board() {
     delete gd;
 }
 
-// init creates the piece and places them on the board. 
-// by placing them on the board, it simply sets the coordinates properly
-
-void Board::init() {
+void Board::init() { // MOVEMENT NOT WORKING AFTER INIT COMPLETE
     td = new TextDisplay();
     gd = new GraphicDisplay();
 
-    vector<Piece*> row;
+    vector<Piece*> pieceRow;
 
     // top row of the board. for the sake of pawn testing. leave it blank
-    row.emplace_back(new Rook(this, "black", 'r', 0, 0, false, false));
-    row.emplace_back(new Knight(this, "black", 'n', 1, 0, false));
-    row.emplace_back(new Bishop(this, "black", 'b', 2, 0, false));
-    row.emplace_back(new Queen(this, "black", 'q', 3, 0, false));
-    row.emplace_back(new King(this, "black", 'k', 4, 0, false, false));
-    row.emplace_back(new Bishop(this, "black", 'b', 5, 0, false));
-    row.emplace_back(new Knight(this, "black", 'n', 6, 0, false));
-    row.emplace_back(new Rook(this, "black", 'r', 7, 0, false, false));
+    pieceRow.emplace_back(new Rook(this, "black", 'r', 0, 0, false, false));
+    pieceRow.emplace_back(new Knight(this, "black", 'n', 0, 1, false));
+    pieceRow.emplace_back(new Bishop(this, "black", 'b', 0, 2, false));
+    pieceRow.emplace_back(new Queen(this, "black", 'q', 0, 3, false));
+    pieceRow.emplace_back(new King(this, "black", 'k', 0, 4, false, false));
+    pieceRow.emplace_back(new Bishop(this, "black", 'b', 0, 5, false));
+    pieceRow.emplace_back(new Knight(this, "black", 'n', 0, 6, false));
+    pieceRow.emplace_back(new Rook(this, "black", 'r', 0, 7, false, false));
 
-    theBoard.emplace_back(row);
-    row.clear(); 
+    theBoard.emplace_back(pieceRow);
+    pieceRow.clear(); 
     
     //second row of the board. filled with pawns when initialized
-    for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Pawn(this, "black", 'p', i, 1, false, false));
+    for (int col = 0; col < 8; ++col) {
+        pieceRow.emplace_back(new Pawn(this, "black", 'p', 1, col, false, false));
     }
 
-    theBoard.emplace_back(row);
-    row.clear();
+    theBoard.emplace_back(pieceRow);
+    pieceRow.clear();
 
-    // third row. should always be blank
-    for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece(this, i, 2, true));
+    // third to sixth row of the board. filled with blank pieces when initialized
+    for (int row = 2; row < 6; row++) {
+        for (int col = 0; col < 8; ++col) {
+            pieceRow.emplace_back(new Piece(this, row, col, true));
+        }
+        theBoard.emplace_back(pieceRow);
+        pieceRow.clear();
     }
-
-    theBoard.emplace_back(row);
-    row.clear();
-
-    // fourth row. should always be blank
-    for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece(this, i, 3, true));
-    }
-
-    theBoard.emplace_back(row);
-    row.clear();
-
-    // fifth row. should always be blank
-    for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece(this, i, 4, true));
-    }
-
-    theBoard.emplace_back(row);
-    row.clear();
-
-    // sixth row. should always be blank
-    for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Piece(this, i, 5, true));
-    }
-
-    theBoard.emplace_back(row);
-    row.clear();
-
+    
     // seventh row. filled with pawns when initialized
-    for (int i = 0; i < 8; ++i) {
-        row.emplace_back(new Pawn(this, "white", 'P', i, 6, false, false));
+    for (int col = 0; col < 8; ++col) {
+        pieceRow.emplace_back(new Pawn(this, "white", 'P', 6, col, false, false));
     }
 
-    theBoard.emplace_back(row);
-    row.clear();
+    theBoard.emplace_back(pieceRow);
+    pieceRow.clear();
 
     // bottom row of the board. for the sake of pawn testing. leave it blank
-    row.emplace_back(new Rook(this, "white", 'R', 0, 7, false, false));
-    row.emplace_back(new Knight(this, "white", 'N', 1, 7, false));
-    row.emplace_back(new Bishop(this, "white", 'B', 2, 7, false));
-    row.emplace_back(new Queen(this, "white", 'Q', 3, 7, false));
-    row.emplace_back(new King(this, "white", 'K', 4, 7, false, false));
-    row.emplace_back(new Bishop(this, "white", 'B', 5, 7, false));
-    row.emplace_back(new Knight(this, "white", 'N', 6, 7, false));
-    row.emplace_back(new Rook(this, "white", 'R', 7, 7, false, false));
+    pieceRow.emplace_back(new Rook(this, "white", 'R', 7, 0, false, false));
+    pieceRow.emplace_back(new Knight(this, "white", 'N', 7, 1, false));
+    pieceRow.emplace_back(new Bishop(this, "white", 'B', 7, 2, false));
+    pieceRow.emplace_back(new Queen(this, "white", 'Q', 7, 3, false));
+    pieceRow.emplace_back(new King(this, "white", 'K', 7, 4, false, false));
+    pieceRow.emplace_back(new Bishop(this, "white", 'B', 7, 5, false));
+    pieceRow.emplace_back(new Knight(this, "white", 'N', 7, 6, false));
+    pieceRow.emplace_back(new Rook(this, "white", 'R', 7, 7, false, false));
 
-    theBoard.emplace_back(row);
-    row.clear();
+    theBoard.emplace_back(pieceRow);
+    pieceRow.clear();
 
     this->attach(td);
     this->attach(gd);
     this->notifyObservers();
-
 }
 
-
-void Board::setup() {
-
+void Board::setup() {   // MOVEMENT NOT WORKING AFTER SETUP COMPLETE
     td = new TextDisplay();
     gd = new GraphicDisplay();
 
-    // initialize the board with the pieces
-    vector<Piece*> row;
-    for (int i = 0; i < 8; ++i) {
-        for (int j = 0; j < 8; ++j) {
-            row.emplace_back(new Piece(this, i, j, true));
+    // initialize the board with blank pieces
+    vector<Piece*> pieceRow;
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            pieceRow.emplace_back(new Piece(this, row, col, true));
         }
-        theBoard.emplace_back(row);
-        row.clear();
+        theBoard.emplace_back(pieceRow);
+        pieceRow.clear();
     }
 
     this->attach(td);
     this->attach(gd);
     this->notifyObservers();
+
+    // loop through theBoard and check for exactly one white king and one black king
+    // loop through theBoard and check for pawns in the first and last row
+    // if there is a pawn in the first or last row, pawnFirstRow = true or pawnLastRow = true
+    // loop through theBoard and check if either king is in check
 
     // done conditions
     bool kings = false;
     bool pawnLastRow = false;
     bool pawnFirstRow = false;
-
-    // loop through theBoard and check for exactly one white king and one black king
-    // if there is more than one of either or none, whiteKing = false or blackKing = false
-    // if there is exactly one of each, whiteKing = true and blackKing = true
     
     // setup loop
-    string op;    
+    string cmd;    
     while (true) {
-        cin >> op;
-        if (op == "done") {
+        cin >> cmd;
+        if (cmd == "done") {
+
+            // loop through theBoard and check for exactly one white king and one black king
             int whiteKingCount = 0;
             int blackKingCount = 0;
             for (auto &row : theBoard) {
@@ -177,12 +151,9 @@ void Board::setup() {
             }
 
             // loop through theBoard and check for pawns in the first and last row
-            // if there is a pawn in the first or last row, pawnFirstRow = true or pawnLastRow = true
-            // if there is no pawn in the first or last row, pawnFirstRow = false and pawnLastRow = false
-            // if there is a pawn in both the first and last row, pawnFirstRow = true and pawnLastRow = true
-            for (int i = 0; i < 8; ++i) {
-                Piece *p1 = this->getPiece(0, i);
-                Piece *p2 = this->getPiece(7, i);
+            for (int col = 0; col < 8; ++col) {
+                Piece *p1 = this->getPiece(0, col);
+                Piece *p2 = this->getPiece(7, col);
                 if (p1->getSymbol() == 'P') {
                     pawnFirstRow = true;
                 } else if (p2->getSymbol() == 'P') {
@@ -192,9 +163,11 @@ void Board::setup() {
 
             if (pawnFirstRow) {
                 cout << "Invalid setup. There is a pawn in the first row" << endl;
+                continue;
             }
             if (pawnLastRow) {
                 cout << "Invalid setup. There is a pawn in the last row" << endl;
+                continue;
             }
 
             // check if either king is in check
@@ -202,7 +175,10 @@ void Board::setup() {
             bool blackKingInCheck = false;
             vector<pair<int, int>> whitePossibleMoves;
             vector<pair<int, int>> blackPossibleMoves;
+            pair<int, int> whiteKingCoord;
+            pair<int, int> blackKingCoord;
 
+            // loop through theBoard and get all the possible moves for each piece and each team
             for (auto &row : theBoard) {
                 for (auto &piece : row) {
                     if (piece->getTeam() == "white") {
@@ -219,17 +195,14 @@ void Board::setup() {
                 }
             }
 
-            pair<int, int> whiteKingCoord;
-            pair<int, int> blackKingCoord;
-
             // get the coordinates of the kings
-            for (int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8 ; j++) {
-                    Piece *p = this->getPiece(i, j);
+            for (int row = 0; row < 8; row++) {
+                for (int col = 0; col < 8 ; col++) {
+                    Piece *p = this->getPiece(row, col);
                     if (p->getSymbol() == 'K') {
-                        whiteKingCoord = {i, j};
+                        whiteKingCoord = {row, col};
                     } else if (p->getSymbol() == 'k') {
-                        blackKingCoord = {i, j};
+                        blackKingCoord = {row, col};
                     }
                 }
             }
@@ -239,6 +212,7 @@ void Board::setup() {
                 if (coord == whiteKingCoord) {
                     whiteKingInCheck= true;
                     cout << "Invalid. White king is in check" << endl;
+                    continue;
                 }
             }
 
@@ -247,62 +221,62 @@ void Board::setup() {
                 if (coord == blackKingCoord) {
                     blackKingInCheck = true;
                     cout << "Invalid. Black king is in check" << endl;
+                    continue;
                 }
             }
-
 
             if (!pawnFirstRow && !pawnLastRow && kings && !whiteKingInCheck && !blackKingInCheck) {
                 return;
             } else {
                 continue;
             }
-        } else if (op == "+") {
+
+        } else if (cmd == "+") {
             char pieceType;
             string coord;
             cin >> pieceType >> coord;
 
             pair<int,int> move = p1->convertToCoord(coord);
-            cout << move.first << " " << move.second << endl;
+
             Piece *deletePiece = this->getPiece(move.first, move.second);
             Piece *newPiece = nullptr;
 
-            // if pieceType is capital, call p1
-
+            // make the new piece
             if (pieceType == 'K') {
-                newPiece = new King(this, "white", 'K', move.second, move.first, false, false);
+                newPiece = new King(this, "white", 'K', move.first, move.second, false, false);
             } 
             else if (pieceType == 'k') {
-                newPiece = new King(this, "black", 'k', move.second, move.first, false, false);
+                newPiece = new King(this, "black", 'k', move.first, move.second, false, false);
             }
             else if (pieceType == 'Q') {
-                newPiece = new Queen(this, "white", 'Q', move.second, move.first, false);
+                newPiece = new Queen(this, "white", 'Q', move.first, move.second, false);
             } 
             else if (pieceType == 'q') {
-                newPiece = new Queen(this, "black", 'q', move.second, move.first, false);
+                newPiece = new Queen(this, "black", 'q', move.first, move.second, false);
             }
             else if (pieceType == 'N') {
-                newPiece = new Knight(this, "white", 'N', move.second, move.first, false);
+                newPiece = new Knight(this, "white", 'N', move.first, move.second, false);
             } 
             else if (pieceType == 'n') {
-                newPiece = new Knight(this, "black", 'n', move.second, move.first, false);
+                newPiece = new Knight(this, "black", 'n', move.first, move.second, false);
             }
             else if (pieceType == 'B') {
-                newPiece = new Bishop(this, "white", 'B', move.second, move.first, false);
+                newPiece = new Bishop(this, "white", 'B', move.first, move.second, false);
             } 
             else if (pieceType == 'b') {
-                newPiece = new Bishop(this, "black", 'b', move.second, move.first, false);
+                newPiece = new Bishop(this, "black", 'b', move.first, move.second, false);
             }
             else if (pieceType == 'R') {
-                newPiece = new Rook(this, "white", 'R', move.second, move.first, false, false);
+                newPiece = new Rook(this, "white", 'R', move.first, move.second, false, false);
             } 
             else if (pieceType == 'r') {
-                newPiece = new Rook(this, "black", 'r', move.second, move.first, false, false);
+                newPiece = new Rook(this, "black", 'r', move.first, move.second, false, false);
             }
             else if (pieceType == 'P') {
-                newPiece = new Pawn(this, "white", 'P', move.second, move.first, false, false);
+                newPiece = new Pawn(this, "white", 'P', move.first, move.second, false, false);
             } 
             else if (pieceType == 'p') {
-                newPiece = new Pawn(this, "black", 'p', move.second, move.first, false, false);
+                newPiece = new Pawn(this, "black", 'p', move.first, move.second, false, false);
             }
             delete deletePiece;
             this->setPiece(move.first, move.second, newPiece);
@@ -313,12 +287,10 @@ void Board::setup() {
             this->notifyObservers();
             cout << *this->td; // print the board
 
-        } else if (op == "-") {
+        } else if (cmd == "-") {
             string coord;
             cin >> coord;
             pair<int,int> move = p1->convertToCoord(coord);
-
-            // error handling for input here
 
             Piece *deletePiece = getPiece(move.first, move.second);
             Piece *newPiece = new Piece(this, move.first, move.second, true);
@@ -332,7 +304,7 @@ void Board::setup() {
             this->notifyObservers();
             cout << *this->td; // print the board
 
-        } else if (op == "=") {
+        } else if (cmd == "=") {
             string colour;
             cin >> colour;
             if (colour == "white") {
@@ -346,15 +318,10 @@ void Board::setup() {
     }
 }
 
-
-// everytime you get piece, switch the x and y coordinates
-// if coordinate is (4,6), then theBoard[6][4] is the piece
-// thus, pass in getPiece(6,4) to get the piece at (4,6)
 Piece *Board::getPiece(int row, int col) {
     return theBoard[row][col];
 }
 
-// same thing as getPiece
 void Board::setPiece(int row, int col, Piece *p) {
     theBoard[row][col] = p;
 }
@@ -377,18 +344,21 @@ Player *Board::getTurn() {
     }
 }
 
-void Board::movePiece(vector<pair<int, int>> move) {
+void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE POSSIBLE MOVES FOR ALL PIECES. USE THE CASTLING EXAMPLE
+    // the current piece is at move[0], the new piece is at move[1]
     pair<int, int> currentCoord = move[0];
     pair<int, int> newCoord = move[1];
 
+    // to check if the current piece has moved
     bool hasMovedFieldP = false;
     bool hasMovedFieldR = false;
     bool hasMovedFieldK = false;
 
+    // to see which player is in check if any. 
+    // I DONT THINK THIS IS NECESSARY
     bool check1 = false;
     bool check2 = false;
     this->isChecked();
-
     if (p1->getMyTurn()) {
         if (p1->getIsCheck()) {
             check1 = true;
@@ -399,8 +369,10 @@ void Board::movePiece(vector<pair<int, int>> move) {
         }
     }
 
-    Piece *p = this->getPiece(currentCoord.first, currentCoord.second);
+    // current piece
+    Piece *p = this->getPiece(currentCoord.first, currentCoord.second); 
 
+    // casting the piece to its actual type if it has moved field
     Pawn *piece = nullptr;  
     Rook *piece2 = nullptr;
     King *piece3 = nullptr;
@@ -416,11 +388,12 @@ void Board::movePiece(vector<pair<int, int>> move) {
         piece3 = dynamic_cast<King*>(p);
         hasMovedFieldK = true;
     }
+    // piece that current piece is swapping with
     Piece *temp = this->getPiece(newCoord.first, newCoord.second);
 
+    // check if the current piece can move to the new coord
     bool inArray = false;
     vector<pair<int, int>> possibleMoves = p->calculatePossibleMoves();
-
     for (auto &coord : possibleMoves) {
         if (coord == newCoord) {
             inArray = true;
@@ -428,36 +401,41 @@ void Board::movePiece(vector<pair<int, int>> move) {
         }
     }
 
-    if (inArray) {
+    bool castling = false;
+
+    if (p->getSymbol() == 'K' || p->getSymbol() == 'k') {
+        if (abs(currentCoord.second - newCoord.second) == 2) {
+            castling = true;  
+        }
+    }
+
+    if (inArray && !castling) {
+        // castling. if king is move 2, skip the rest of the code in this function
+
         this->setPiece(newCoord.first, newCoord.second, p);
         this->setPiece(currentCoord.first, currentCoord.second, temp);
 
-        // if the same player's king is still in check, then the move is invalid
+        // if the same player's king is in check after the move,
+        // then the move is invalid
         // switch is back
         this->isChecked();
-        if (p1->getMyTurn() && check1) {
+        if (p1->getMyTurn()) {
             if (p1->getIsCheck()) {
                 this->setPiece(currentCoord.first, currentCoord.second, p);
                 this->setPiece(newCoord.first, newCoord.second, temp);
-                //cout << "Invalid move. White king is still in check" << endl;
                 return;
             }
-        } else if (p2->getMyTurn() && check2) {
+        } else if (p2->getMyTurn()) {
             if (p2->getIsCheck()) {
                 this->setPiece(currentCoord.first, currentCoord.second, p);
                 this->setPiece(newCoord.first, newCoord.second, temp);
-                //cout << "Invalid move. Black king is still in check" << endl;
                 return;
             }
         }
         
         // pawn promotion
         if (this->getPiece(newCoord.first, newCoord.second)->getSymbol() == 'P' && newCoord.first == 0) {
-            // prompt user for input
-            // if input is valid, then create a new piece and set it to theBoard
-            // delete the old piece
-            // if input is invalid, then do nothing
-            string newPiece;
+            string newPiece; // new piece symbol
             cin >> newPiece;
             if (newPiece == "Q") {
                 Piece *newQueen = new Queen(this, "white", 'Q', newCoord.first, newCoord.second, false);
@@ -477,11 +455,7 @@ void Board::movePiece(vector<pair<int, int>> move) {
                 this->setPiece(newCoord.first, newCoord.second, newRook);
             }
         } else if (this->getPiece(newCoord.first, newCoord.second)->getSymbol() == 'p' && newCoord.second == 7) {
-            // prompt user for input
-            // if input is valid, then create a new piece and set it to theBoard
-            // delete the old piece
-            // if input is invalid, then do nothing
-            string newPiece;
+            string newPiece; // new piece symbol
             cin >> newPiece;
             if (newPiece == "q") {
                 Piece *newQueen = new Queen(this, "black", 'q', newCoord.first, newCoord.second, false);
@@ -502,18 +476,13 @@ void Board::movePiece(vector<pair<int, int>> move) {
             }
         }
 
-        // castling
-
-        // IF PIECE AT CURRENT COORD IS A KING AND HAS NOT MOVED, AND THE PIECE AT NEW COORD IS A ROOK AND HAS NOT MOVED
-        // AND THE PIECE AT NEW COORD IS EMPTY, AND THE PIECE AT THE COORD BETWEEN THE KING AND ROOK IS EMPTY
-        // AND THE KING IS NOT IN CHECK, AND THE KING WILL NOT BE IN CHECK AFTER THE MOVE, DO THE CASTLE SHIT
-
         p->setRow(newCoord.first);
         p->setCol(newCoord.second);
         temp->setRow(currentCoord.first);
         temp->setCol(currentCoord.second);
         temp->setBlank(true);
 
+        // setting moved to true
         if (hasMovedFieldP) {
             piece->setMoved(true);
         } else if (hasMovedFieldR) {
@@ -522,11 +491,212 @@ void Board::movePiece(vector<pair<int, int>> move) {
             piece3->setMoved(true);
         }
 
+        // notify observers
         this->gdCurrentCoord = currentCoord;
         this->gdNewCoord = newCoord;
         this->notifyObservers();
         this->changeTurn();
+        return;
     } 
+
+    // castling
+    if (p->getSymbol() == 'K' && (currentCoord == make_pair(7,4) && newCoord == make_pair(7,6))) {
+        // white king moves right
+        Piece *castlePiece = this->getPiece(7,7);
+        bool rookMoved = false;
+        if (castlePiece->getSymbol() == 'R') {
+            Rook *castlePieceRook = dynamic_cast<Rook*>(castlePiece);
+            rookMoved = castlePieceRook->getMoved();
+        }
+        else {
+            return;
+        }
+        Piece *rookTemp = this->getPiece(7,5);
+        if (piece3->getMoved() == false && rookMoved == false) {
+            this->setPiece(newCoord.first, newCoord.second, p);
+            this->setPiece(currentCoord.first, currentCoord.second, temp);
+            this->setPiece(7,5,castlePiece);
+            this->setPiece(7,7,rookTemp);
+            this->isChecked();
+            if (p1->getMyTurn()) {
+                if (p1->getIsCheck()) {
+                    this->setPiece(currentCoord.first, currentCoord.second, p);
+                    this->setPiece(newCoord.first, newCoord.second, temp);
+                    this->setPiece(7,7,castlePiece);
+                    this->setPiece(7,5,rookTemp);
+                    return;
+                }
+            }
+            p->setRow(newCoord.first);
+            p->setCol(newCoord.second);
+            temp->setRow(currentCoord.first);
+            temp->setCol(currentCoord.second);
+            castlePiece->setRow(7);
+            castlePiece->setCol(5);
+            rookTemp->setRow(7);
+            rookTemp->setCol(7);
+        }
+        this->gdCurrentCoord = make_pair(7,4);
+        this->gdNewCoord = make_pair(7,6);
+        this->notifyObservers();
+
+        this->gdCurrentCoord = make_pair(7,7);
+        this->gdNewCoord = make_pair(7,5);
+        this->notifyObservers();
+        this->changeTurn();
+        return;
+    }
+    else if (p->getSymbol() == 'K' && (currentCoord == make_pair(7,4) && newCoord == make_pair(7,2))) {
+        // white king moves right
+        Piece *castlePiece = this->getPiece(7,0);
+        bool rookMoved = false;
+        if (castlePiece->getSymbol() == 'R') {
+            Rook *castlePieceRook = dynamic_cast<Rook*>(castlePiece);
+            rookMoved = castlePieceRook->getMoved();
+        }
+        else {
+            return;
+        }
+        Piece *rookTemp = this->getPiece(7,3);
+        if (piece3->getMoved() == false && rookMoved == false) {
+            this->setPiece(newCoord.first, newCoord.second, p);
+            this->setPiece(currentCoord.first, currentCoord.second, temp);
+            this->setPiece(7,3,castlePiece);
+            this->setPiece(7,0,rookTemp);
+
+            // if castling causes the king to be in check, then the move is invalid
+            this->isChecked();
+            if (p1->getMyTurn()) {
+                if (p1->getIsCheck()) {
+                    this->setPiece(currentCoord.first, currentCoord.second, p);
+                    this->setPiece(newCoord.first, newCoord.second, temp);
+                    this->setPiece(7,0,castlePiece);
+                    this->setPiece(7,3,rookTemp);
+                    return;
+                }
+            }
+            p->setRow(newCoord.first);
+            p->setCol(newCoord.second);
+            temp->setRow(currentCoord.first);
+            temp->setCol(currentCoord.second);
+            castlePiece->setRow(7);
+            castlePiece->setCol(3);
+            rookTemp->setRow(7);
+            rookTemp->setCol(0);
+        }
+        this->gdCurrentCoord = make_pair(7,4);
+        this->gdNewCoord = make_pair(7,2);
+        this->notifyObservers();
+
+        this->gdCurrentCoord = make_pair(7,0);
+        this->gdNewCoord = make_pair(7,3);
+        this->notifyObservers();
+        this->changeTurn();
+        return;
+    }
+    else if (p->getSymbol() == 'k' && (currentCoord == make_pair(0,4) && newCoord == make_pair(0,6))) {
+        // white king moves right
+        Piece *castlePiece = this->getPiece(0,7);
+        bool rookMoved = false;
+        if (castlePiece->getSymbol() == 'r') {
+            Rook *castlePieceRook = dynamic_cast<Rook*>(castlePiece);
+            rookMoved = castlePieceRook->getMoved();
+        }
+        else {
+            return;
+        }
+        Piece *rookTemp = this->getPiece(0,5);
+        if (piece3->getMoved() == false && rookMoved == false) {
+            this->setPiece(newCoord.first, newCoord.second, p);
+            this->setPiece(currentCoord.first, currentCoord.second, temp);
+            this->setPiece(0,5,castlePiece);
+            this->setPiece(0,7,rookTemp);
+
+            this->isChecked();
+            if (p1->getMyTurn()) {
+                if (p1->getIsCheck()) {
+                    this->setPiece(currentCoord.first, currentCoord.second, p);
+                    this->setPiece(newCoord.first, newCoord.second, temp);
+                    this->setPiece(0,7,castlePiece);
+                    this->setPiece(0,5,rookTemp);
+                    return;
+                }
+            }
+            p->setRow(newCoord.first);
+            p->setCol(newCoord.second);
+            temp->setRow(currentCoord.first);
+            temp->setCol(currentCoord.second);
+            castlePiece->setRow(0);
+            castlePiece->setCol(5);
+            rookTemp->setRow(0);
+            rookTemp->setCol(7);
+        }
+        this->gdCurrentCoord = make_pair(0,4);
+        this->gdNewCoord = make_pair(0,6);
+        this->notifyObservers();
+
+        this->gdCurrentCoord = make_pair(0,7);
+        this->gdNewCoord = make_pair(0,5);
+        this->notifyObservers();
+        this->changeTurn();
+        return;
+    }
+    else if (p->getSymbol() == 'k' && (currentCoord == make_pair(0,4) && newCoord == make_pair(0,2))) {
+        // white king moves right
+        Piece *castlePiece = this->getPiece(0,0);
+        bool rookMoved = false;
+        if (castlePiece->getSymbol() == 'r') {
+            Rook *castlePieceRook = dynamic_cast<Rook*>(castlePiece);
+            rookMoved = castlePieceRook->getMoved();
+        }
+        else {
+            return;
+        }
+        Piece *rookTemp = this->getPiece(0,3);
+        if (piece3->getMoved() == false && rookMoved == false) {
+            this->setPiece(newCoord.first, newCoord.second, p);
+            this->setPiece(currentCoord.first, currentCoord.second, temp);
+            this->setPiece(0,3,castlePiece);
+            this->setPiece(0,0,rookTemp);
+
+            this->isChecked();
+            if (p1->getMyTurn()) {
+                if (p1->getIsCheck()) {
+                    this->setPiece(currentCoord.first, currentCoord.second, p);
+                    this->setPiece(newCoord.first, newCoord.second, temp);
+                    this->setPiece(0,0,castlePiece);
+                    this->setPiece(0,3,rookTemp);
+                    return;
+                }
+            }
+            p->setRow(newCoord.first);
+            p->setCol(newCoord.second);
+            temp->setRow(currentCoord.first);
+            temp->setCol(currentCoord.second);
+            castlePiece->setRow(0);
+            castlePiece->setCol(3);
+            rookTemp->setRow(0);
+            rookTemp->setCol(0);
+        }
+        this->gdCurrentCoord = make_pair(0,4);
+        this->gdNewCoord = make_pair(0,2);
+        this->notifyObservers();
+
+        this->gdCurrentCoord = make_pair(0,0);
+        this->gdNewCoord = make_pair(0,3);
+        this->notifyObservers();
+        this->changeTurn();
+        return;
+    }
+    
+}
+
+Player* Board::getP1() { 
+    return p1; 
+}
+
+Player* Board::getP2() { 
+    return p2; 
 }
 
 void Board::isChecked() {
@@ -570,7 +740,7 @@ void Board::isChecked() {
         for (auto &coord : blackPossibleMoves) {
             if (coord == whiteKingCoord) {
                 p1->setCheck(true);
-                break;
+                return;
             }
         }
 
@@ -590,7 +760,7 @@ void Board::isChecked() {
         for (auto &coord : whitePossibleMoves) {
             if (coord == blackKingCoord) {
                 p2->setCheck(true);
-                break;
+                return;
             }
         }
     }
@@ -640,6 +810,26 @@ void Board::isCheckmated() {
                     //delete copy;
                 }
             }
+            else if (p->getTeam() == "black") {
+                vector<pair<int, int>> possibleMoves = p->calculatePossibleMoves();
+                for (auto &coord : possibleMoves) {
+                    vector<pair<int, int>> move = {make_pair(i, j), coord};
+                    
+                    // copy the board
+                    Board *copy = new Board(p1, p2);
+                    copy->theBoard = this->theBoard;
+                    copy->movePiece(move);
+
+                    // check if the king is still in check
+                    copy->isChecked();
+                    if (!copy->p2->getIsCheck()) {
+                        currentPlayer->setCheckmate(false);
+                        return;
+                    }
+
+                    //delete copy;
+                }
+            }
         }
     }
     currentPlayer->setCheckmate(true);
@@ -665,4 +855,8 @@ void Board::notifyObservers() {
     for (auto &ob : observers) {
         ob->notify(*this);
     }
+}
+
+void Board::notifyGraphicObservers() {
+    gd->notify(*this);
 }

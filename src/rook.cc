@@ -23,64 +23,85 @@ void Rook::setMoved(bool moved) {
 vector<pair<int, int>> Rook::calculatePossibleMoves() {
     vector<pair<int, int>> moves;
 
-    int y = getRow();
-    int x = getCol();
-    bool moved = getMoved();
+    int row = getRow();
+    int col = getCol();
 
-    // move up until a piece is encountered or the edge of the board is reached or an opponent's piece is encountered
-    for (int i = y-1; i >= 0; --i) {
-        if (this->getBoard()->getPiece(i, x)->isBlank()) {
-            moves.emplace_back(make_pair(x, i));
-        } else {
-            if (this->getBoard()->getPiece(i, x)->getTeam() != getTeam()) {
-                moves.emplace_back(make_pair(x, i));
+    // move up until a piece is encountered or the edge of the board is reached or 
+    // an opponent's piece is encountered
+    for (int i = 1; i < 8; ++i) {
+        if (row-i >= 0) {
+            if (this->getBoard()->getPiece(row-i, col)->isBlank()) {
+                moves.emplace_back(make_pair(row-i, col));
+            } 
+            else if (this->getBoard()->getPiece(row-i, col)->getTeam() != getTeam()) {
+                moves.emplace_back(make_pair(row-i, col));
+                break;
             }
+            else {
+                break;
+            }
+        }
+        else {
             break;
         }
     }
 
     // move down until a piece is encountered or the edge of the board is reached or an opponent's piece is encountered
-    for (int i = y+1; i < 8; ++i) {
-        if (this->getBoard()->getPiece(i, x)->isBlank()) {
-            moves.emplace_back(make_pair(x, i));
-        } else {
-            if (this->getBoard()->getPiece(i, x)->getTeam() != getTeam()) {
-                moves.emplace_back(make_pair(x, i));
+    for (int i = 1; i < 8; ++i) {
+        if (row+i < 8) {
+            if (this->getBoard()->getPiece(row+i, col)->isBlank()) {
+                moves.emplace_back(make_pair(row+i, col));
+            } 
+            else if (this->getBoard()->getPiece(row+i, col)->getTeam() != getTeam()) {
+                moves.emplace_back(make_pair(row+i, col));
+                break;
             }
+            else {
+                break;
+            }
+        }
+        else {
             break;
         }
     }
 
     // move left until a piece is encountered or the edge of the board is reached or an opponent's piece is encountered
-    for (int i = x-1; i >= 0; --i) {
-        if (this->getBoard()->getPiece(y, i)->isBlank()) {
-            moves.emplace_back(make_pair(i, y));
-        } else {
-            if (this->getBoard()->getPiece(y, i)->getTeam() != getTeam()) {
-                moves.emplace_back(make_pair(i, y));
+    for (int i = 1; i < 8; ++i) {
+        if (col-i >= 0) {
+            if (this->getBoard()->getPiece(row, col-i)->isBlank()) {
+                moves.emplace_back(make_pair(row, col-i));
+            } 
+            else if (this->getBoard()->getPiece(row, col-i)->getTeam() != getTeam()) {
+                moves.emplace_back(make_pair(row, col-i));
+                break;
             }
+            else {
+                break;
+            }
+        }
+        else {
             break;
         }
     }
 
     // move right until a piece is encountered or the edge of the board is reached or an opponent's piece is encountered
-    for (int i = x+1; i < 8; ++i) {
-        if (this->getBoard()->getPiece(y, i)->isBlank()) {
-            moves.emplace_back(make_pair(i, y));
-        } else {
-            if (this->getBoard()->getPiece(y, i)->getTeam() != getTeam()) {
-                moves.emplace_back(make_pair(i, y));
+    for (int i = 1; i < 8; ++i) {
+        if (col+i < 8) {
+            if (this->getBoard()->getPiece(row, col+i)->isBlank()) {
+                moves.emplace_back(make_pair(row, col+i));
+            } 
+            else if (this->getBoard()->getPiece(row, col+i)->getTeam() != getTeam()) {
+                moves.emplace_back(make_pair(row, col+i));
+                break;
             }
+            else {
+                break;
+            }
+        }
+        else {
             break;
         }
     }
 
-   for (auto &move : moves) {
-        int temp = move.first;
-        move.first = move.second;
-        move.second = temp;
-    }
-
     return moves;
-
 }

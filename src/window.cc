@@ -6,6 +6,7 @@
 #include <vector>
 #include <unistd.h>
 #include "window.h"
+#include "piece.h"
 
 using namespace std;
 
@@ -40,9 +41,13 @@ Xwindow::Xwindow(int width, int height) {
     "black",
     "red",
     "khaki",
-    "darkolivegreen",
+    "darkolivegreen4",
     "transparent",
-    "gray"
+    "gray",
+    "lightcoral",
+    "firebrick",
+    "lightsteelblue3",
+    "moccasin"
   };
 
   cmap=DefaultColormap(d,DefaultScreen(d));
@@ -107,8 +112,9 @@ void Xwindow::drawTitle() {
   setFont("lucidasans-bold-24");
   // XLoadFont(d, "-misc-seravek-medium-r-normal--0-0-0-0-p-0-iso10646-1");
   string msg = "CHESS";
-  drawString(950, 120, msg);
+  drawString(957, 120, msg);
   setFont("lucidasans-bold-18");
+  drawBitMap(80, 12.5, 2, icon, Xwindow::Black);
 
 }
 
@@ -116,18 +122,20 @@ void Xwindow::drawString(int x, int y, string msg) {
   XDrawString(d, w, DefaultGC(d, s), x, y, msg.c_str(), msg.length());
 }
 
-void Xwindow::drawBitMap(int cellDim, int row, int col, const int bitmap[80][80], int cellColour) {
+void Xwindow::drawBitMap(int cellDim, int x, int y, const int bitmap[80][80], int cellColour) {
   XImage *image = XGetImage(d, w, 0, 0, cellDim, cellDim, AllPlanes, 1);
-  for (int row = 0; row < cellDim; ++row) {
-    for (int col = 0; col < cellDim; ++col) {
-      if (bitmap[row][col] == Transparent) {
-        XPutPixel(image, col, row, colours[cellColour]);
+  
+  for (int r = 0; r < cellDim; ++r) {
+    for (int c = 0; c < cellDim; ++c) {
+      if (bitmap[r][c] == Transparent) {
+        XPutPixel(image, c, r, colours[cellColour]);
       } else {
-        XPutPixel(image, col, row, colours[bitmap[row][col]]);
+        XPutPixel(image, c, r, colours[bitmap[r][c]]);
       }
     }
   }
-  XPutImage(d, w, gc, image, 0, 0, cellDim * row, cellDim * col, cellDim, cellDim);
+
+  XPutImage(d, w, gc, image, 0, 0, cellDim * x, cellDim * y, cellDim, cellDim);
   XDestroyImage(image);
   XSync(d, 1);
 }
