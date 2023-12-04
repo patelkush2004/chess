@@ -44,8 +44,23 @@ int main() {
     // game loop
     while (cin >> cmd) {
 
+        //if (p1->getMyTurn()) {
+         //   cout << "White's turn" << endl;
+        //}
+        //else {
+        //    cout << "Black's turn" << endl;
+        //}
+
         if (cmd == "setup") {
             b.setup();
+
+            if (p1->getIsCpu()) {
+                cout << "White Computer Turn" << endl;
+            }
+            else {
+                cout << "White Turn" << endl;
+            }
+
             cout << b;
 
             // White player always goes first
