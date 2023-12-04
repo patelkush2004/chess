@@ -355,10 +355,10 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
     bool hasMovedFieldK = false;
 
     // to see which player is in check if any. 
+    // I DONT THINK THIS IS NECESSARY
     bool check1 = false;
     bool check2 = false;
     this->isChecked();
-
     if (p1->getMyTurn()) {
         if (p1->getIsCheck()) {
             check1 = true;
@@ -415,16 +415,17 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
         this->setPiece(newCoord.first, newCoord.second, p);
         this->setPiece(currentCoord.first, currentCoord.second, temp);
 
-        // if the same player's king is still in check, then the move is invalid
+        // if the same player's king is in check after the move,
+        // then the move is invalid
         // switch is back
         this->isChecked();
-        if (p1->getMyTurn() && check1) {
+        if (p1->getMyTurn()) {
             if (p1->getIsCheck()) {
                 this->setPiece(currentCoord.first, currentCoord.second, p);
                 this->setPiece(newCoord.first, newCoord.second, temp);
                 return;
             }
-        } else if (p2->getMyTurn() && check2) {
+        } else if (p2->getMyTurn()) {
             if (p2->getIsCheck()) {
                 this->setPiece(currentCoord.first, currentCoord.second, p);
                 this->setPiece(newCoord.first, newCoord.second, temp);
@@ -495,6 +496,7 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
         this->gdNewCoord = newCoord;
         this->notifyObservers();
         this->changeTurn();
+        return;
     } 
 
     // castling
@@ -515,6 +517,16 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
             this->setPiece(currentCoord.first, currentCoord.second, temp);
             this->setPiece(7,5,castlePiece);
             this->setPiece(7,7,rookTemp);
+            this->isChecked();
+            if (p1->getMyTurn()) {
+                if (p1->getIsCheck()) {
+                    this->setPiece(currentCoord.first, currentCoord.second, p);
+                    this->setPiece(newCoord.first, newCoord.second, temp);
+                    this->setPiece(7,7,castlePiece);
+                    this->setPiece(7,5,rookTemp);
+                    return;
+                }
+            }
             p->setRow(newCoord.first);
             p->setCol(newCoord.second);
             temp->setRow(currentCoord.first);
@@ -532,6 +544,7 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
         this->gdNewCoord = make_pair(7,5);
         this->notifyObservers();
         this->changeTurn();
+        return;
     }
     else if (p->getSymbol() == 'K' && (currentCoord == make_pair(7,4) && newCoord == make_pair(7,2))) {
         // white king moves right
@@ -550,6 +563,18 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
             this->setPiece(currentCoord.first, currentCoord.second, temp);
             this->setPiece(7,3,castlePiece);
             this->setPiece(7,0,rookTemp);
+
+            // if castling causes the king to be in check, then the move is invalid
+            this->isChecked();
+            if (p1->getMyTurn()) {
+                if (p1->getIsCheck()) {
+                    this->setPiece(currentCoord.first, currentCoord.second, p);
+                    this->setPiece(newCoord.first, newCoord.second, temp);
+                    this->setPiece(7,0,castlePiece);
+                    this->setPiece(7,3,rookTemp);
+                    return;
+                }
+            }
             p->setRow(newCoord.first);
             p->setCol(newCoord.second);
             temp->setRow(currentCoord.first);
@@ -567,6 +592,7 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
         this->gdNewCoord = make_pair(7,3);
         this->notifyObservers();
         this->changeTurn();
+        return;
     }
     else if (p->getSymbol() == 'k' && (currentCoord == make_pair(0,4) && newCoord == make_pair(0,6))) {
         // white king moves right
@@ -585,6 +611,17 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
             this->setPiece(currentCoord.first, currentCoord.second, temp);
             this->setPiece(0,5,castlePiece);
             this->setPiece(0,7,rookTemp);
+
+            this->isChecked();
+            if (p1->getMyTurn()) {
+                if (p1->getIsCheck()) {
+                    this->setPiece(currentCoord.first, currentCoord.second, p);
+                    this->setPiece(newCoord.first, newCoord.second, temp);
+                    this->setPiece(0,7,castlePiece);
+                    this->setPiece(0,5,rookTemp);
+                    return;
+                }
+            }
             p->setRow(newCoord.first);
             p->setCol(newCoord.second);
             temp->setRow(currentCoord.first);
@@ -602,6 +639,7 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
         this->gdNewCoord = make_pair(0,5);
         this->notifyObservers();
         this->changeTurn();
+        return;
     }
     else if (p->getSymbol() == 'k' && (currentCoord == make_pair(0,4) && newCoord == make_pair(0,2))) {
         // white king moves right
@@ -620,6 +658,17 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
             this->setPiece(currentCoord.first, currentCoord.second, temp);
             this->setPiece(0,3,castlePiece);
             this->setPiece(0,0,rookTemp);
+
+            this->isChecked();
+            if (p1->getMyTurn()) {
+                if (p1->getIsCheck()) {
+                    this->setPiece(currentCoord.first, currentCoord.second, p);
+                    this->setPiece(newCoord.first, newCoord.second, temp);
+                    this->setPiece(0,0,castlePiece);
+                    this->setPiece(0,3,rookTemp);
+                    return;
+                }
+            }
             p->setRow(newCoord.first);
             p->setCol(newCoord.second);
             temp->setRow(currentCoord.first);
@@ -637,6 +686,7 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
         this->gdNewCoord = make_pair(0,3);
         this->notifyObservers();
         this->changeTurn();
+        return;
     }
     
 }
