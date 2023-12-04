@@ -98,5 +98,19 @@ vector<pair<int, int>> King::calculatePossibleMoves() {
         }
     }
 
+    // castling
+    
+    if(this->getMoved() ==  false) {
+        // check if the king can castle left
+        if (this->getBoard()->getPiece(row, col-1)->isBlank() && this->getBoard()->getPiece(row, col-2)->isBlank() && this->getBoard()->getPiece(row, col-3)->isBlank()) {
+                moves.emplace_back(make_pair(row, col-2));
+        }
+
+        // check if the king can castle right
+        if (this->getBoard()->getPiece(row, col+1)->isBlank() && this->getBoard()->getPiece(row, col+2)->isBlank()) {
+                moves.emplace_back(make_pair(row, col+2));
+        }
+    }
+
     return moves;
 }

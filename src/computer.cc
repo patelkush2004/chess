@@ -27,7 +27,6 @@ pair<int, int> Computer::convertToCoord(string notation) {
 
 vector<pair<int, int>> Computer::makeComputerMove(Board& b)  {
 
-    // do NOT ever use Piece by value, this causes seg faults. Use pointer to Piece instead.
     vector<Piece*> availablePieces;
     vector<pair<int, int>> moves;
     int randomIndex;
@@ -36,19 +35,18 @@ vector<pair<int, int>> Computer::makeComputerMove(Board& b)  {
     while (true) {
         // finds all available team pieces 
         // Nit: this should be handled by board or a vector in player!
-        for(int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
-                if (b.getPiece(x, y)->getTeam() == this->getTeam() && !b.getPiece(x, y)->isBlank()) {
-                    availablePieces.emplace_back(b.getPiece(x, y));
+        for(int row = 0; row < 8; row++) {
+            for (int col = 0; col < 8; col++) {
+                if (b.getPiece(row, col)->getTeam() == this->getTeam() && !b.getPiece(row, col)->isBlank()) {
+                    availablePieces.emplace_back(b.getPiece(row, col));
                 }
             }
-        } // this is working perfectly, traverses through each row. 
+        } 
 
         // seed-safe random index generation for availabliePieces
         randomIndex = randomGenerator(0, availablePieces.size() - 1);
 
         selectedPiece = availablePieces[randomIndex];
-        //selectedPiece = b.getPiece(6,1);
 
         moves = selectedPiece->calculatePossibleMoves();
 
@@ -72,6 +70,9 @@ vector<pair<int, int>> Computer::makeComputerMove(Board& b)  {
 
     fromToMove.emplace_back(current);
     fromToMove.emplace_back(move);
+
+    availablePieces.clear();
+    moves.clear();
 
     return fromToMove;
 }

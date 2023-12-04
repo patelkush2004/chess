@@ -35,7 +35,7 @@ Board::~Board() {
 
 void Board::init() { // MOVEMENT NOT WORKING AFTER INIT COMPLETE
     td = new TextDisplay();
-    //gd = new GraphicDisplay();
+    gd = new GraphicDisplay();
 
     vector<Piece*> pieceRow;
 
@@ -91,13 +91,13 @@ void Board::init() { // MOVEMENT NOT WORKING AFTER INIT COMPLETE
     pieceRow.clear();
 
     this->attach(td);
-    //this->attach(gd);
+    this->attach(gd);
     this->notifyObservers();
 }
 
 void Board::setup() {   // MOVEMENT NOT WORKING AFTER SETUP COMPLETE
     td = new TextDisplay();
-    //gd = new GraphicDisplay();
+    gd = new GraphicDisplay();
 
     // initialize the board with blank pieces
     vector<Piece*> pieceRow;
@@ -110,7 +110,7 @@ void Board::setup() {   // MOVEMENT NOT WORKING AFTER SETUP COMPLETE
     }
 
     this->attach(td);
-    //this->attach(gd);
+    this->attach(gd);
     this->notifyObservers();
 
     // loop through theBoard and check for exactly one white king and one black king
@@ -400,7 +400,18 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
             break;
         }
     }
-    if (inArray) {
+
+    bool castling = false;
+
+    if (p->getSymbol() == 'K' || p->getSymbol() == 'k') {
+        if (abs(currentCoord.second - newCoord.second) == 2) {
+            castling = true;  
+        }
+    }
+
+    if (inArray && !castling) {
+        // castling. if king is move 2, skip the rest of the code in this function
+
         this->setPiece(newCoord.first, newCoord.second, p);
         this->setPiece(currentCoord.first, currentCoord.second, temp);
 
@@ -489,9 +500,17 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
     // castling
     if (p->getSymbol() == 'K' && (currentCoord == make_pair(7,4) && newCoord == make_pair(7,6))) {
         // white king moves right
-        Rook *castlePiece = dynamic_cast<Rook*>(this->getPiece(7,7));
+        Piece *castlePiece = this->getPiece(7,7);
+        bool rookMoved = false;
+        if (castlePiece->getSymbol() == 'R') {
+            Rook *castlePieceRook = dynamic_cast<Rook*>(castlePiece);
+            rookMoved = castlePieceRook->getMoved();
+        }
+        else {
+            return;
+        }
         Piece *rookTemp = this->getPiece(7,5);
-        if (piece3->getMoved() == false && castlePiece->getMoved() == false) {
+        if (piece3->getMoved() == false && rookMoved == false) {
             this->setPiece(newCoord.first, newCoord.second, p);
             this->setPiece(currentCoord.first, currentCoord.second, temp);
             this->setPiece(7,5,castlePiece);
@@ -516,9 +535,17 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
     }
     else if (p->getSymbol() == 'K' && (currentCoord == make_pair(7,4) && newCoord == make_pair(7,2))) {
         // white king moves right
-        Rook *castlePiece = dynamic_cast<Rook*>(this->getPiece(7,0));
+        Piece *castlePiece = this->getPiece(7,0);
+        bool rookMoved = false;
+        if (castlePiece->getSymbol() == 'R') {
+            Rook *castlePieceRook = dynamic_cast<Rook*>(castlePiece);
+            rookMoved = castlePieceRook->getMoved();
+        }
+        else {
+            return;
+        }
         Piece *rookTemp = this->getPiece(7,3);
-        if (piece3->getMoved() == false && castlePiece->getMoved() == false) {
+        if (piece3->getMoved() == false && rookMoved == false) {
             this->setPiece(newCoord.first, newCoord.second, p);
             this->setPiece(currentCoord.first, currentCoord.second, temp);
             this->setPiece(7,3,castlePiece);
@@ -543,9 +570,17 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
     }
     else if (p->getSymbol() == 'k' && (currentCoord == make_pair(0,4) && newCoord == make_pair(0,6))) {
         // white king moves right
-        Rook *castlePiece = dynamic_cast<Rook*>(this->getPiece(0,7));
+        Piece *castlePiece = this->getPiece(0,7);
+        bool rookMoved = false;
+        if (castlePiece->getSymbol() == 'r') {
+            Rook *castlePieceRook = dynamic_cast<Rook*>(castlePiece);
+            rookMoved = castlePieceRook->getMoved();
+        }
+        else {
+            return;
+        }
         Piece *rookTemp = this->getPiece(0,5);
-        if (piece3->getMoved() == false && castlePiece->getMoved() == false) {
+        if (piece3->getMoved() == false && rookMoved == false) {
             this->setPiece(newCoord.first, newCoord.second, p);
             this->setPiece(currentCoord.first, currentCoord.second, temp);
             this->setPiece(0,5,castlePiece);
@@ -570,9 +605,17 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
     }
     else if (p->getSymbol() == 'k' && (currentCoord == make_pair(0,4) && newCoord == make_pair(0,2))) {
         // white king moves right
-        Rook *castlePiece = dynamic_cast<Rook*>(this->getPiece(0,0));
+        Piece *castlePiece = this->getPiece(0,0);
+        bool rookMoved = false;
+        if (castlePiece->getSymbol() == 'r') {
+            Rook *castlePieceRook = dynamic_cast<Rook*>(castlePiece);
+            rookMoved = castlePieceRook->getMoved();
+        }
+        else {
+            return;
+        }
         Piece *rookTemp = this->getPiece(0,3);
-        if (piece3->getMoved() == false && castlePiece->getMoved() == false) {
+        if (piece3->getMoved() == false && rookMoved == false) {
             this->setPiece(newCoord.first, newCoord.second, p);
             this->setPiece(currentCoord.first, currentCoord.second, temp);
             this->setPiece(0,3,castlePiece);
