@@ -7,6 +7,8 @@
 #include "computer.h"
 #include "textdisplay.h"
 
+class graphicDisplay;
+
 using namespace std;
 
 int main() {
@@ -49,9 +51,11 @@ int main() {
             // White player always goes first
             if (p1->getIsCpu()) {
                 cout << "White Computer Turn" << endl;
+                b.getGd()->graphicTurnMsg("white", true);
             }
             else {
                 cout << "White Turn" << endl;
+                b.getGd()->graphicTurnMsg("white", false);
             }
 
         }
@@ -61,9 +65,11 @@ int main() {
 
             if (p1->getIsCpu()) {
                 cout << "White Computer Turn" << endl;
+                b.getGd()->graphicTurnMsg("white", true);
             }
             else {
                 cout << "White Turn" << endl;
+                b.getGd()->graphicTurnMsg("white", false);
             }
 
 
@@ -85,20 +91,34 @@ int main() {
 
             if (p2->getIsCpu()) {
                 cout << "Black Computer Turn" << endl;
+                b.getGd()->graphicTurnMsg("black", true);
             }
             else {
                 cout << "Black Turn" << endl;
+                b.getGd()->graphicTurnMsg("black", false);
             }
 
+            b.isChecked();
+            b.notifyGraphicObservers();
+          
             //b.isChecked();
+  
             if (p2->getIsCheck()) {
                 cout << "Black is in check." << endl;
+                b.getGd()->graphicCheckMsg("check");
             }
 
+
+            b.isCheckmated();
+            b.notifyGraphicObservers();
+
             //b.isCheckmated();
+
             if (p2->getIsCheckmate()) {
                 cout << "Checkmate! White wins!" << endl;
                 p1->updateScore();
+                b.getGd()->graphicScoreMsg(true, p1->getScore());
+                b.getGd()->graphicCheckMsg("checkmate");
                 // MAKE THE GAME CONTINUE
             }
         }
@@ -108,20 +128,35 @@ int main() {
             cout << b;
             if (p2->getIsCpu()) {
                 cout << "Black Computer Turn" << endl;
+                b.getGd()->graphicTurnMsg("black", true);
             }
             else {
                 cout << "Black Turn" << endl;
+                b.getGd()->graphicTurnMsg("black", false);
             }
+
+
+            b.isChecked();
+            b.notifyGraphicObservers();
 
             //b.isChecked();
+
             if (p2->getIsCheck()) {
                 cout << "Black is in check." << endl;
+                b.getGd()->graphicCheckMsg("check");
             }
 
+
+            b.isCheckmated();
+            b.notifyGraphicObservers();
+
             //b.isCheckmated();
+
             if (p2->getIsCheckmate()) {
                 cout << "Checkmate! White wins!" << endl;
                 p1->updateScore();
+                b.getGd()->graphicScoreMsg("white", p1->getScore());
+                b.getGd()->graphicCheckMsg("checkmate");
                 // MAKE THE GAME CONTINUE
             }
         }
@@ -131,20 +166,34 @@ int main() {
             cout << b;
             if (p1->getIsCpu()) {
                 cout << "White Computer Turn" << endl;
+                b.getGd()->graphicTurnMsg("white", true);
             }
             else {
                 cout << "White Turn" << endl;
+                b.getGd()->graphicTurnMsg("white", false);
             }
+
+            b.isChecked();
+            b.notifyGraphicObservers();
 
             //b.isChecked();
+
             if (p1->getIsCheck()) {
                 cout << "White is in check." << endl;
+                b.getGd()->graphicCheckMsg("check");
             }
 
+
+            b.isCheckmated();
+            b.notifyGraphicObservers();
+
             //b.isCheckmated();
+  
             if (p1->getIsCheckmate()) {
                 cout << "Checkmate! Black wins!" << endl;
                 p2->updateScore();
+                b.getGd()->graphicScoreMsg("white", p2->getScore());
+                b.getGd()->graphicCheckMsg("checkmate");
                 // MAKE THE GAME CONTINUE
             }
         }
@@ -157,20 +206,35 @@ int main() {
             cout << b;
             if (p1->getIsCpu()) {
                 cout << "White Computer Turn" << endl;
+                b.getGd()->graphicTurnMsg("white", true);
             }
             else {
                 cout << "White Turn" << endl;
+                b.getGd()->graphicTurnMsg("white", false);
             }
 
+
+            b.isChecked();
+            b.notifyGraphicObservers();
+
             //b.isChecked();
+
             if (p2->getIsCheck()) {
-                cout << "Blac is in check." << endl;
+                cout << "Black is in check." << endl;
+                b.getGd()->graphicCheckMsg("check");
             }
             
+
+            b.isCheckmated();
+            b.notifyGraphicObservers();
+
             //b.isCheckmated();
+
             if (p1->getIsCheckmate()) {
                 cout << "Checkmate! Black wins!" << endl;
                 p2->updateScore();
+                b.getGd()->graphicScoreMsg("black", p2->getScore());
+                b.getGd()->graphicCheckMsg("checkmate");
                 // MAKE THE GAME CONTINUE
             }
         }

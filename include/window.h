@@ -16,7 +16,7 @@ class Xwindow {
   ~Xwindow();                              // Destructor; destroys the window.
 
   // enum {White=0, Black, Red, Green, Blue}; // Available colours.
-  enum {White=0, Black, Red, Khaki, DarkOliveGreen, Transparent, Gray};
+  enum {White=0, Black, Red, Khaki, DarkOliveGreen, Transparent, Gray, LightCoral, FireBrick, LightSteelBlue3, Moccasin};
 
   // Draws a rectangle
   void fillRectangle(int x, int y, int width, int height, int colour=Black);
@@ -34,10 +34,10 @@ class Xwindow {
   // Draws a BitMap
   // Documentation used from:
   // https://tronche.com/gui/x/xlib/graphics/XGetImage.html
-  void drawBitMap(int cellDim, int row, int col, const int bitmap[80][80], int cellColour);
+  void drawBitMap(int cellDim, int x, int y, const int bitmap[80][80], int cellColour);
 
 };
 
-enum colors {White=0, Black, Red, Khaki, DarkOliveGreen, Transparent, Gray};
+enum colors {White=0, Black, Red, Khaki, DarkOliveGreen, Transparent, Gray, LightCoral, FireBrick, LightSteelBlue3, Moccasin};
 
 #endif

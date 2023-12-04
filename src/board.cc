@@ -641,6 +641,14 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
     
 }
 
+Player* Board::getP1() { 
+    return p1; 
+}
+
+Player* Board::getP2() { 
+    return p2; 
+}
+
 void Board::isChecked() {
  
     // if it is player 1's turn, check if white king is in check.
@@ -682,7 +690,7 @@ void Board::isChecked() {
         for (auto &coord : blackPossibleMoves) {
             if (coord == whiteKingCoord) {
                 p1->setCheck(true);
-                break;
+                return;
             }
         }
 
@@ -702,7 +710,7 @@ void Board::isChecked() {
         for (auto &coord : whitePossibleMoves) {
             if (coord == blackKingCoord) {
                 p2->setCheck(true);
-                break;
+                return;
             }
         }
     }
@@ -797,4 +805,8 @@ void Board::notifyObservers() {
     for (auto &ob : observers) {
         ob->notify(*this);
     }
+}
+
+void Board::notifyGraphicObservers() {
+    gd->notify(*this);
 }

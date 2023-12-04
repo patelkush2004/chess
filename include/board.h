@@ -35,11 +35,16 @@ class Board : public Subject {
         Piece *getPiece(int row, int col); // Returns the piece at the given row and column
         void setPiece(int row, int col, Piece *p); // Sets the piece at the given row and column
 
+        GraphicDisplay* getGd() { return gd; }
+
         void changeTurn(); // Changes the turn
         Player *getTurn(); // Gets the player whose turn it is
 
         void movePiece(vector<pair<int, int>> move); // Moves the piece
-        
+
+        Player* getP1();
+        Player* getP2();
+
         void isChecked(); // Checks if the current player is in check
         void isCheckmated(); // Checks if the current player is in checkmate
         void isStalemated(); // Checks if the current player is in stalemate
@@ -47,6 +52,7 @@ class Board : public Subject {
         void attach(Observer *o); // Attaches an observer   
         // void detach(Observer *o); // Detaches an observer. Don't think we need this
         void notifyObservers() override; // Notifies all observers
+        void notifyGraphicObservers();
 
         friend ostream &operator<<(ostream &out, const Board &b); // Overloaded output operator
 
