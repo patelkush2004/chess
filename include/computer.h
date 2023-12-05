@@ -14,9 +14,9 @@ class Computer : public Player {
         Computer(string team, bool isCpu, bool myTurn);
         ~Computer();
         pair<int, int> convertToCoord(string notation);
-        vector<pair<int, int>> makeComputerMove(Board& b) override;
-        
+        vector<pair<int, int>> makeComputerMove(Board& b, int level) override;
         vector<pair<int, int>> levelOne(Board& b);
+        vector<pair<int, int>> levelTwo(Board& b);
 };
 
 #endif
