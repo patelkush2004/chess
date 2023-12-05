@@ -11,6 +11,7 @@ using namespace std;
 
 class Rook : public Piece {
     bool moved;
+    PieceType type = PieceType::RookType;
     public:
         Rook(Board *theBoard, string team, char symbol, int row, int col, bool blank, bool moved);
         ~Rook();

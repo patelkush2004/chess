@@ -10,6 +10,7 @@
 using namespace std;
 
 class Knight : public Piece {
+    PieceType type = PieceType::KnightType;
     public:
         Knight(Board *theBoard, string team, char symbol, int row, int col, bool blank);
         ~Knight();

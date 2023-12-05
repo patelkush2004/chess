@@ -146,11 +146,10 @@ void Board::init() { // MOVEMENT NOT WORKING AFTER INIT COMPLETE
 
     this->attach(td);
     this->attach(gd);
-    //this->boardtoState();
     this->notifyObservers();
 }
 
-void Board::setup() {  
+void Board::setup() {   // MOVEMENT NOT WORKING AFTER SETUP COMPLETE
     td = new TextDisplay();
     gd = new GraphicDisplay();
 
@@ -281,7 +280,6 @@ void Board::setup() {
             }
 
             if (!pawnFirstRow && !pawnLastRow && kings && !whiteKingInCheck && !blackKingInCheck) {
-                //this->boardtoState();
                 return;
             } else {
                 continue;
@@ -400,9 +398,9 @@ Player *Board::getTurn() {
     }
 }
 
-void Board::movePiece(vector<pair<int, int>> move) { 
-
+void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE POSSIBLE MOVES FOR ALL PIECES. USE THE CASTLING EXAMPLE
     // the current piece is at move[0], the new piece is at move[1]
+
     pair<int, int> currentCoord = move[0];
     pair<int, int> newCoord = move[1];
 
@@ -464,7 +462,9 @@ void Board::movePiece(vector<pair<int, int>> move) {
         }
     }
 
+
     if (inArray && !castling) {
+        // castling. if king is move 2, skip the rest of the code in this function
 
         this->setPiece(newCoord.first, newCoord.second, p);
         this->setPiece(currentCoord.first, currentCoord.second, temp);
@@ -486,7 +486,7 @@ void Board::movePiece(vector<pair<int, int>> move) {
                 return;
             }
         }
-        
+
         // pawn promotion
         if (this->getPiece(newCoord.first, newCoord.second)->getSymbol() == 'P' && newCoord.first == 0) {
             if (!p1->getIsCpu()) {
@@ -563,13 +563,20 @@ void Board::movePiece(vector<pair<int, int>> move) {
         this->gdCurrentCoord = currentCoord;
         this->gdNewCoord = newCoord;
 
-        //this->boardtoState();           UNCOMMENT THIS OUT FOR UNDO AND COMPUTER
         this->notifyObservers();
         this->changeTurn();
 
         // cout << *this->td;
         // boardStates.pop();
         // vector<vector<string>> latest = boardStates.top();
+
+        // for (int row = 0; row < 8; ++row) {
+        //     for (int col = 0; col < 8; ++col) {
+        //         cout << latest[row][col] << " ";
+        //     }
+        //     cout << endl;
+        // }
+
         // applyState(latest);
         // notifyObservers();
 
@@ -619,7 +626,6 @@ void Board::movePiece(vector<pair<int, int>> move) {
 
         this->gdCurrentCoord = make_pair(7,7);
         this->gdNewCoord = make_pair(7,5);
-        //this->boardtoState();
         this->notifyObservers();
         this->changeTurn();
         return;
@@ -668,7 +674,6 @@ void Board::movePiece(vector<pair<int, int>> move) {
 
         this->gdCurrentCoord = make_pair(7,0);
         this->gdNewCoord = make_pair(7,3);
-        //this->boardtoState();
         this->notifyObservers();
         this->changeTurn();
         return;
@@ -716,7 +721,6 @@ void Board::movePiece(vector<pair<int, int>> move) {
 
         this->gdCurrentCoord = make_pair(0,7);
         this->gdNewCoord = make_pair(0,5);
-        //this->boardtoState();
         this->notifyObservers();
         this->changeTurn();
         return;
@@ -764,7 +768,6 @@ void Board::movePiece(vector<pair<int, int>> move) {
 
         this->gdCurrentCoord = make_pair(0,0);
         this->gdNewCoord = make_pair(0,3);
-        //this->boardtoState();
         this->notifyObservers();
         this->changeTurn();
         return;
@@ -804,6 +807,7 @@ void Board::isChecked() {
     pair<int, int> whiteKingCoord;
     pair<int, int> blackKingCoord;
 
+
     // get the coordinates of the kings
     for (int row = 0; row < 8; row++) {
         for (int col = 0; col < 8 ; col++) {
@@ -816,11 +820,13 @@ void Board::isChecked() {
         }
     }
 
+
     // check if white king is in check
     // loop through theBoard and find the black pieces 
     // check if the white king is in its possible moves
     vector<pair<int, int>> whitePossibleMoves;
     vector<pair<int, int>> blackPossibleMoves;
+
 
     if (p1->getMyTurn()) {
         for (int row = 0; row < 8; row++) {
@@ -877,7 +883,6 @@ void Board::isCheckmated() {
 
     // copy the board
     Board copy = *this;
-
     if (p1->getMyTurn()) {
         currentPlayer = p1;
     } else {
@@ -888,6 +893,7 @@ void Board::isCheckmated() {
         currentPlayer->setCheckmate(false);
         return;
     }
+
 
     for (int row = 0; row < 8; row++) {
         for (int col = 0; col < 8 ; col++) {
@@ -988,57 +994,6 @@ void Board::isStalemated() {
     return;
 }
 
-void Board::reversePiece(vector<pair<int, int>> move) {
-    pair<int, int> originalCoord = move[0]; // original coord of the piece
-    pair<int, int> movedCoord = move[1]; // current coord of the piece
-
-    Piece *pieceAtOriginal = this->getPiece(originalCoord.first, originalCoord.second);
-    Piece *pieceAtMoved = this->getPiece(movedCoord.first, movedCoord.second);
-
-    this->setPiece(movedCoord.first, movedCoord.second, pieceAtOriginal);
-    this->setPiece(originalCoord.first, originalCoord.second, pieceAtMoved);
-
-    if (pieceAtOriginal) {
-        pieceAtOriginal->setRow(movedCoord.first);
-        pieceAtOriginal->setCol(movedCoord.second);
-    }
-
-    if (pieceAtMoved) {
-        pieceAtMoved->setRow(originalCoord.first);
-        pieceAtMoved->setCol(originalCoord.second);
-        pieceAtMoved->setBlank(true);
-    }
-
-    Pawn *pawn = nullptr;
-    Rook *rook = nullptr;
-    King *king = nullptr;
-
-    if (typeid(*pieceAtOriginal) == typeid(Pawn)) {
-        pawn = dynamic_cast<Pawn*>(pieceAtOriginal);
-        if (pawn) pawn->setMoved(false);
-    } else if (typeid(*pieceAtOriginal) == typeid(Rook)) {
-        rook = dynamic_cast<Rook*>(pieceAtOriginal);
-        if (rook) rook->setMoved(false);
-    } else if (typeid(*pieceAtOriginal) == typeid(King)) {
-        king = dynamic_cast<King*>(pieceAtOriginal);
-        if (king) king->setMoved(false);
-    }
-
-    if (typeid(*pieceAtMoved) == typeid(Pawn)) {
-        pawn = dynamic_cast<Pawn*>(pieceAtMoved);
-        if (pawn) pawn->setMoved(false);
-    } else if (typeid(*pieceAtMoved) == typeid(Rook)) {
-        rook = dynamic_cast<Rook*>(pieceAtMoved);
-        if (rook) rook->setMoved(false);
-    } else if (typeid(*pieceAtMoved) == typeid(King)) {
-        king = dynamic_cast<King*>(pieceAtMoved);
-        if (king) king->setMoved(false);
-    }
-
-    this->notifyObservers();
-
-}
-
 ostream &operator<<(ostream &out, const Board &b) {
     out << *b.td;
     return out;
@@ -1080,22 +1035,49 @@ void Board::boardtoState() {
             Rook* pieceR = nullptr;
             King* pieceK = nullptr;
 
-            if (symbol == 'P') {
+            if (p->isBlank()) {
+                pieceName = "blank";
+            } else if (symbol == 'P') {
                 pieceName = "Pawn";
-                pieceP = dynamic_cast<Pawn*>(p);
-                pieceP->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                // pieceP = dynamic_cast<Pawn*>(p);
+                // pieceP->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                if (p->getType() == PieceType::PawnType) {
+                    pieceP = dynamic_cast<Pawn*>(p);
+                    pieceP->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                } else {
+                    pieceName = pieceName + "F";
+                }
+                // p->getType() == PieceType::PawnType ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
             } else if (symbol == 'p') {
                 pieceName = "pawn";
-                pieceP = dynamic_cast<Pawn*>(p);
-                pieceP->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                // pieceP = dynamic_cast<Pawn*>(p); // CHANGE
+                // pieceP->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                if (p->getType() == PieceType::PawnType) {
+                    pieceP = dynamic_cast<Pawn*>(p);
+                    pieceP->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                } else {
+                    pieceName = pieceName + "F";
+                }
             } else if (symbol == 'R') {
                 pieceName = "Rook";
-                pieceR = dynamic_cast<Rook*>(p);
-                pieceR->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                // pieceR = dynamic_cast<Rook*>(p);
+                // pieceR->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                if (p->getType() == PieceType::RookType) {
+                    pieceR = dynamic_cast<Rook*>(p);
+                    pieceR->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                } else {
+                    pieceName = pieceName + "F";
+                }
             } else if (symbol == 'r') {
                 pieceName = "rook";
-                pieceR = dynamic_cast<Rook*>(p);
-                pieceR->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                // pieceR = dynamic_cast<Rook*>(p);
+                // pieceR->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                if (p->getType() == PieceType::RookType) {
+                    pieceR = dynamic_cast<Rook*>(p);
+                    pieceR->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                } else {
+                    pieceName = pieceName + "F";
+                }
             } else if (symbol == 'N') {
                 pieceName = "Knight";
             } else if (symbol == 'n') {
@@ -1110,12 +1092,24 @@ void Board::boardtoState() {
                 pieceName = "queen";
             } else if (symbol == 'K') {
                 pieceName = "King";
-                pieceK = dynamic_cast<King*>(p);
-                pieceK->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                // pieceK = dynamic_cast<King*>(p);
+                // pieceK->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                if (p->getType() == PieceType::KingType) {
+                    pieceK = dynamic_cast<King*>(p);
+                    pieceK->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                } else {
+                    pieceName = pieceName + "F";
+                }
             } else if (symbol == 'k') {
                 pieceName = "king";
-                pieceK = dynamic_cast<King*>(p);
-                pieceK->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                // pieceK = dynamic_cast<King*>(p);
+                // pieceK->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                if (p->getType() == PieceType::KingType) {
+                    pieceK = dynamic_cast<King*>(p);
+                    pieceK->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+                } else {
+                    pieceName = pieceName + "F";
+                }
             } else {
                 pieceName = "blank";
             }
@@ -1123,6 +1117,20 @@ void Board::boardtoState() {
             state[row][col] = pieceName;
         }
     }
+
+    // cout << "SYMBOL PRINTING hellloooodsfnskdfjdlsfkjfsdlkfdjklsdjkljklsdfjkldsflkjdfsjkldfskjl" << endl;
+
+    // Piece * tempPiece = this->getPiece(2, 0);
+
+    // cout << tempPiece->getSymbol() << endl;
+
+    // cout << "BOARD old Pushed: " << "\n" << endl;
+    // for (int row = 0; row < 8; ++row) {
+    //     for (int col = 0; col < 8; ++col) {
+    //         cout << state[row][col] << " ";
+    //     }
+    //     cout << endl;
+    // }
 
     boardStates.push(state);
 
@@ -1210,6 +1218,70 @@ void Board::applyState(vector<vector<string>> state) {
 
         }
     }
+}
+
+void Board::reversePiece() {
+    vector<vector<string>> latest = boardStates.top();
+    boardStates.pop();
+
+    // cout << "BEFORE" << endl;
+
+    // cout << *this;
+
+    applyState(latest);
+
+    // cout << "BOARD: " << "\n" << endl;
+    // for (int row = 0; row < 8; ++row) {
+    //     for (int col = 0; col < 8; ++col) {
+    //         cout << latest[row][col] << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+    this->notifyObservers();
+
+
+    // cout << "AFTER" << endl;
+
+    // cout << *this;
+    
+    // tempVar++;
+
+    this->changeTurn();
+
+
+}
+
+
+string Board::arrayToFENSyntax(Board& b) {
+    std::string fen;
+    for (int row = 0; row < 8; ++row) {
+        if (row > 0) {
+            fen += '/';
+        }
+
+        int emptyCount = 0;
+        for (int col = 0; col < 8; ++col) {
+            Piece* piece = b.getPiece(row, col);
+            char symbol = piece->getSymbol();
+
+            if (piece->isBlank()) {
+                ++emptyCount;
+            } else {
+                if (emptyCount > 0) {
+                    fen += std::to_string(emptyCount);
+                    emptyCount = 0;
+                }
+                fen += symbol;
+            }
+        }
+
+        if (emptyCount > 0) {
+            fen += std::to_string(emptyCount);
+        }
+    }
+
+    return fen;
 }
 
 

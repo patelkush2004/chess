@@ -132,7 +132,7 @@ int main() {
             }
         }
         else if (cmd == "move" && p1->getIsCpu() && p1->getMyTurn()) {
-            vector<pair<int, int>> move = p1->makeComputerMove(b, 2);
+            vector<pair<int, int>> move = p1->makeComputerMove(b, 3);
             b.movePiece(move);
             cout << b;
             if (p2->getIsCpu() && p2->getMyTurn()) {
@@ -171,7 +171,10 @@ int main() {
             }
         }
         else if (cmd == "move" && p2->getIsCpu() && p2->getMyTurn()) {
-            vector<pair<int, int>> move = p2->makeComputerMove(b, 2);
+            cout << "HI !!!!!" << endl;
+
+
+            vector<pair<int, int>> move = p2->makeComputerMove(b, 3);
             b.movePiece(move);
             cout << b;
             if (p1->getIsCpu() && p1->getMyTurn()) {

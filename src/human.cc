@@ -33,4 +33,3 @@ vector<pair<int, int>> Human::makeMove(string current, string newCoordString)  {
 vector<pair<int, int>> Human::makeComputerMove(Board& b, int level)  {
     return vector<pair<int, int>>();
 }
-

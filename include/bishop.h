@@ -10,6 +10,7 @@
 using namespace std;
 
 class Bishop : public Piece {
+    PieceType type = PieceType::BishopType;
     public:
         Bishop(Board *theBoard, string team, char symbol, int row, int col, bool blank);
         ~Bishop();

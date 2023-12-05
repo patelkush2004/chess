@@ -12,6 +12,7 @@ using namespace std;
 
 class Pawn : public Piece {
     bool moved;
+    PieceType type = PieceType::PawnType;
     public:
         Pawn(Board *theBoard, string team, char symbol, int row, int col, bool blank, bool moved);
         ~Pawn();
@@ -19,6 +20,7 @@ class Pawn : public Piece {
         void setMoved(bool moved);
         vector<pair<int, int>> calculatePossibleMoves() override;
         vector<pair<int, int>> capturingMoves() override;
+        
 };
 
 static const int blackPawn [80][80] = {

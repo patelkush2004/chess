@@ -12,6 +12,8 @@ class Board;
 
 using namespace std;
 
+enum PieceType {Blank=0, PawnType, KnightType, BishopType, RookType, QueenType, KingType};
+
 class Piece {
     Board *theBoard; // Pointer to the board that the piece is on. the piece now has access to the board and can call its methods
     //vector<pair<int, int>> possibleMoves; no need to include this. instead what we can do is call the calculatePossibleMoves() method and it will return the possible moves
@@ -19,6 +21,7 @@ class Piece {
     char symbol;
     int row, col;
     bool blank;
+    PieceType type = Blank;
 
     public:
         //default constructor
@@ -35,6 +38,7 @@ class Piece {
         int getRow(); // returns the row of the piece
         int getCol(); // returns the col of the piece
         bool isBlank(); // if the piece is blank, it has been captured, do don't display it
+        PieceType getType() {return type;} // returns the type of the piece
         Board *getBoard(); // returns the board that the piece is on
 };
 

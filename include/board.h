@@ -55,7 +55,7 @@ class Board : public Subject {
         void isChecked(); // Checks if the current player is in check
         void isCheckmated(); // Checks if the current player is in checkmate
         void isStalemated(); // Checks if the current player is in stalemate
-        void reversePiece(vector<pair<int, int>> move); // Reverses the piece
+        void reversePiece();
 
         void boardtoState(); // Converts the board to a state
         void applyState(vector<vector<string>> state); // Applies the given state to the board
@@ -66,6 +66,9 @@ class Board : public Subject {
         void notifyGraphicObservers();
 
         friend ostream &operator<<(ostream &out, const Board &b); // Overloaded output operator
+
+        string arrayToFENSyntax(Board& b);
+
 
 };
 

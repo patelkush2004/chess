@@ -10,6 +10,7 @@
 using namespace std;
 
 class Queen : public Piece {
+    PieceType type = PieceType::QueenType;
     bool moved;
     public:
         Queen(Board *theBoard, string team, char symbol, int row, int col, bool blank);
