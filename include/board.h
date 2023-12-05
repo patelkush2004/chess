@@ -29,6 +29,7 @@ class Board : public Subject {
     public:
         Board(Player *p1, Player *p2); // Default constructor
         ~Board(); // Destructor
+        Board(const Board &other); // Copy constructor
 
         pair<int,int> gdCurrentCoord; // old coordinate for the graphicdisplay
         pair<int,int> gdNewCoord; // new coordinate for the graphicdisplay

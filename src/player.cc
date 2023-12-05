@@ -36,6 +36,10 @@ void Player::updateScore() {
     this->score++;
 }
 
+void Player::setScore(int score) {
+    this->score = score;
+}
+
 void Player::setMyTurn(bool turn) {
     this->myTurn = turn;
 }

@@ -53,14 +53,6 @@ int main() {
 
         if (cmd == "setup") {
             b.setup();
-
-            if (p1->getIsCpu()) {
-                cout << "White Computer Turn" << endl;
-            }
-            else {
-                cout << "White Turn" << endl;
-            }
-
             cout << b;
 
             // White player always goes first
@@ -72,7 +64,6 @@ int main() {
                 cout << "White Turn" << endl;
                 b.getGd()->graphicTurnMsg("white", false);
             }
-
         }
         else if (cmd == "done") {
             b.init();
@@ -86,17 +77,23 @@ int main() {
                 cout << "White Turn" << endl;
                 b.getGd()->graphicTurnMsg("white", false);
             }
-
-
         }
 
         if (cmd == "resign") { // resign CHANGE THIS UP TOO IF NEEDED
+            if (p1->getMyTurn()) {
+                cout << "Black wins!" << endl;
+                p2->updateScore();
+                b.getGd()->graphicScoreMsg("black", p2->getScore());
+            } else {
+                cout << "White wins!" << endl;
+                p1->updateScore();
+                b.getGd()->graphicScoreMsg("white", p1->getScore());
+            }
             break;
         }
 
         // make move
         if (cmd == "move" && !p1->getIsCpu() && p1->getMyTurn()) {
-            // ADD CONDITION TO SEE IF VALID TEAM IS MOVING VALID PIECE 
             string current;
             string newCoord;
             cin >> current >> newCoord;
@@ -129,7 +126,6 @@ int main() {
                 p1->updateScore();
                 b.getGd()->graphicScoreMsg(true, p1->getScore());
                 b.getGd()->graphicCheckMsg("checkmate");
-                // MAKE THE GAME CONTINUE
             }
         }
         else if (cmd == "move" && p1->getIsCpu() && p1->getMyTurn()) {
@@ -144,7 +140,6 @@ int main() {
                 cout << "Black Turn" << endl;
                 b.getGd()->graphicTurnMsg("black", false);
             }
-
 
             b.isChecked();
             b.notifyGraphicObservers();
@@ -186,7 +181,6 @@ int main() {
                 b.getGd()->graphicCheckMsg("check");
             }
 
-
             b.isCheckmated();
             b.notifyGraphicObservers();
 
@@ -214,7 +208,6 @@ int main() {
                 b.getGd()->graphicTurnMsg("white", false);
             }
 
-
             b.isChecked();
             b.notifyGraphicObservers();
 
@@ -223,7 +216,6 @@ int main() {
                 b.getGd()->graphicCheckMsg("check");
             }
             
-
             b.isCheckmated();
             b.notifyGraphicObservers();
 
@@ -233,6 +225,47 @@ int main() {
                 b.getGd()->graphicScoreMsg("black", p2->getScore());
                 b.getGd()->graphicCheckMsg("checkmate");
                 // MAKE THE GAME CONTINUE
+            }
+        }
+
+        if (p1->getIsCheckmate() || p2->getIsCheckmate()) {
+            cout << "Would you like to play again? (y/n)" << endl;
+            string answer;
+            cin >> answer;
+            if (answer == "y") {
+                int score1 = p1->getScore();
+                int score2 = p2->getScore();
+                delete p1;
+                delete p2;
+
+                Player *p1 = nullptr;
+                Player *p2 = nullptr;
+                if (cmd == "game") {
+                    string player1;
+                    string player2;
+                    cin >> player1 >> player2;
+
+                    if (player1 == "human") {
+                        p1 = new Human("white", false, true);
+                        p1->setScore(score1);
+                    } else {
+                        p1 = new Computer("white", true, true); 
+                        p1->setScore(score1);
+                    }
+
+                    if (player2 == "human") {
+                        p2 = new Human("black", false, false);
+                        p2->setScore(score2);
+                    } else {
+                        p2 = new Computer("black", true, false); 
+                        p2->setScore(score2);
+                    }
+                }
+
+                Board b (p1, p2); // create board stack allocated
+                continue;
+            } else {
+                break;
             }
         }
 

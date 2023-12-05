@@ -32,6 +32,7 @@ class Player {
         pair<int, int> getCurrentCoord();
         pair<int, int> getNewCoord();
         void updateScore();
+        void setScore(int score);
         //void setIsCpu(bool isCpu);
         void setMyTurn(bool myTurn);
         void setCurrentCoord(pair<int, int> currentCoord);
