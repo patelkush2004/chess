@@ -44,13 +44,6 @@ int main() {
     // game loop
     while (cin >> cmd) {
 
-        //if (p1->getMyTurn()) {
-         //   cout << "White's turn" << endl;
-        //}
-        //else {
-        //    cout << "Black's turn" << endl;
-        //}
-
         if (cmd == "setup") {
             b.setup();
 
@@ -104,11 +97,11 @@ int main() {
             b.movePiece(move);
             cout << b;
 
-            if (p2->getIsCpu()) {
+            if (p2->getIsCpu() && p2->getMyTurn()) {
                 cout << "Black Computer Turn" << endl;
                 b.getGd()->graphicTurnMsg("black", true);
             }
-            else {
+            else if (p2->getMyTurn()){
                 cout << "Black Turn" << endl;
                 b.getGd()->graphicTurnMsg("black", false);
             }
@@ -116,18 +109,13 @@ int main() {
             b.isChecked();
             b.notifyGraphicObservers();
           
-            //b.isChecked();
-  
             if (p2->getIsCheck()) {
                 cout << "Black is in check." << endl;
                 b.getGd()->graphicCheckMsg("check");
             }
 
-
             b.isCheckmated();
             b.notifyGraphicObservers();
-
-            //b.isCheckmated();
 
             if (p2->getIsCheckmate()) {
                 cout << "Checkmate! White wins!" << endl;
@@ -141,11 +129,11 @@ int main() {
             vector<pair<int, int>> move = p1->makeComputerMove(b, 2);
             b.movePiece(move);
             cout << b;
-            if (p2->getIsCpu()) {
+            if (p2->getIsCpu() && p2->getMyTurn()) {
                 cout << "Black Computer Turn" << endl;
                 b.getGd()->graphicTurnMsg("black", true);
             }
-            else {
+            else if (p2->getMyTurn()){
                 cout << "Black Turn" << endl;
                 b.getGd()->graphicTurnMsg("black", false);
             }
@@ -154,18 +142,13 @@ int main() {
             b.isChecked();
             b.notifyGraphicObservers();
 
-            //b.isChecked();
-
             if (p2->getIsCheck()) {
                 cout << "Black is in check." << endl;
                 b.getGd()->graphicCheckMsg("check");
             }
 
-
             b.isCheckmated();
             b.notifyGraphicObservers();
-
-            //b.isCheckmated();
 
             if (p2->getIsCheckmate()) {
                 cout << "Checkmate! White wins!" << endl;
@@ -179,19 +162,17 @@ int main() {
             vector<pair<int, int>> move = p2->makeComputerMove(b, 2);
             b.movePiece(move);
             cout << b;
-            if (p1->getIsCpu()) {
+            if (p1->getIsCpu() && p1->getMyTurn()) {
                 cout << "White Computer Turn" << endl;
                 b.getGd()->graphicTurnMsg("white", true);
             }
-            else {
+            else if (p1->getMyTurn()){
                 cout << "White Turn" << endl;
                 b.getGd()->graphicTurnMsg("white", false);
             }
 
             b.isChecked();
             b.notifyGraphicObservers();
-
-            //b.isChecked();
 
             if (p1->getIsCheck()) {
                 cout << "White is in check." << endl;
@@ -202,8 +183,6 @@ int main() {
             b.isCheckmated();
             b.notifyGraphicObservers();
 
-            //b.isCheckmated();
-  
             if (p1->getIsCheckmate()) {
                 cout << "Checkmate! Black wins!" << endl;
                 p2->updateScore();
@@ -219,11 +198,11 @@ int main() {
             vector<pair<int, int>> move = p2->makeMove(current, newCoord);
             b.movePiece(move);
             cout << b;
-            if (p1->getIsCpu()) {
+            if (p1->getIsCpu() && p1->getMyTurn()) {
                 cout << "White Computer Turn" << endl;
                 b.getGd()->graphicTurnMsg("white", true);
             }
-            else {
+            else if (p1->getMyTurn()){
                 cout << "White Turn" << endl;
                 b.getGd()->graphicTurnMsg("white", false);
             }
@@ -232,18 +211,14 @@ int main() {
             b.isChecked();
             b.notifyGraphicObservers();
 
-            //b.isChecked();
-
-            if (p2->getIsCheck()) {
-                cout << "Black is in check." << endl;
+            if (p1->getIsCheck()) {
+                cout << "White is in check." << endl;
                 b.getGd()->graphicCheckMsg("check");
             }
             
 
             b.isCheckmated();
             b.notifyGraphicObservers();
-
-            //b.isCheckmated();
 
             if (p1->getIsCheckmate()) {
                 cout << "Checkmate! Black wins!" << endl;

@@ -354,7 +354,6 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
     bool hasMovedFieldR = false;
     bool hasMovedFieldK = false;
 
-
     // current piece
     Piece *p = this->getPiece(currentCoord.first, currentCoord.second); 
 
@@ -396,7 +395,6 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
     }
 
     if (inArray && !castling) {
-        // castling. if king is move 2, skip the rest of the code in this function
 
         this->setPiece(newCoord.first, newCoord.second, p);
         this->setPiece(currentCoord.first, currentCoord.second, temp);
@@ -729,6 +727,7 @@ void Board::isChecked() {
                 return;
             }
         }
+        p1->setCheck(false);
 
     }
     else if (p2->getMyTurn()) {
@@ -749,6 +748,7 @@ void Board::isChecked() {
                 return;
             }
         }
+        p2->setCheck(false);
     }
 }
 
@@ -773,17 +773,32 @@ void Board::isCheckmated() {
         return;
     }
 
-    for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8 ; j++) {
-            Piece *p = this->getPiece(i, j);
+    for (int row = 0; row < 8; row++) {
+        for (int col = 0; col < 8 ; col++) {
+            Piece *p = this->getPiece(row, col);
             if (p->getTeam() == "white") {
                 vector<pair<int, int>> possibleMoves = p->calculatePossibleMoves();
                 for (auto &coord : possibleMoves) {
-                    vector<pair<int, int>> move = {make_pair(i, j), coord};
+                    vector<pair<int, int>> move = {make_pair(row, col), coord};
                     
                     // copy the board
                     Board *copy = new Board(p1, p2);
                     copy->theBoard = this->theBoard;
+                    
+                    /*
+                    Board *copy = new Board(p1, p2);
+                    for (int i = 0; i < 8; ++i) {
+                        for (int j = 0; j < 8; ++j) {
+                            Piece *originalPiece = this->theBoard[i][j];
+                            if (originalPiece != nullptr) {
+                                Piece *newPiece = new Piece(*originalPiece); // create a new piece that's a copy of the original
+                                copy->theBoard[i][j] = newPiece;
+                            } else {
+                                copy->theBoard[i][j] = nullptr;
+                            }
+                        }
+                    }
+                    */
                     copy->movePiece(move);
 
                     // check if the king is still in check
@@ -792,14 +807,13 @@ void Board::isCheckmated() {
                         currentPlayer->setCheckmate(false);
                         return;
                     }
-
                     //delete copy;
                 }
             }
             else if (p->getTeam() == "black") {
                 vector<pair<int, int>> possibleMoves = p->calculatePossibleMoves();
                 for (auto &coord : possibleMoves) {
-                    vector<pair<int, int>> move = {make_pair(i, j), coord};
+                    vector<pair<int, int>> move = {make_pair(row, col), coord};
                     
                     // copy the board
                     Board *copy = new Board(p1, p2);
