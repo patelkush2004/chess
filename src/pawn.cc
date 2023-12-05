@@ -108,7 +108,7 @@ vector<pair<int, int>> Pawn::capturingMoves() {
             // white pawns move up the board which is down the vector
             moves.emplace_back(make_pair(row-1, col + 1));
         }
-    }
+    } 
 
     // attacking opponent's piece
     if ((getTeam() == "black") && (row != 7) && (col != 0)) {
