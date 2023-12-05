@@ -105,6 +105,7 @@ int main() {
                 b.getGd()->graphicTurnMsg("black", false);
             }
 
+
             b.isChecked();
             b.notifyGraphicObservers();
           
@@ -112,6 +113,7 @@ int main() {
                 cout << "Black is in check." << endl;
                 b.getGd()->graphicCheckMsg("check");
             }
+
 
             b.isCheckmated();
             b.notifyGraphicObservers();
@@ -123,6 +125,7 @@ int main() {
                 b.getGd()->graphicCheckMsg("checkmate");
             }
 
+
             b.isStalemated();
             b.notifyGraphicObservers();
 
@@ -130,6 +133,8 @@ int main() {
                 cout << "Stalemate! Draw!" << endl;
                 //b.getGd()->graphicCheckMsg("checkmate"); FIX THIS
             }
+
+
         }
         else if (cmd == "move" && p1->getIsCpu() && p1->getMyTurn()) {
             vector<pair<int, int>> move = p1->makeComputerMove(b, 2);
@@ -256,7 +261,9 @@ int main() {
 
         if (p1->getIsCheckmate() || p2->getIsCheckmate() || p1->getIsStalemate() || p2->getIsStalemate() || resign) {
             cout << "Do you want to play again? (yes/no)" << endl;
-            if (cmd == "yes") {
+            string answer;
+            cin >> answer;
+            if (answer == "yes") {
 
                 int score1 = p1->getScore();
                 int score2 = p2->getScore();
@@ -282,7 +289,7 @@ int main() {
 
                 resign = false;
             }
-            else if (cmd == "no") {
+            else if (answer == "no") {
                 break;
             }
         }
