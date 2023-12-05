@@ -44,6 +44,13 @@ int main() {
     // game loop
     while (cin >> cmd) {
 
+        //if (p1->getMyTurn()) {
+         //   cout << "White's turn" << endl;
+        //}
+        //else {
+        //    cout << "Black's turn" << endl;
+        //}
+
         if (cmd == "setup") {
             b.setup();
 

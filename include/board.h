@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <stack>
 
 #include "piece.h"
 #include "player.h"
@@ -17,6 +18,8 @@ using namespace std;
 
 class Board : public Subject {
     vector<vector<Piece*>> theBoard; // The actual board. is a vector of vectors of pieces
+    stack<vector<vector<string>>> boardStates; // boardStates, a stack of board states
+
     vector<Observer*> observers; // The observers of the board
     Player *p1; // The white player
     Player *p2; // The black player
@@ -49,6 +52,9 @@ class Board : public Subject {
         void isCheckmated(); // Checks if the current player is in checkmate
         void isStalemated(); // Checks if the current player is in stalemate
         void reversePiece(vector<pair<int, int>> move); // Reverses the piece
+
+        void boardtoState(); // Converts the board to a state
+        void applyState(vector<vector<string>> state); // Applies the given state to the board
 
         void attach(Observer *o); // Attaches an observer   
         // void detach(Observer *o); // Detaches an observer. Don't think we need this

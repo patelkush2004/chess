@@ -26,21 +26,8 @@ pair<int, int> Computer::convertToCoord(string notation) {
 
 
 vector<pair<int, int>> Computer::makeComputerMove(Board& b, int level)  {
-
-    vector<pair<int, int>> move;
-
-    if (level == 1) {
-        move = levelOne(b);
-    } else if (level == 2) {
-        move = levelTwo(b);
-    }
-
-    return move;
-}
-
-vector<pair<int, int>> Computer::levelOne(Board& b)  {
+ 
     int randomIndex;
-
     // this is a vector of pairs of <currentPosition, vectorPossibleMoves>
     vector<
         pair<
@@ -110,7 +97,6 @@ vector<pair<int, int>> Computer::levelTwo(Board& b)  {
                     captureMoves.emplace_back(currentAndPossibleMove);
                     cout << move.first << ", " << move.second << endl;
                 }
-
                 for (pair<int, int> move : possibleMoves) {
                     pair<pair<int, int>, pair<int, int>> currentAndPossibleMove(current, move);
                     moves.emplace_back(currentAndPossibleMove);
