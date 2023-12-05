@@ -17,6 +17,8 @@ int main() {
     Player *p1 = nullptr; 
     Player *p2 = nullptr;
 
+    bool resign = false;
+
     string cmd;
     cin >> cmd;
 
@@ -43,13 +45,6 @@ int main() {
 
     // game loop
     while (cin >> cmd) {
-
-        //if (p1->getMyTurn()) {
-         //   cout << "White's turn" << endl;
-        //}
-        //else {
-        //    cout << "Black's turn" << endl;
-        //}
 
         if (cmd == "setup") {
             b.setup();
@@ -79,7 +74,7 @@ int main() {
             }
         }
 
-        if (cmd == "resign") { // resign CHANGE THIS UP TOO IF NEEDED
+        if (cmd == "resign") { // resign 
             if (p1->getMyTurn()) {
                 cout << "Black wins!" << endl;
                 p2->updateScore();
@@ -89,7 +84,7 @@ int main() {
                 p1->updateScore();
                 b.getGd()->graphicScoreMsg("white", p1->getScore());
             }
-            break;
+            resign = true;
         }
 
         // make move
@@ -127,6 +122,14 @@ int main() {
                 b.getGd()->graphicScoreMsg(true, p1->getScore());
                 b.getGd()->graphicCheckMsg("checkmate");
             }
+
+            b.isStalemated();
+            b.notifyGraphicObservers();
+
+            if (p2->getIsStalemate()) {
+                cout << "Stalemate! Draw!" << endl;
+                //b.getGd()->graphicCheckMsg("checkmate"); FIX THIS
+            }
         }
         else if (cmd == "move" && p1->getIsCpu() && p1->getMyTurn()) {
             vector<pair<int, int>> move = p1->makeComputerMove(b, 2);
@@ -159,6 +162,13 @@ int main() {
                 b.getGd()->graphicCheckMsg("checkmate");
                 // MAKE THE GAME CONTINUE
             }
+            b.isStalemated();
+            b.notifyGraphicObservers();
+
+            if (p2->getIsStalemate()) {
+                cout << "Stalemate! Draw!" << endl;
+                //b.getGd()->graphicCheckMsg("checkmate"); FIX THIS
+            }
         }
         else if (cmd == "move" && p2->getIsCpu() && p2->getMyTurn()) {
             vector<pair<int, int>> move = p2->makeComputerMove(b, 2);
@@ -190,6 +200,14 @@ int main() {
                 b.getGd()->graphicScoreMsg("white", p2->getScore());
                 b.getGd()->graphicCheckMsg("checkmate");
                 // MAKE THE GAME CONTINUE
+            }
+
+            b.isStalemated();
+            b.notifyGraphicObservers();
+
+            if (p1->getIsStalemate()) {
+                cout << "Stalemate! Draw!" << endl;
+                //b.getGd()->graphicCheckMsg("checkmate"); FIX THIS
             }
         }
         else if (cmd == "move" && !p2->getIsCpu() && p2->getMyTurn()) {
@@ -226,45 +244,41 @@ int main() {
                 b.getGd()->graphicCheckMsg("checkmate");
                 // MAKE THE GAME CONTINUE
             }
+
+            b.isStalemated();
+            b.notifyGraphicObservers();
+
+            if (p1->getIsStalemate()) {
+                cout << "Stalemate! Draw!" << endl;
+                //b.getGd()->graphicCheckMsg("checkmate"); FIX THIS
+            }
         }
 
-        if (p1->getIsCheckmate() || p2->getIsCheckmate()) {
-            cout << "Would you like to play again? (y/n)" << endl;
-            string answer;
-            cin >> answer;
-            if (answer == "y") {
+        if (p1->getIsCheckmate() || p2->getIsCheckmate() || p1->getIsStalemate() || p2->getIsStalemate() || resign) {
+            cout << "Do you want to play again? (yes/no)" << endl;
+            if (cmd == "yes") {
+
                 int score1 = p1->getScore();
                 int score2 = p2->getScore();
-                delete p1;
-                delete p2;
 
-                Player *p1 = nullptr;
-                Player *p2 = nullptr;
-                if (cmd == "game") {
-                    string player1;
-                    string player2;
-                    cin >> player1 >> player2;
+                p1->setCheck(false);
+                p1->setCheckmate(false);
+                p1->setStalemate(false);
+                p2->setCheck(false);
+                p2->setCheckmate(false);
+                p2->setStalemate(false);
+                p1->setScore(score1);
+                p2->setScore(score2);
 
-                    if (player1 == "human") {
-                        p1 = new Human("white", false, true);
-                        p1->setScore(score1);
-                    } else {
-                        p1 = new Computer("white", true, true); 
-                        p1->setScore(score1);
-                    }
+                p1->setMyTurn(true);
+                p2->setMyTurn(false);
 
-                    if (player2 == "human") {
-                        p2 = new Human("black", false, false);
-                        p2->setScore(score2);
-                    } else {
-                        p2 = new Computer("black", true, false); 
-                        p2->setScore(score2);
-                    }
-                }
+                b.clearBoard();
+                b.clearBoardStates();
 
-                Board b (p1, p2); // create board stack allocated
-                continue;
-            } else {
+                resign = false;
+            }
+            else if (cmd == "no") {
                 break;
             }
         }

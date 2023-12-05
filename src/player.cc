@@ -65,6 +65,14 @@ bool Player::getIsCheckmate() {
     return isCheckmate;
 }
 
+void Player::setStalemate(bool stalemate) {
+    this->isStalemate = stalemate;
+}
+
+bool Player::getIsStalemate() {
+    return isStalemate;
+}
+
 void Player::setCurrentCoord(pair<int, int> coords) {
     this->currentCoord = coords;
 }

@@ -15,6 +15,7 @@ class Player {
     bool myTurn; // true if it is the player's turn
     bool isCheck;
     bool isCheckmate;
+    bool isStalemate;
     pair<int, int> currentCoord; // current coordinate of the piece player is trying to move
     pair<int, int> newCoord; // new coordinate of the piece player is trying to move
 
@@ -27,8 +28,10 @@ class Player {
         bool getMyTurn();
         bool getIsCheck();
         bool getIsCheckmate();
+        bool getIsStalemate();
         void setCheck(bool check);
         void setCheckmate(bool checkmate);
+        void setStalemate(bool stalemate);
         pair<int, int> getCurrentCoord();
         pair<int, int> getNewCoord();
         void updateScore();

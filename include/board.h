@@ -49,6 +49,9 @@ class Board : public Subject {
         Player* getP1();
         Player* getP2();
 
+        void clearBoard(); // Clears the board
+        void clearBoardStates(); // Clears the board states
+
         void isChecked(); // Checks if the current player is in check
         void isCheckmated(); // Checks if the current player is in checkmate
         void isStalemated(); // Checks if the current player is in stalemate

@@ -146,11 +146,11 @@ void Board::init() { // MOVEMENT NOT WORKING AFTER INIT COMPLETE
 
     this->attach(td);
     this->attach(gd);
-    this->boardtoState();
+    //this->boardtoState();
     this->notifyObservers();
 }
 
-void Board::setup() {   // MOVEMENT NOT WORKING AFTER SETUP COMPLETE
+void Board::setup() {  
     td = new TextDisplay();
     gd = new GraphicDisplay();
 
@@ -236,12 +236,12 @@ void Board::setup() {   // MOVEMENT NOT WORKING AFTER SETUP COMPLETE
             // loop through theBoard and get all the possible moves for each piece and each team
             for (auto &row : theBoard) {
                 for (auto &piece : row) {
-                    if (piece->getTeam() == "white") {
+                    if (piece->getTeam() == "white" && piece->isBlank() == false) {
                         vector<pair<int, int>> possibleMoves = piece->calculatePossibleMoves();
                         for (auto &coord : possibleMoves) {
                             whitePossibleMoves.emplace_back(coord);
                         }
-                    } else if (piece->getTeam() == "black") {
+                    } else if (piece->getTeam() == "black" && piece->isBlank() == false) {
                         vector<pair<int, int>> possibleMoves = piece->calculatePossibleMoves();
                         for (auto &coord : possibleMoves) {
                             blackPossibleMoves.emplace_back(coord);
@@ -281,7 +281,7 @@ void Board::setup() {   // MOVEMENT NOT WORKING AFTER SETUP COMPLETE
             }
 
             if (!pawnFirstRow && !pawnLastRow && kings && !whiteKingInCheck && !blackKingInCheck) {
-                this->boardtoState();
+                //this->boardtoState();
                 return;
             } else {
                 continue;
@@ -549,7 +549,7 @@ void Board::movePiece(vector<pair<int, int>> move) {
         this->gdCurrentCoord = currentCoord;
         this->gdNewCoord = newCoord;
 
-        this->boardtoState();
+        //this->boardtoState();           UNCOMMENT THIS OUT FOR UNDO AND COMPUTER
         this->notifyObservers();
         this->changeTurn();
 
@@ -605,7 +605,7 @@ void Board::movePiece(vector<pair<int, int>> move) {
 
         this->gdCurrentCoord = make_pair(7,7);
         this->gdNewCoord = make_pair(7,5);
-        this->boardtoState();
+        //this->boardtoState();
         this->notifyObservers();
         this->changeTurn();
         return;
@@ -654,7 +654,7 @@ void Board::movePiece(vector<pair<int, int>> move) {
 
         this->gdCurrentCoord = make_pair(7,0);
         this->gdNewCoord = make_pair(7,3);
-        this->boardtoState();
+        //this->boardtoState();
         this->notifyObservers();
         this->changeTurn();
         return;
@@ -702,7 +702,7 @@ void Board::movePiece(vector<pair<int, int>> move) {
 
         this->gdCurrentCoord = make_pair(0,7);
         this->gdNewCoord = make_pair(0,5);
-        this->boardtoState();
+        //this->boardtoState();
         this->notifyObservers();
         this->changeTurn();
         return;
@@ -750,7 +750,7 @@ void Board::movePiece(vector<pair<int, int>> move) {
 
         this->gdCurrentCoord = make_pair(0,0);
         this->gdNewCoord = make_pair(0,3);
-        this->boardtoState();
+        //this->boardtoState();
         this->notifyObservers();
         this->changeTurn();
         return;
@@ -764,6 +764,22 @@ Player* Board::getP1() {
 
 Player* Board::getP2() { 
     return p2; 
+}
+
+void Board::clearBoard() {
+    for (auto &row : theBoard) {
+        for (auto &piece : row) {
+            delete piece;
+        }
+        row.clear();
+    }
+    theBoard.clear();
+}
+
+void Board::clearBoardStates() {
+    while (!boardStates.empty()) {
+        boardStates.pop();
+    }
 }
 
 void Board::isChecked() {
@@ -869,10 +885,11 @@ void Board::isCheckmated() {
                     for (auto &coord : possibleMoves) {
                         vector<pair<int, int>> move = {make_pair(row, col), coord};
                         copy.movePiece(move);
-                    }
-                    if (!copy.p1->getIsCheck()) {
-                        currentPlayer->setCheckmate(false);
-                        return;
+
+                        if (!copy.p1->getIsCheck()) {
+                            currentPlayer->setCheckmate(false);
+                            return;
+                        }
                     }
                 }
             }
@@ -882,11 +899,11 @@ void Board::isCheckmated() {
                     for (auto &coord : possibleMoves) {
                         vector<pair<int, int>> move = {make_pair(row, col), coord};
                         copy.movePiece(move);
-                    }
 
-                    if (!copy.p2->getIsCheck()) {
-                        currentPlayer->setCheckmate(false);
-                        return;
+                        if (!copy.p2->getIsCheck()) {
+                            currentPlayer->setCheckmate(false);
+                            return;
+                        }
                     }
                 }
             }
@@ -897,7 +914,64 @@ void Board::isCheckmated() {
 }
 
 void Board::isStalemated() {
+    // if the current player is not in check
+    // check if the current player has any possible moves
+    // go through all the pieces of the current player
+    // check if any of them have any possible moves such that the king is not in check
+    // if there are no possible moves, then the current player is stalemated
 
+    Player *currentPlayer;
+
+    // copy the board
+    Board copy = *this;
+
+    if (p1->getMyTurn()) {
+        currentPlayer = p1;
+    } else {
+        currentPlayer = p2;
+    }
+
+    if (currentPlayer->getIsCheck()) {
+        currentPlayer->setStalemate(false);
+        return;
+    }
+
+    for (int row = 0; row < 8; row++) {
+        for (int col = 0; col < 8 ; col++) {
+            Piece *p = this->getPiece(row, col);
+            if (p != nullptr && p1->getMyTurn() && !p1->getIsCheck()) {
+                if (p->getTeam() == "white" && !p->isBlank()) {
+                    vector<pair<int, int>> possibleMoves = p->calculatePossibleMoves();
+
+                    for (auto &coord : possibleMoves) {
+                        vector<pair<int, int>> move = {make_pair(row, col), coord};
+                        copy.movePiece(move);
+
+                        if (!copy.p1->getIsCheck()) {
+                            currentPlayer->setStalemate(false);
+                            return;
+                        }
+                    }
+                }
+            }
+            else if (p2->getMyTurn() && !p2->getIsCheck()) {
+                if (p != nullptr && p->getTeam() == "black" && !p->isBlank()) {
+                    vector<pair<int, int>> possibleMoves = p->calculatePossibleMoves();
+                    for (auto &coord : possibleMoves) {
+                        vector<pair<int, int>> move = {make_pair(row, col), coord};
+                        copy.movePiece(move);
+
+                        if (!copy.p2->getIsCheck()) {
+                            currentPlayer->setStalemate(false);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    currentPlayer->setStalemate(true);
+    return;
 }
 
 void Board::reversePiece(vector<pair<int, int>> move) {
@@ -992,11 +1066,11 @@ void Board::boardtoState() {
             Rook* pieceR = nullptr;
             King* pieceK = nullptr;
 
-            if (symbol == 'p') {
+            if (symbol == 'P') {
                 pieceName = "Pawn";
                 pieceP = dynamic_cast<Pawn*>(p);
                 pieceP->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
-            } else if (symbol == 'P') {
+            } else if (symbol == 'p') {
                 pieceName = "pawn";
                 pieceP = dynamic_cast<Pawn*>(p);
                 pieceP->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
