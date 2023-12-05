@@ -24,9 +24,9 @@ void TextDisplay::notify(Board &theBoard) {
         for (int col = 0; col < 8 ; col++) {
             if (theBoard.getPiece(row, col)->isBlank()) {
                 if((row + col) % 2 == 0) {
-                    theDisplay[row][col] = '_';
-                } else {
                     theDisplay[row][col] = ' ';
+                } else {
+                    theDisplay[row][col] = '_';
                 }
             } else {
                 theDisplay[row][col] = theBoard.getPiece(row, col)->getSymbol();

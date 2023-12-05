@@ -53,6 +53,11 @@ vector<pair<int, int>> Piece::calculatePossibleMoves() {
     return moves;
 }
 
+vector<pair<int, int>> Piece::capturingMoves() {
+    vector<pair<int, int>> moves;
+    return moves;
+}
+
 Board *Piece::getBoard() {
     return theBoard;
 }

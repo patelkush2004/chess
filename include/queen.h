@@ -15,6 +15,8 @@ class Queen : public Piece {
         Queen(Board *theBoard, string team, char symbol, int row, int col, bool blank);
         ~Queen();
         vector<pair<int, int>> calculatePossibleMoves() override;
+        vector<pair<int, int>> capturingMoves() override;
+
 };
 
 static const int blackQueen [80][80] = {

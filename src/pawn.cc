@@ -90,3 +90,40 @@ vector<pair<int, int>> Pawn::calculatePossibleMoves() {
     return moves;
 }
 
+vector<pair<int, int>> Pawn::capturingMoves() {
+    vector<pair<int, int>> moves;
+
+    int row = getRow();
+    int col = getCol();
+
+    // attacking opponent's piece
+    if ((getTeam() == "white") && (row != 0) && (col != 0)) {
+        if (this->getBoard()->getPiece(row-1, col-1)->getTeam() == "black") {
+            // white pawns move up the board which is down the vector
+            moves.emplace_back(make_pair(row-1, col-1));
+        }
+    } 
+    if ((getTeam() == "white") && (row != 0) && (col != 7)) {
+        if (this->getBoard()->getPiece(row - 1, col+1)->getTeam() == "black") {
+            // white pawns move up the board which is down the vector
+            moves.emplace_back(make_pair(row-1, col + 1));
+        }
+    }
+
+    // attacking opponent's piece
+    if ((getTeam() == "black") && (row != 7) && (col != 0)) {
+        if (this->getBoard()->getPiece(row+1, col-1)->getTeam() == "white") {
+            // black pawns move down the board which is up the vector
+            moves.emplace_back(make_pair(row+1, col-1));
+        }
+    }
+    if ((getTeam() == "black") && (row != 7) && (col != 7)) {
+        if (this->getBoard()->getPiece(row + 1, col+1)->getTeam() == "white") {
+            // black pawns move down the board which is up the vector
+            moves.emplace_back(make_pair(row + 1, col + 1));
+        }
+    }
+
+    return moves;
+}
+

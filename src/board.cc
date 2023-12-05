@@ -354,20 +354,6 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
     bool hasMovedFieldR = false;
     bool hasMovedFieldK = false;
 
-    // to see which player is in check if any. 
-    // I DONT THINK THIS IS NECESSARY
-    bool check1 = false;
-    bool check2 = false;
-    this->isChecked();
-    if (p1->getMyTurn()) {
-        if (p1->getIsCheck()) {
-            check1 = true;
-        }
-    } else if (p2->getMyTurn()) {
-        if (p2->getIsCheck()) {
-            check2 = true;
-        }
-    }
 
     // current piece
     Piece *p = this->getPiece(currentCoord.first, currentCoord.second); 
@@ -838,6 +824,57 @@ void Board::isCheckmated() {
 }
 
 void Board::isStalemated() {
+
+}
+
+void Board::reversePiece(vector<pair<int, int>> move) {
+    pair<int, int> originalCoord = move[0]; // original coord of the piece
+    pair<int, int> movedCoord = move[1]; // current coord of the piece
+
+    Piece *pieceAtOriginal = this->getPiece(originalCoord.first, originalCoord.second);
+    Piece *pieceAtMoved = this->getPiece(movedCoord.first, movedCoord.second);
+
+    this->setPiece(movedCoord.first, movedCoord.second, pieceAtOriginal);
+    this->setPiece(originalCoord.first, originalCoord.second, pieceAtMoved);
+
+    if (pieceAtOriginal) {
+        pieceAtOriginal->setRow(movedCoord.first);
+        pieceAtOriginal->setCol(movedCoord.second);
+    }
+
+    if (pieceAtMoved) {
+        pieceAtMoved->setRow(originalCoord.first);
+        pieceAtMoved->setCol(originalCoord.second);
+        pieceAtMoved->setBlank(true);
+    }
+
+    Pawn *pawn = nullptr;
+    Rook *rook = nullptr;
+    King *king = nullptr;
+
+    if (typeid(*pieceAtOriginal) == typeid(Pawn)) {
+        pawn = dynamic_cast<Pawn*>(pieceAtOriginal);
+        if (pawn) pawn->setMoved(false);
+    } else if (typeid(*pieceAtOriginal) == typeid(Rook)) {
+        rook = dynamic_cast<Rook*>(pieceAtOriginal);
+        if (rook) rook->setMoved(false);
+    } else if (typeid(*pieceAtOriginal) == typeid(King)) {
+        king = dynamic_cast<King*>(pieceAtOriginal);
+        if (king) king->setMoved(false);
+    }
+
+    if (typeid(*pieceAtMoved) == typeid(Pawn)) {
+        pawn = dynamic_cast<Pawn*>(pieceAtMoved);
+        if (pawn) pawn->setMoved(false);
+    } else if (typeid(*pieceAtMoved) == typeid(Rook)) {
+        rook = dynamic_cast<Rook*>(pieceAtMoved);
+        if (rook) rook->setMoved(false);
+    } else if (typeid(*pieceAtMoved) == typeid(King)) {
+        king = dynamic_cast<King*>(pieceAtMoved);
+        if (king) king->setMoved(false);
+    }
+
+    this->notifyObservers();
 
 }
 

@@ -14,6 +14,7 @@ class Bishop : public Piece {
         Bishop(Board *theBoard, string team, char symbol, int row, int col, bool blank);
         ~Bishop();
         vector<pair<int, int>> calculatePossibleMoves() override;
+        vector<pair<int, int>> capturingMoves() override;
 };
 
 static const int blackBishop [80][80] = {

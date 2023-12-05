@@ -15,6 +15,7 @@ class Computer : public Player {
         ~Computer();
         pair<int, int> convertToCoord(string notation);
         vector<pair<int, int>> makeComputerMove(Board& b) override;
+        
         vector<pair<int, int>> levelOne(Board& b);
 };
 

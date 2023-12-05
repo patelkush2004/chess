@@ -48,6 +48,7 @@ class Board : public Subject {
         void isChecked(); // Checks if the current player is in check
         void isCheckmated(); // Checks if the current player is in checkmate
         void isStalemated(); // Checks if the current player is in stalemate
+        void reversePiece(vector<pair<int, int>> move); // Reverses the piece
 
         void attach(Observer *o); // Attaches an observer   
         // void detach(Observer *o); // Detaches an observer. Don't think we need this

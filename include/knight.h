@@ -14,6 +14,7 @@ class Knight : public Piece {
         Knight(Board *theBoard, string team, char symbol, int row, int col, bool blank);
         ~Knight();
         vector<pair<int, int>> calculatePossibleMoves() override;
+        vector<pair<int, int>> capturingMoves() override;
 };
 
 static const int blackKnight [80][80] = {

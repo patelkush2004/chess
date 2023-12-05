@@ -1,101 +1,97 @@
    ________
-1 |rnbqkbnr|
-2 |pppppppp|
-3 |_ _ _ _ |
-4 | _ _ _ _|
-5 |_ _ _ _ |
-6 | _ _ _ _|
-7 |PPPPPPPP|
-8 |RNBQKBNR|
+8 |rnbqkbnr|
+7 |pppppppp|
+6 |_ _ _ _ |
+5 | _ _ _ _|
+4 |_ _ _ _ |
+3 | _ _ _ _|
+2 |PPPPPPPP|
+1 |RNBQKBNR|
 
    abcdefgh
+White Turn
    ________
-1 |rnbqkbnr|
-2 |pppppppp|
-3 |_ _ _ _ |
-4 | _ _ _ _|
-5 |_ _ P _ |
-6 | _ _ _ _|
-7 |PPPP_PPP|
-8 |RNBQKBNR|
+8 |rnbqkbnr|
+7 |pppppppp|
+6 |_ _ _ _ |
+5 | _ _ _ _|
+4 |_ _ P _ |
+3 | _ _ _ _|
+2 |PPPP_PPP|
+1 |RNBQKBNR|
 
    abcdefgh
+Black Turn
    ________
-1 |rnbqkbnr|
-2 |pppp ppp|
-3 |_ _ _ _ |
-4 | _ _p_ _|
-5 |_ _ P _ |
-6 | _ _ _ _|
-7 |PPPP_PPP|
-8 |RNBQKBNR|
+8 |rnbqkbnr|
+7 |pppp ppp|
+6 |_ _ _ _ |
+5 | _ _p_ _|
+4 |_ _ P _ |
+3 | _ _ _ _|
+2 |PPPP_PPP|
+1 |RNBQKBNR|
 
    abcdefgh
+White Turn
    ________
-1 |rnbqkbnr|
-2 |pppp ppp|
-3 |_ _ _ _ |
-4 | _ _p_ _|
-5 |_ _ P _ |
-6 | _ _ _ P|
-7 |PPPP_PP |
-8 |RNBQKBNR|
+8 |rnbqkbnr|
+7 |pppp ppp|
+6 |_ _ _ _ |
+5 | B _p_ _|
+4 |_ _ P _ |
+3 | _ _ _ _|
+2 |PPPP_PPP|
+1 |RNBQK_NR|
 
    abcdefgh
+Black Turn
    ________
-1 |rnbqk nr|
-2 |pppp ppp|
-3 |_ _ _ _ |
-4 | _ _p_ _|
-5 |_b_ P _ |
-6 | _ _ _ P|
-7 |PPPP_PP |
-8 |RNBQKBNR|
+8 |rnbqkbnr|
+7 | ppp ppp|
+6 |_ _ _ _ |
+5 |pB _p_ _|
+4 |_ _ P _ |
+3 | _ _ _ _|
+2 |PPPP_PPP|
+1 |RNBQK_NR|
 
    abcdefgh
+White Turn
    ________
-1 |rnbqk nr|
-2 |pppp ppp|
-3 |_ _ _ _ |
-4 | _ _p_ _|
-5 |_b_ P _ |
-6 |P_ _ _ P|
-7 |_PPP_PP |
-8 |RNBQKBNR|
+8 |rnbqkbnr|
+7 | ppp ppp|
+6 |_ _ _ _ |
+5 |pB _p_ Q|
+4 |_ _ P _ |
+3 | _ _ _ _|
+2 |PPPP_PPP|
+1 |RNB_K_NR|
 
    abcdefgh
+Black Turn
    ________
-1 |rnb k nr|
-2 |pppp ppp|
-3 |_ _ _ _ |
-4 | _ _p_q_|
-5 |_b_ P _ |
-6 |P_ _ _ P|
-7 |_PPP_PP |
-8 |RNBQKBNR|
+8 |rnbqkbnr|
+7 | ppp ppp|
+6 |_ _ _ _ |
+5 | B _p_ Q|
+4 |p _ P _ |
+3 | _ _ _ _|
+2 |PPPP_PPP|
+1 |RNB_K_NR|
 
    abcdefgh
+White Turn
    ________
-1 |rnb k nr|
-2 |pppp ppp|
-3 |_ _ _ _ |
-4 | _ _p_q_|
-5 |Pb_ P _ |
-6 | _ _ _ P|
-7 |_PPP_PP |
-8 |RNBQKBNR|
+8 |rnbqkbnr|
+7 | ppp Qpp|
+6 |_ _ _ _ |
+5 | B _p_ _|
+4 |p _ P _ |
+3 | _ _ _ _|
+2 |PPPP_PPP|
+1 |RNB_K_NR|
 
    abcdefgh
-   ________
-1 |rnb k nr|
-2 |pppp ppp|
-3 |_ _ _ _ |
-4 | _ _p_ _|
-5 |Pb_ P _ |
-6 | _ _ _ P|
-7 |_PPq_PP |
-8 |RNBQKBNR|
-
-   abcdefgh
-White is in check.
-Checkmate! Black wins!
+Black Turn
+Black is in check.

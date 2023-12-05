@@ -18,6 +18,7 @@ class Pawn : public Piece {
         bool getMoved();
         void setMoved(bool moved);
         vector<pair<int, int>> calculatePossibleMoves() override;
+        vector<pair<int, int>> Pawn::capturingMoves() override;
 };
 
 static const int blackPawn [80][80] = {

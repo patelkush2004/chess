@@ -64,5 +64,3 @@ vector<pair<int, int>> Computer::makeComputerMove(Board& b)  {
 
     return fromToMove;
 }
-
-

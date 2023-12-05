@@ -29,6 +29,7 @@ class Piece {
         void setCol(int col); // set's the col of the piece
         void setBlank(bool blank); // if the piece is blank, it has been captured, do don't display it
         virtual vector<pair<int, int>> calculatePossibleMoves(); // calculates the possible moves of the piece
+        virtual vector<pair<int, int>> capturingMoves(); // calculates the capturing moves of the piece
         string getTeam(); // returns the team of the piece
         char getSymbol(); // returns the symbol of the piece
         int getRow(); // returns the row of the piece

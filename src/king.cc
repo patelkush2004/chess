@@ -114,3 +114,69 @@ vector<pair<int, int>> King::calculatePossibleMoves() {
 
     return moves;
 }
+
+vector<pair<int, int>> King::capturingMoves() {
+    vector<pair<int, int>> moves;
+
+    int row = getRow();
+    int col = getCol();
+
+    // check if the king can move up
+    if (row > 0) {
+        if (this->getBoard()->getPiece(row-1, col)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row-1, col));
+        }
+    }
+
+    // check if the king can move down
+    if (row < 7) {
+        if (this->getBoard()->getPiece(row+1, col)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row+1, col));
+        }
+    }
+
+    // check if the king can move left
+    if (col > 0) {
+        if (this->getBoard()->getPiece(row, col-1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row, col-1));
+        }
+    }
+
+    // check if the king can move right
+    if (col < 7) {
+        if (this->getBoard()->getPiece(row, col+1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row, col+1));
+        }
+    }
+
+    // check if the king can move up and left
+    if ((row > 0) && (col > 0)) {
+        if (this->getBoard()->getPiece(row-1, col-1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row-1, col-1));
+        }
+    }
+
+    // check if the king can move up and right 
+    if ((row > 0) && (col < 7)) {
+        if (this->getBoard()->getPiece(row-1, col+1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row-1, col+1));
+        }
+    }
+
+    // check if the king can move down and left
+    if ((row < 7) && (col > 0)) {
+        if (this->getBoard()->getPiece(row+1, col-1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row+1, col-1));
+        }
+    }
+
+    // check if the king can move down and right
+    if ((row < 7) && (col < 7)) {
+        if (this->getBoard()->getPiece(row+1, col+1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row+1, col+1));
+        }
+    }
+
+    return moves;
+}
+
