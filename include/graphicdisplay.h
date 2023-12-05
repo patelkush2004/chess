@@ -23,7 +23,7 @@ class GraphicDisplay: public Observer {
 
         void notify(Board &theBoard) override;
         void drawPiece(int col, int row, string symbol, int tileColour);
-        void updateGraphicCheck(Board &theBoard, string symbol, bool checkmate);
+        void updateGraphicCheck(Board &theBoard, string symbol, string checkmate);
 
         void graphicTurnMsg(string colour, bool cpu);
         void graphicScoreMsg(bool player1, int score);

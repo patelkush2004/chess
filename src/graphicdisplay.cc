@@ -158,17 +158,22 @@ void GraphicDisplay::drawPiece(int row, int col, string symbol, int tileColour) 
     }
 }
 
-void GraphicDisplay::updateGraphicCheck(Board &theBoard, string symbol, bool checkmate) {
+void GraphicDisplay::updateGraphicCheck(Board &theBoard, string symbol, string checkmate) {
     for (int row = 1; row <= 8; ++row) {
         for (int col = 1; col <= 8; ++col) {
             Piece* curPiece = theBoard.getPiece(row-1, col-1);
             if (string{curPiece->getSymbol()} == symbol) {
-                if (checkmate) {
+                if (checkmate == "checkmate") {
                     drawPiece(row, col, symbol, Xwindow::FireBrick);
                     graphicCheckMsg("checkmate");
-                } else {
+                } else if (checkmate == "check"){
                     graphicCheckMsg("check");
                     drawPiece(row, col, symbol, Xwindow::LightCoral);
+                }
+                else {
+                    int tileColour;
+                    ((row + col) % 2 == 0) ? tileColour = Xwindow::Moccasin : tileColour = Xwindow::DarkOliveGreen;
+                    drawPiece(row, col, symbol, tileColour);
                 }
                 // checkmate ? drawPiece(row, col, symbol, Xwindow::FireBrick) : drawPiece(row, col, symbol, Xwindow::LightCoral);
             }
@@ -185,22 +190,27 @@ void GraphicDisplay::notify(Board &theBoard) {
     if (drawnInitialState) {
 
         if (theBoard.getP1()->getIsCheckmate()) {
-            updateGraphicCheck(theBoard, "K", true); 
+            updateGraphicCheck(theBoard, "K", "checkmate"); 
             return;
         }
 
-        if (theBoard.getP1()->getIsCheck()) {
-            updateGraphicCheck(theBoard, "K", false);
+        else if (theBoard.getP1()->getIsCheck()) {
+            updateGraphicCheck(theBoard, "K", "check");
         }
 
-        if (theBoard.getP2()->getIsCheckmate()) {
-            updateGraphicCheck(theBoard, "k", true);
+        else if (theBoard.getP2()->getIsCheckmate()) {
+            updateGraphicCheck(theBoard, "k", "checkmate");
             return;
         }
 
-        if (theBoard.getP2()->getIsCheck()) {
-            updateGraphicCheck(theBoard, "k", false);
+        else if (theBoard.getP2()->getIsCheck()) {
+            updateGraphicCheck(theBoard, "k", "check");
         }
+
+        else {
+            updateGraphicCheck(theBoard, "k", "none");
+        }
+
 
         int oldRow = theBoard.gdCurrentCoord.first + 1;
         int oldCol = theBoard.gdCurrentCoord.second + 1;
