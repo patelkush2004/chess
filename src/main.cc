@@ -273,6 +273,10 @@ int main() {
                 p1->setMyTurn(true);
                 p2->setMyTurn(false);
 
+                // graphic display not showing the right score
+                b.getGd()->graphicScoreMsg("white", p1->getScore());
+                b.getGd()->graphicScoreMsg("black", p2->getScore());
+
                 b.clearBoard();
                 b.clearBoardStates();
 

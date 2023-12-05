@@ -489,44 +489,58 @@ void Board::movePiece(vector<pair<int, int>> move) {
         
         // pawn promotion
         if (this->getPiece(newCoord.first, newCoord.second)->getSymbol() == 'P' && newCoord.first == 0) {
+            if (!p1->getIsCpu()) {
             string newPiece; // new piece symbol
             cin >> newPiece;
-            if (newPiece == "Q") {
+                if (newPiece == "Q") {
+                    Piece *newQueen = new Queen(this, "white", 'Q', newCoord.first, newCoord.second, false);
+                    delete this->getPiece(newCoord.first, newCoord.second);
+                    this->setPiece(newCoord.first, newCoord.second, newQueen);
+                } else if (newPiece == "N") {
+                    Piece *newKnight = new Knight(this, "white", 'N', newCoord.first, newCoord.second, false);
+                    delete this->getPiece(newCoord.first, newCoord.second);
+                    this->setPiece(newCoord.first, newCoord.second, newKnight);
+                } else if (newPiece == "B") {
+                    Piece *newBishop = new Bishop(this, "white", 'B', newCoord.first, newCoord.second, false);
+                    delete this->getPiece(newCoord.first, newCoord.second);
+                    this->setPiece(newCoord.first, newCoord.second, newBishop);
+                } else if (newPiece == "R") {
+                    Piece *newRook = new Rook(this, "white", 'R', newCoord.first, newCoord.second, false, false);
+                    delete this->getPiece(newCoord.first, newCoord.second);
+                    this->setPiece(newCoord.first, newCoord.second, newRook);
+                }
+            }
+            else {
                 Piece *newQueen = new Queen(this, "white", 'Q', newCoord.first, newCoord.second, false);
                 delete this->getPiece(newCoord.first, newCoord.second);
                 this->setPiece(newCoord.first, newCoord.second, newQueen);
-            } else if (newPiece == "N") {
-                Piece *newKnight = new Knight(this, "white", 'N', newCoord.first, newCoord.second, false);
-                delete this->getPiece(newCoord.first, newCoord.second);
-                this->setPiece(newCoord.first, newCoord.second, newKnight);
-            } else if (newPiece == "B") {
-                Piece *newBishop = new Bishop(this, "white", 'B', newCoord.first, newCoord.second, false);
-                delete this->getPiece(newCoord.first, newCoord.second);
-                this->setPiece(newCoord.first, newCoord.second, newBishop);
-            } else if (newPiece == "R") {
-                Piece *newRook = new Rook(this, "white", 'R', newCoord.first, newCoord.second, false, false);
-                delete this->getPiece(newCoord.first, newCoord.second);
-                this->setPiece(newCoord.first, newCoord.second, newRook);
             }
-        } else if (this->getPiece(newCoord.first, newCoord.second)->getSymbol() == 'p' && newCoord.second == 7) {
-            string newPiece; // new piece symbol
-            cin >> newPiece;
-            if (newPiece == "q") {
+        } else if (this->getPiece(newCoord.first, newCoord.second)->getSymbol() == 'p' && newCoord.first == 7) {
+            if (!p2->getIsCpu()) {
+                string newPiece; // new piece symbol
+                cin >> newPiece;
+                if (newPiece == "q") {
+                    Piece *newQueen = new Queen(this, "black", 'q', newCoord.first, newCoord.second, false);
+                    delete this->getPiece(newCoord.first, newCoord.second);
+                    this->setPiece(newCoord.first, newCoord.second, newQueen);
+                } else if (newPiece == "n") {
+                    Piece *newKnight = new Knight(this, "black", 'n', newCoord.first, newCoord.second, false);
+                    delete this->getPiece(newCoord.first, newCoord.second);
+                    this->setPiece(newCoord.first, newCoord.second, newKnight);
+                } else if (newPiece == "b") {
+                    Piece *newBishop = new Bishop(this, "black", 'b', newCoord.first, newCoord.second, false);
+                    delete this->getPiece(newCoord.first, newCoord.second);
+                    this->setPiece(newCoord.first, newCoord.second, newBishop);
+                } else if (newPiece == "r") {
+                    Piece *newRook = new Rook(this, "black", 'r', newCoord.first, newCoord.second, false, false);
+                    delete this->getPiece(newCoord.first, newCoord.second);
+                    this->setPiece(newCoord.first, newCoord.second, newRook);
+                }
+            }
+            else {
                 Piece *newQueen = new Queen(this, "black", 'q', newCoord.first, newCoord.second, false);
                 delete this->getPiece(newCoord.first, newCoord.second);
                 this->setPiece(newCoord.first, newCoord.second, newQueen);
-            } else if (newPiece == "n") {
-                Piece *newKnight = new Knight(this, "black", 'n', newCoord.first, newCoord.second, false);
-                delete this->getPiece(newCoord.first, newCoord.second);
-                this->setPiece(newCoord.first, newCoord.second, newKnight);
-            } else if (newPiece == "b") {
-                Piece *newBishop = new Bishop(this, "black", 'b', newCoord.first, newCoord.second, false);
-                delete this->getPiece(newCoord.first, newCoord.second);
-                this->setPiece(newCoord.first, newCoord.second, newBishop);
-            } else if (newPiece == "r") {
-                Piece *newRook = new Rook(this, "black", 'r', newCoord.first, newCoord.second, false, false);
-                delete this->getPiece(newCoord.first, newCoord.second);
-                this->setPiece(newCoord.first, newCoord.second, newRook);
             }
         }
 
