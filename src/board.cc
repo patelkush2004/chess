@@ -494,6 +494,8 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
         // notify observers
         this->gdCurrentCoord = currentCoord;
         this->gdNewCoord = newCoord;
+
+        this->boardtoState();
         this->notifyObservers();
         this->changeTurn();
         return;
@@ -542,6 +544,7 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
 
         this->gdCurrentCoord = make_pair(7,7);
         this->gdNewCoord = make_pair(7,5);
+        this->boardtoState();
         this->notifyObservers();
         this->changeTurn();
         return;
@@ -590,6 +593,7 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
 
         this->gdCurrentCoord = make_pair(7,0);
         this->gdNewCoord = make_pair(7,3);
+        this->boardtoState();
         this->notifyObservers();
         this->changeTurn();
         return;
@@ -637,6 +641,7 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
 
         this->gdCurrentCoord = make_pair(0,7);
         this->gdNewCoord = make_pair(0,5);
+        this->boardtoState();
         this->notifyObservers();
         this->changeTurn();
         return;
@@ -684,11 +689,12 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
 
         this->gdCurrentCoord = make_pair(0,0);
         this->gdNewCoord = make_pair(0,3);
+        this->boardtoState();
         this->notifyObservers();
         this->changeTurn();
         return;
     }
-    
+
 }
 
 Player* Board::getP1() { 
@@ -860,3 +866,158 @@ void Board::notifyObservers() {
 void Board::notifyGraphicObservers() {
     gd->notify(*this);
 }
+
+void Board::boardtoState() {
+
+    vector<vector<string>> state = {};
+    state.resize(8);
+
+    for (int row = 0; row < 8; ++row) {
+        state[row].resize(8);
+    }
+     
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+            Piece *p = this->getPiece(row, col);
+            char symbol = p->getSymbol();
+
+            string pieceName;
+            // switch case to make a temp string based on the symbol
+            // lower case for black team, uppercase for white team
+            Pawn* pieceP = nullptr;
+            Rook* pieceR = nullptr;
+            King* pieceK = nullptr;
+
+            if (symbol == 'p') {
+                pieceName = "Pawn";
+                pieceP = dynamic_cast<Pawn*>(p);
+                pieceP->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+            } else if (symbol == 'P') {
+                pieceName = "pawn";
+                pieceP = dynamic_cast<Pawn*>(p);
+                pieceP->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+            } else if (symbol == 'R') {
+                pieceName = "Rook";
+                pieceR = dynamic_cast<Rook*>(p);
+                pieceR->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+            } else if (symbol == 'r') {
+                pieceName = "rook";
+                pieceR = dynamic_cast<Rook*>(p);
+                pieceR->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+            } else if (symbol == 'N') {
+                pieceName = "Knight";
+            } else if (symbol == 'n') {
+                pieceName = "knight";
+            } else if (symbol == 'B') {
+                pieceName = "Bishop";
+            } else if (symbol == 'b') {
+                pieceName = "bishop";
+            } else if (symbol == 'Q') {
+                pieceName = "Queen";
+            } else if (symbol == 'q') {
+                pieceName = "queen";
+            } else if (symbol == 'K') {
+                pieceName = "King";
+                pieceK = dynamic_cast<King*>(p);
+                pieceK->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+            } else if (symbol == 'k') {
+                pieceName = "king";
+                pieceK = dynamic_cast<King*>(p);
+                pieceK->getMoved() ? pieceName = pieceName + "T" : pieceName = pieceName + "F";
+            } else {
+                pieceName = "blank";
+            }
+
+            state[row][col] = pieceName;
+        }
+    }
+
+    boardStates.push(state);
+
+}
+
+void Board::applyState(vector<vector<string>> state) {
+    for (int row = 0; row < 8; ++row) {
+        for (int col = 0; col < 8; ++col) {
+
+            if (state[row][col] == "blank") {
+                Piece *newPiece = new Piece(this, row, col, true);
+                delete this->getPiece(row, col);
+                this->setPiece(row, col, newPiece);
+            } else if (isupper(state[row][col][0])) {
+                // white piece
+                if (state[row][col] == "PawnT") {
+                    Piece *newPiece = new Pawn(this, "white", 'P', row, col, true, true);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+                } else if (state[row][col] == "PawnF") {
+                    Piece *newPiece = new Pawn(this, "white", 'P', row, col, true, false);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+                } else if (state[row][col] == "RookT") {
+                    Piece *newPiece = new Rook(this, "white", 'R', row, col, true, true);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+                } else if (state[row][col] == "RookF") {
+                    Piece *newPiece = new Rook(this, "white", 'R', row, col, true, false);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+                } else if (state[row][col] == "KingT") {
+                    Piece *newPiece = new King(this, "white", 'K', row, col, true, true);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+                } else if (state[row][col] == "KingF") {
+                    Piece *newPiece = new King(this, "white", 'K', row, col, true, false);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+                } else if (state[row][col] == "Knight") {
+                    Piece *newPiece = new Knight(this, "white", 'N', row, col, true);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+                } else if (state[row][col] == "Bishop") {
+                    Piece *newPiece = new Bishop(this, "white", 'B', row, col, true);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+            } else {
+                // black piece
+                if (state[row][col] == "pawnT") {
+                    Piece *newPiece = new Pawn(this, "black", 'p', row, col, true, true);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+                } else if (state[row][col] == "pawnF") {
+                    Piece *newPiece = new Pawn(this, "black", 'p', row, col, true, false);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+                } else if (state[row][col] == "rookT") {
+                    Piece *newPiece = new Rook(this, "black", 'r', row, col, true, true);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+                } else if (state[row][col] == "rookF") {
+                    Piece *newPiece = new Rook(this, "black", 'r', row, col, true, false);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+                } else if (state[row][col] == "kingT") {
+                    Piece *newPiece = new King(this, "black", 'k', row, col, true, true);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+                } else if (state[row][col] == "kingF") {
+                    Piece *newPiece = new King(this, "black", 'k', row, col, true, false);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+                } else if (state[row][col] == "knight") {
+                    Piece *newPiece = new Knight(this, "black", 'n', row, col, true);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+                } else if (state[row][col] == "bishop") {
+                    Piece *newPiece = new Bishop(this, "black", 'b', row, col, true);
+                    delete this->getPiece(row, col);
+                    this->setPiece(row, col, newPiece);
+                }
+            }
+
+        }
+    }
+}}
+
+
+
