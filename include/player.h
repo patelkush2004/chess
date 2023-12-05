@@ -22,6 +22,7 @@ class Player {
     public:
         Player(string team, bool isCpu, bool myTurn);
         virtual ~Player();
+        Player(const Player &other);
         string getTeam();
         int getScore();
         bool getIsCpu();

@@ -14,6 +14,11 @@ Player::Player(string team, bool isCpu, bool myTurn) :
 // Destructor
 Player::~Player() {}
 
+// copy constructor
+Player::Player(const Player &other) : 
+    team{other.team}, score{other.score}, isCpu{other.isCpu}, myTurn{other.myTurn} {
+}
+
 // Getters
 string Player::getTeam() {
     return team;

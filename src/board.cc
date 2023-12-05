@@ -565,7 +565,6 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
 
         this->notifyObservers();
         this->changeTurn();
-
         // cout << *this->td;
         // boardStates.pop();
         // vector<vector<string>> latest = boardStates.top();
@@ -956,10 +955,13 @@ void Board::isStalemated() {
         return;
     }
 
+    bool p1PrevState = p1->getMyTurn(), p2PrevState = p2->getMyTurn();
+
     for (int row = 0; row < 8; row++) {
         for (int col = 0; col < 8 ; col++) {
             Piece *p = this->getPiece(row, col);
-            if (p != nullptr && p1->getMyTurn() && !p1->getIsCheck()) {
+            if (p1->getMyTurn() && !p1->getIsCheck()) {
+                // cout << "should not be running" << endl;
                 if (p->getTeam() == "white" && !p->isBlank()) {
                     vector<pair<int, int>> possibleMoves = p->calculatePossibleMoves();
 
@@ -969,22 +971,26 @@ void Board::isStalemated() {
 
                         if (!copy.p1->getIsCheck()) {
                             currentPlayer->setStalemate(false);
+                            p1->setMyTurn(p1PrevState);
+                            p2->setMyTurn(p2PrevState);
                             return;
                         }
                     }
                 }
             }
             else if (p2->getMyTurn() && !p2->getIsCheck()) {
-                if (p != nullptr && p->getTeam() == "black" && !p->isBlank()) {
+                if (p->getTeam() == "black" && !p->isBlank()) {
                     vector<pair<int, int>> possibleMoves = p->calculatePossibleMoves();
                     for (auto &coord : possibleMoves) {
                         vector<pair<int, int>> move = {make_pair(row, col), coord};
                         copy.movePiece(move);
-
                         if (!copy.p2->getIsCheck()) {
                             currentPlayer->setStalemate(false);
+                            p1->setMyTurn(p1PrevState);
+                            p2->setMyTurn(p2PrevState);
                             return;
                         }
+
                     }
                 }
             }
