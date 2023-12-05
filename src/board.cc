@@ -92,6 +92,7 @@ void Board::init() { // MOVEMENT NOT WORKING AFTER INIT COMPLETE
 
     this->attach(td);
     this->attach(gd);
+    this->boardtoState();
     this->notifyObservers();
 }
 
@@ -226,6 +227,7 @@ void Board::setup() {   // MOVEMENT NOT WORKING AFTER SETUP COMPLETE
             }
 
             if (!pawnFirstRow && !pawnLastRow && kings && !whiteKingInCheck && !blackKingInCheck) {
+                this->boardtoState();
                 return;
             } else {
                 continue;
@@ -498,6 +500,13 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
         this->boardtoState();
         this->notifyObservers();
         this->changeTurn();
+
+        // cout << *this->td;
+        // boardStates.pop();
+        // vector<vector<string>> latest = boardStates.top();
+        // applyState(latest);
+        // notifyObservers();
+
         return;
     } 
 
@@ -947,69 +956,70 @@ void Board::applyState(vector<vector<string>> state) {
             } else if (isupper(state[row][col][0])) {
                 // white piece
                 if (state[row][col] == "PawnT") {
-                    Piece *newPiece = new Pawn(this, "white", 'P', row, col, true, true);
+                    Piece *newPiece = new Pawn(this, "white", 'P', row, col, false, true);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
                 } else if (state[row][col] == "PawnF") {
-                    Piece *newPiece = new Pawn(this, "white", 'P', row, col, true, false);
+                    Piece *newPiece = new Pawn(this, "white", 'P', row, col, false, false);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
                 } else if (state[row][col] == "RookT") {
-                    Piece *newPiece = new Rook(this, "white", 'R', row, col, true, true);
+                    Piece *newPiece = new Rook(this, "white", 'R', row, col, false, true);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
                 } else if (state[row][col] == "RookF") {
-                    Piece *newPiece = new Rook(this, "white", 'R', row, col, true, false);
+                    Piece *newPiece = new Rook(this, "white", 'R', row, col, false, false);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
                 } else if (state[row][col] == "KingT") {
-                    Piece *newPiece = new King(this, "white", 'K', row, col, true, true);
+                    Piece *newPiece = new King(this, "white", 'K', row, col, false, true);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
                 } else if (state[row][col] == "KingF") {
-                    Piece *newPiece = new King(this, "white", 'K', row, col, true, false);
+                    Piece *newPiece = new King(this, "white", 'K', row, col, false, false);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
                 } else if (state[row][col] == "Knight") {
-                    Piece *newPiece = new Knight(this, "white", 'N', row, col, true);
+                    Piece *newPiece = new Knight(this, "white", 'N', row, col, false);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
                 } else if (state[row][col] == "Bishop") {
-                    Piece *newPiece = new Bishop(this, "white", 'B', row, col, true);
+                    Piece *newPiece = new Bishop(this, "white", 'B', row, col, false);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
+                }
             } else {
                 // black piece
                 if (state[row][col] == "pawnT") {
-                    Piece *newPiece = new Pawn(this, "black", 'p', row, col, true, true);
+                    Piece *newPiece = new Pawn(this, "black", 'p', row, col, false, true);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
                 } else if (state[row][col] == "pawnF") {
-                    Piece *newPiece = new Pawn(this, "black", 'p', row, col, true, false);
+                    Piece *newPiece = new Pawn(this, "black", 'p', row, col, false, false);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
                 } else if (state[row][col] == "rookT") {
-                    Piece *newPiece = new Rook(this, "black", 'r', row, col, true, true);
+                    Piece *newPiece = new Rook(this, "black", 'r', row, col, false, true);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
                 } else if (state[row][col] == "rookF") {
-                    Piece *newPiece = new Rook(this, "black", 'r', row, col, true, false);
+                    Piece *newPiece = new Rook(this, "black", 'r', row, col, false, false);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
                 } else if (state[row][col] == "kingT") {
-                    Piece *newPiece = new King(this, "black", 'k', row, col, true, true);
+                    Piece *newPiece = new King(this, "black", 'k', row, col, false, true);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
                 } else if (state[row][col] == "kingF") {
-                    Piece *newPiece = new King(this, "black", 'k', row, col, true, false);
+                    Piece *newPiece = new King(this, "black", 'k', row, col, false, false);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
                 } else if (state[row][col] == "knight") {
-                    Piece *newPiece = new Knight(this, "black", 'n', row, col, true);
+                    Piece *newPiece = new Knight(this, "black", 'n', row, col, false);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
                 } else if (state[row][col] == "bishop") {
-                    Piece *newPiece = new Bishop(this, "black", 'b', row, col, true);
+                    Piece *newPiece = new Bishop(this, "black", 'b', row, col, false);
                     delete this->getPiece(row, col);
                     this->setPiece(row, col, newPiece);
                 }
@@ -1017,7 +1027,7 @@ void Board::applyState(vector<vector<string>> state) {
 
         }
     }
-}}
+}
 
 
 
