@@ -127,7 +127,6 @@ vector<pair<int, int>> Computer::levelTwo(Board& b)  {
                 for (pair<int, int> move : possibleCaptureMoves) {
                     pair<pair<int, int>, pair<int, int>> currentAndPossibleMove(current, move);
                     captureMoves.emplace_back(currentAndPossibleMove);
-                    cout << move.first << ", " << move.second << endl;
                 }
 
                 for (pair<int, int> move : possibleMoves) {
@@ -192,12 +191,6 @@ pair<vector<pair<int, int>>, int> Computer::minimax(Board& b, int depth, const s
             bestEval = recursiveEval;
             bestMove = moveSequence;
         }
-    }
-
-    if (!bestMove.empty()) {
-        cout << "Best move: (" << bestMove[0].first << ", " << bestMove[0].second << ") to (" << bestMove[1].first << ", " << bestMove[1].second << ") with evaluation " << bestEval << endl;
-    } else {
-        cout << "No best move found. Evaluation: " << bestEval << endl;
     }
 
     return {bestMove, bestEval};
@@ -339,8 +332,6 @@ vector<pair<int, int>> Computer::levelFive(Board &b) {
 
     // closing the file
     outputFile.close();
-
-    cout << "Best move: " << bestMoveOutput << endl;
 
     // correct type return to makeComputerMove
     vector<pair<int, int>> fromToMove;
