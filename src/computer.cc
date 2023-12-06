@@ -157,6 +157,9 @@ vector<pair<int, int>> Computer::levelTwo(Board& b)  {
 
 // Minimax Algorithm functions
 
+// Minimax Algorithm
+// Credit to Chess Programming Wiki for the pseudocode and understanding of implementation
+// https://www.chessprogramming.org/Minimax
 pair<vector<pair<int, int>>, int> Computer::minimax(Board& b, int depth, const string maximizingPlayerColor, bool maximize) {
     if (depth == 0) {
         return {vector<pair<int, int>>(), eval(b, maximizingPlayerColor)};
@@ -245,8 +248,6 @@ int Computer::eval(Board& b, const string maximizingPlayerColor) {
     }
     return totalMaterialValueMaximizingTeam - totalMaterialValueMinimizingTeam;
 }
-
-// Minimax algorithm functions end
 
 vector<pair<int, int>> Computer::levelThree(Board &b) {
     pair<vector<pair<int, int>>, int> bestMaterialMove = minimax(b, 2, "black", true);
