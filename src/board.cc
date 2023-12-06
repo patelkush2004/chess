@@ -563,7 +563,6 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
         this->gdCurrentCoord = currentCoord;
         this->gdNewCoord = newCoord;
 
-        this->notifyObservers();
         this->changeTurn();
         // cout << *this->td;
         // boardStates.pop();
@@ -621,11 +620,9 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
         }
         this->gdCurrentCoord = make_pair(7,4);
         this->gdNewCoord = make_pair(7,6);
-        this->notifyObservers();
 
         this->gdCurrentCoord = make_pair(7,7);
         this->gdNewCoord = make_pair(7,5);
-        this->notifyObservers();
         this->changeTurn();
         return;
     }
@@ -669,11 +666,9 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
         }
         this->gdCurrentCoord = make_pair(7,4);
         this->gdNewCoord = make_pair(7,2);
-        this->notifyObservers();
 
         this->gdCurrentCoord = make_pair(7,0);
         this->gdNewCoord = make_pair(7,3);
-        this->notifyObservers();
         this->changeTurn();
         return;
     }
@@ -716,11 +711,9 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
         }
         this->gdCurrentCoord = make_pair(0,4);
         this->gdNewCoord = make_pair(0,6);
-        this->notifyObservers();
 
         this->gdCurrentCoord = make_pair(0,7);
         this->gdNewCoord = make_pair(0,5);
-        this->notifyObservers();
         this->changeTurn();
         return;
     }
@@ -763,11 +756,9 @@ void Board::movePiece(vector<pair<int, int>> move) { // FIX THIS AND CALCULATE P
         }
         this->gdCurrentCoord = make_pair(0,4);
         this->gdNewCoord = make_pair(0,2);
-        this->notifyObservers();
 
         this->gdCurrentCoord = make_pair(0,0);
         this->gdNewCoord = make_pair(0,3);
-        this->notifyObservers();
         this->changeTurn();
         return;
     }
@@ -1243,9 +1234,6 @@ void Board::reversePiece() {
     //     }
     //     cout << endl;
     // }
-
-    this->notifyObservers();
-
 
     // cout << "AFTER" << endl;
 

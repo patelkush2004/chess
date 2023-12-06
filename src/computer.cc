@@ -41,14 +41,11 @@ vector<pair<int, int>> Computer::makeComputerMove(Board& b, int level)  {
 
     vector<pair<int, int>> move;
 
-    cout << "three like Lebum james" << endl;
-
     if (level == 1) {
         move = levelOne(b);
     } else if (level == 2) {
         move = levelTwo(b);
     } else if (level == 3) {
-        cout << "three like curry" << endl;
         move = levelThree(b);
     } else if (level == 4) {
         move = levelFour(b);

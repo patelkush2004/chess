@@ -19,6 +19,9 @@ int main() {
 
     bool resign = false;
 
+    int level1 = 1;
+    int level2 = 2;
+
     string cmd;
     cin >> cmd;
 
@@ -30,16 +33,26 @@ int main() {
 
         if (player1 == "human") {
             p1 = new Human("white", false, true);
-        } else {
-            p1 = new Computer("white", true, true); 
+        } 
+        else if (player1 == "computer[1]" || player1 == "computer[2]" || player1 == "computer[3]" || player1 == "computer[4]") {
+            p1 = new Computer("white", true, true);
+            for (size_t i = 0; i < player1.size(); ++i) {
+                if (player1[i] >= '0' && player1[i] <= '9') level1 = player1[i] - '0';
+            }
         }
 
         if (player2 == "human") {
-            p2 = new Human("black", false, false);
-        } else {
-            p2 = new Computer("black", true, false); 
+            p2 = new Human("black", false, true);
+        } 
+        else if (player2 == "computer[1]" || player2 == "computer[2]" || player2 == "computer[3]" || player2 == "computer[4]") {
+            p2 = new Computer("black", true, true);
+            for (size_t i = 0; i < player2.size(); ++i) {
+                if (player2[i] >= '0' && player2[i] <= '9') level2 = player2[i] - '0';
+            }
         }
+
     }
+
 
     Board b (p1, p2); // create board stack allocated
 
@@ -89,6 +102,9 @@ int main() {
 
         // make move
         if (cmd == "move" && !p1->getIsCpu() && p1->getMyTurn()) {
+
+            b.notifyObservers();
+
             string current;
             string newCoord;
             cin >> current >> newCoord;
@@ -131,13 +147,16 @@ int main() {
 
             if (p2->getIsStalemate()) {
                 cout << "Stalemate! Draw!" << endl;
-                //b.getGd()->graphicCheckMsg("checkmate"); FIX THIS
+
             }
 
 
         }
         else if (cmd == "move" && p1->getIsCpu() && p1->getMyTurn()) {
-            vector<pair<int, int>> move = p1->makeComputerMove(b, 3);
+
+            b.notifyObservers();
+
+            vector<pair<int, int>> move = p1->makeComputerMove(b, level1);
             b.movePiece(move);
             cout << b;
             if (p2->getIsCpu() && p2->getMyTurn()) {
@@ -176,10 +195,10 @@ int main() {
             }
         }
         else if (cmd == "move" && p2->getIsCpu() && p2->getMyTurn()) {
-            cout << "HI !!!!!" << endl;
 
+            b.notifyObservers();
 
-            vector<pair<int, int>> move = p2->makeComputerMove(b, 3);
+            vector<pair<int, int>> move = p2->makeComputerMove(b, level2);
             b.movePiece(move);
             cout << b;
             if (p1->getIsCpu() && p1->getMyTurn()) {
@@ -219,6 +238,9 @@ int main() {
             }
         }
         else if (cmd == "move" && !p2->getIsCpu() && p2->getMyTurn()) {
+
+            b.notifyObservers();
+
             string current;
             string newCoord;
             cin >> current >> newCoord;
