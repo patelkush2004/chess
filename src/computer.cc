@@ -7,6 +7,7 @@
 #include <vector>
 #include <climits>
 #include "tools.h"
+#include <fstream>
 
 using namespace std;
 
@@ -49,6 +50,8 @@ vector<pair<int, int>> Computer::makeComputerMove(Board& b, int level)  {
         move = levelThree(b);
     } else if (level == 4) {
         move = levelFour(b);
+    } else if (level == 5) {
+        move = levelFive(b);
     }
 
     return move;
@@ -261,9 +264,13 @@ vector<pair<int, int>> Computer::levelFour(Board &b) {
     return bestMaterialMove.first;
 }
 
-void Computer::levelFive(Board &b) {
+// levelFive utilizes the stockfish chess engine to do the board analysis
+// Source: https://stockfishchess.org/
+vector<pair<int, int>> Computer::levelFive(Board &b) {
     string fen;
 
+    // the next lines convert our board structure into the FEN format because stockfish only understands FEN syntax for board evals
+    // Source: https://www.chess.com/terms/fen-chess
     for (int row = 0; row < 8; ++row) {
 
         if (row > 0) {
@@ -277,10 +284,10 @@ void Computer::levelFive(Board &b) {
             char symbol = piece->getSymbol();
 
             if (piece->isBlank()) {
-                ++emptyPieceCount;
+                emptyPieceCount++;
             } else {
                 if (emptyPieceCount > 0) {
-                    fen += std::to_string(emptyPieceCount);
+                    fen += to_string(emptyPieceCount);
                     emptyPieceCount = 0;
                 }
                 fen += symbol;
@@ -288,9 +295,59 @@ void Computer::levelFive(Board &b) {
         }
 
         if (emptyPieceCount > 0) {
-            fen += std::to_string(emptyPieceCount);
+            fen += to_string(emptyPieceCount);
+        }
+    }
+    
+    // adding some extra FEN things stockfish needs to understand specifcally the team color
+    fen += " ";
+    fen += this->getTeam()[0];
+    fen += " - - ";
+    fen += "0 0";
+
+    // the stockfish execs path
+    string pathToStockfish = "src/stockfish";
+
+    // for some reason I could not utilize the fopen command correctly so i switched to the system command api and
+    // did a trivial solution of taking command input through a txt file and also dumping it into a text file for me to read
+    string inputFilePath = "src/stockfish_commands.txt";
+    string outputFilePath = "src/stockfish_output.txt";
+    
+    ofstream inputFile(inputFilePath);
+
+    // stockfish API call commands
+    inputFile << "position fen " << fen << endl;
+    inputFile << "go depth 12" << endl;
+    inputFile.close();
+
+    // system command
+    string command = pathToStockfish + " < " + inputFilePath + " > " + outputFilePath;
+
+    system(command.c_str());
+
+    ifstream outputFile(outputFilePath);
+    string line;
+    string bestMoveOutput;
+
+    // parsing the file to find the bestmove line then stripping for the actual move syntax i.e. a7a6
+    while (getline(outputFile, line)) {
+        if (line.find("bestmove") != string::npos) {
+            bestMoveOutput = line.substr(line.find("bestmove") + 9);
+            break;
         }
     }
 
-    return;
+    // closing the file
+    outputFile.close();
+
+    cout << "Best move: " << bestMoveOutput << endl;
+
+    // correct type return to makeComputerMove
+    vector<pair<int, int>> fromToMove;
+
+    fromToMove.emplace_back(convertToCoord(bestMoveOutput.substr(0, 2)));
+    fromToMove.emplace_back(convertToCoord(bestMoveOutput.substr(2, 2)));
+
+    return fromToMove;
+
 }

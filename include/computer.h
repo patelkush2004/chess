@@ -19,7 +19,7 @@ class Computer : public Player {
         vector<pair<int, int>> levelTwo(Board& b);
         vector<pair<int, int>> levelThree(Board& b);
         vector<pair<int, int>> levelFour(Board& b);
-        void levelFive(Board& b);
+        vector<pair<int, int>> levelFive(Board& b);
 
         // Minimax functions
         int eval(Board& b, string team);

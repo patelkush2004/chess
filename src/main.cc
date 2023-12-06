@@ -34,7 +34,7 @@ int main() {
         if (player1 == "human") {
             p1 = new Human("white", false, true);
         } 
-        else if (player1 == "computer[1]" || player1 == "computer[2]" || player1 == "computer[3]" || player1 == "computer[4]") {
+        else if (player1 == "computer[1]" || player1 == "computer[2]" || player1 == "computer[3]" || player1 == "computer[4]" || player1 == "computer[5]") {
             p1 = new Computer("white", true, true);
             for (size_t i = 0; i < player1.size(); ++i) {
                 if (player1[i] >= '0' && player1[i] <= '9') level1 = player1[i] - '0';
@@ -44,7 +44,7 @@ int main() {
         if (player2 == "human") {
             p2 = new Human("black", false, true);
         } 
-        else if (player2 == "computer[1]" || player2 == "computer[2]" || player2 == "computer[3]" || player2 == "computer[4]") {
+        else if (player2 == "computer[1]" || player2 == "computer[2]" || player2 == "computer[3]" || player2 == "computer[4]" || player2 == "computer[5]") {
             p2 = new Computer("black", true, true);
             for (size_t i = 0; i < player2.size(); ++i) {
                 if (player2[i] >= '0' && player2[i] <= '9') level2 = player2[i] - '0';
