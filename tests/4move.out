@@ -1,0 +1,97 @@
+   ________
+8 |rnbqkbnr|
+7 |pppppppp|
+6 |_ _ _ _ |
+5 | _ _ _ _|
+4 |_ _ _ _ |
+3 | _ _ _ _|
+2 |PPPPPPPP|
+1 |RNBQKBNR|
+
+   abcdefgh
+White Turn
+   ________
+8 |rnbqkbnr|
+7 |pppppppp|
+6 |_ _ _ _ |
+5 | _ _ _ _|
+4 |_ _ P _ |
+3 | _ _ _ _|
+2 |PPPP_PPP|
+1 |RNBQKBNR|
+
+   abcdefgh
+Black Turn
+   ________
+8 |rnbqkbnr|
+7 |pppp ppp|
+6 |_ _ _ _ |
+5 | _ _p_ _|
+4 |_ _ P _ |
+3 | _ _ _ _|
+2 |PPPP_PPP|
+1 |RNBQKBNR|
+
+   abcdefgh
+White Turn
+   ________
+8 |rnbqkbnr|
+7 |pppp ppp|
+6 |_ _ _ _ |
+5 | B _p_ _|
+4 |_ _ P _ |
+3 | _ _ _ _|
+2 |PPPP_PPP|
+1 |RNBQK_NR|
+
+   abcdefgh
+Black Turn
+   ________
+8 |rnbqkbnr|
+7 | ppp ppp|
+6 |_ _ _ _ |
+5 |pB _p_ _|
+4 |_ _ P _ |
+3 | _ _ _ _|
+2 |PPPP_PPP|
+1 |RNBQK_NR|
+
+   abcdefgh
+White Turn
+   ________
+8 |rnbqkbnr|
+7 | ppp ppp|
+6 |_ _ _ _ |
+5 |pB _p_ Q|
+4 |_ _ P _ |
+3 | _ _ _ _|
+2 |PPPP_PPP|
+1 |RNB_K_NR|
+
+   abcdefgh
+Black Turn
+   ________
+8 |rnbqkbnr|
+7 | ppp ppp|
+6 |_ _ _ _ |
+5 | B _p_ Q|
+4 |p _ P _ |
+3 | _ _ _ _|
+2 |PPPP_PPP|
+1 |RNB_K_NR|
+
+   abcdefgh
+White Turn
+   ________
+8 |rnbqkbnr|
+7 | ppp Qpp|
+6 |_ _ _ _ |
+5 | B _p_ _|
+4 |p _ P _ |
+3 | _ _ _ _|
+2 |PPPP_PPP|
+1 |RNB_K_NR|
+
+   abcdefgh
+Black Turn
+Black is in check.

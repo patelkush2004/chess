@@ -15,88 +15,153 @@ Knight::~Knight() {
 vector<pair<int, int>> Knight::calculatePossibleMoves() {
     vector<pair<int, int>> moves;
 
-    int y = getRow();
-    int x = getCol();
+    int row = getRow();
+    int col = getCol();
 
     // check up and to the right, stop at edges of board or when you hit a piece of the same team. capture the piece if it's the other team's
-    if ((y-2 >= 0) && (x+1 < 8)) {
-        if (this->getBoard()->getPiece(y-2, x+1)->isBlank()) {
-            moves.emplace_back(make_pair(x+1, y-2));
-        } else if (this->getBoard()->getPiece(y-2, x+1)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x+1, y-2));
+    if ((row-2 >= 0) && (col+1 < 8)) {
+        if (this->getBoard()->getPiece(row-2, col+1)->isBlank()) {
+            moves.emplace_back(make_pair(row-2, col+1));
+        } else if (this->getBoard()->getPiece(row-2, col+1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row-2, col+1));
         }
     }
 
     // check up and to the left
-    if ((y-2 >= 0) && (x-1 >= 0)) {
-        if (this->getBoard()->getPiece(y-2, x-1)->isBlank()) {
-            moves.emplace_back(make_pair(x-1, y-2));
-        } else if (this->getBoard()->getPiece(y-2, x-1)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x-1, y-2));
+    if ((row-2 >= 0) && (col-1 >= 0)) {
+        if (this->getBoard()->getPiece(row-2, col-1)->isBlank()) {
+            moves.emplace_back(make_pair(row-2, col-1));
+        } else if (this->getBoard()->getPiece(row-2, col-1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row-2, col-1));
         }
     }
 
     // check down and to the right
-    if ((y+2 < 8) && (x+1 < 8)) {
-        if (this->getBoard()->getPiece(y+2, x+1)->isBlank()) {
-            moves.emplace_back(make_pair(x+1, y+2));
-        } else if (this->getBoard()->getPiece(y+2, x+1)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x+1, y+2));
+    if ((row+2 < 8) && (col+1 < 8)) {
+        if (this->getBoard()->getPiece(row+2, col+1)->isBlank()) {
+            moves.emplace_back(make_pair(row+2, col+1));
+        } else if (this->getBoard()->getPiece(row+2, col+1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row+2, col+1));
         }
     }
 
     // check down and to the left
-    if ((y+2 < 8) && (x-1 >= 0)) {
-        if (this->getBoard()->getPiece(y+2, x-1)->isBlank()) {
-            moves.emplace_back(make_pair(x-1, y+2));
-        } else if (this->getBoard()->getPiece(y+2, x-1)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x-1, y+2));
+    if ((row+2 < 8) && (col-1 >= 0)) {
+        if (this->getBoard()->getPiece(row+2, col-1)->isBlank()) {
+            moves.emplace_back(make_pair(row+2, col-1));
+        } else if (this->getBoard()->getPiece(row+2, col-1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row+2, col-1));
         }
     }
 
     // check left and up
-    if ((y-1 >= 0) && (x-2 >= 0)) {
-        if (this->getBoard()->getPiece(y-1, x-2)->isBlank()) {
-            moves.emplace_back(make_pair(x-2, y-1));
-        } else if (this->getBoard()->getPiece(y-1, x-2)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x-2, y-1));
+    if ((row-1 >= 0) && (col-2 >= 0)) {
+        if (this->getBoard()->getPiece(row-1, col-2)->isBlank()) {
+            moves.emplace_back(make_pair(row-1, col-2));
+        } else if (this->getBoard()->getPiece(row-1, col-2)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row-1, col-2));
         }
     }
 
     // check left and down
-    if ((y+1 < 8) && (x-2 >= 0)) {
-        if (this->getBoard()->getPiece(y+1, x-2)->isBlank()) {
-            moves.emplace_back(make_pair(x-2, y+1));
-        } else if (this->getBoard()->getPiece(y+1, x-2)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x-2, y+1));
+    if ((row+1 < 8) && (col-2 >= 0)) {
+        if (this->getBoard()->getPiece(row+1, col-2)->isBlank()) {
+            moves.emplace_back(make_pair(row+1, col-2));
+        } else if (this->getBoard()->getPiece(row+1, col-2)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row+1, col-2));
         }
     }
 
     // check right and up
-    if ((y-1 >= 0) && (x+2 < 8)) {
-        if (this->getBoard()->getPiece(y-1, x+2)->isBlank()) {
-            moves.emplace_back(make_pair(x+2, y-1));
-        } else if (this->getBoard()->getPiece(y-1, x+2)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x+2, y-1));
+    if ((row-1 >= 0) && (col+2 < 8)) {
+        if (this->getBoard()->getPiece(row-1, col+2)->isBlank()) {
+            moves.emplace_back(make_pair(row-1, col+2));
+        } else if (this->getBoard()->getPiece(row-1, col+2)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row-1, col+2));
         }
     }
 
     // check right and down
-    if ((y+1 < 8) && (x+2 < 8)) {
-        if (this->getBoard()->getPiece(y+1, x+2)->isBlank()) {
-            moves.emplace_back(make_pair(x+2, y+1));
-        } else if (this->getBoard()->getPiece(y+1, x+2)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x+2, y+1));
+    if ((row+1 < 8) && (col+2 < 8)) {
+        if (this->getBoard()->getPiece(row+1, col+2)->isBlank()) {
+            moves.emplace_back(make_pair(row+1, col+2));
+        } else if (this->getBoard()->getPiece(row+1, col+2)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row+1, col+2));
         }
     }
 
-    for (auto &move : moves) {
-        int temp = move.first;
-        move.first = move.second;
-        move.second = temp;
+    return moves;
+}
+
+vector<pair<int, int>> Knight::capturingMoves() {
+    vector<pair<int, int>> moves;
+
+    int row = getRow();
+    int col = getCol();
+
+    // check up and to the right, stop at edges of board or when you hit a piece of the same team. capture the piece if it's the other team's
+    if ((row-2 >= 0) && (col+1 < 8)) {
+        if (this->getBoard()->getPiece(row-2, col+1)->getTeam() != this->getTeam()
+            && !this->getBoard()->getPiece(row-2, col+1)->isBlank()) {
+            moves.emplace_back(make_pair(row-2, col+1));
+        }
+    }
+
+    // check up and to the left
+    if ((row-2 >= 0) && (col-1 >= 0)) {
+        if (this->getBoard()->getPiece(row-2, col-1)->getTeam() != this->getTeam()
+            && !this->getBoard()->getPiece(row-2, col-1)->isBlank()) {
+            moves.emplace_back(make_pair(row-2, col-1));
+        }
+    }
+
+    // check down and to the right
+    if ((row+2 < 8) && (col+1 < 8)) {
+        if (this->getBoard()->getPiece(row+2, col+1)->getTeam() != this->getTeam()
+            && !this->getBoard()->getPiece(row+2, col+1)->isBlank()) {
+            moves.emplace_back(make_pair(row+2, col+1));
+        }
+    }
+
+    // check down and to the left
+    if ((row+2 < 8) && (col-1 >= 0)) {
+        if (this->getBoard()->getPiece(row+2, col-1)->getTeam() != this->getTeam()
+            && !this->getBoard()->getPiece(row+2, col-1)->isBlank()) {
+            moves.emplace_back(make_pair(row+2, col-1));
+        }
+    }
+
+    // check left and up
+    if ((row-1 >= 0) && (col-2 >= 0)) {
+        if (this->getBoard()->getPiece(row-1, col-2)->getTeam() != this->getTeam()
+            && !this->getBoard()->getPiece(row-1, col-2)->isBlank()) {
+            moves.emplace_back(make_pair(row-1, col-2));
+        }
+    }
+
+    // check left and down
+    if ((row+1 < 8) && (col-2 >= 0)) {
+        if (this->getBoard()->getPiece(row+1, col-2)->getTeam() != this->getTeam()
+            && !this->getBoard()->getPiece(row+1, col-2)->isBlank()) {
+            moves.emplace_back(make_pair(row+1, col-2));
+        }
+    }
+
+    // check right and up
+    if ((row-1 >= 0) && (col+2 < 8)) {
+        if (this->getBoard()->getPiece(row-1, col+2)->getTeam() != this->getTeam()
+            && !this->getBoard()->getPiece(row-1, col+2)->isBlank()) {
+            moves.emplace_back(make_pair(row-1, col+2));
+        }
+    }
+
+    // check right and down
+    if ((row+1 < 8) && (col+2 < 8)) {
+        if (this->getBoard()->getPiece(row+1, col+2)->getTeam() != this->getTeam()
+            && !this->getBoard()->getPiece(row+1, col+2)->isBlank()) {
+            moves.emplace_back(make_pair(row+1, col+2));
+        }
     }
 
     return moves;
-
 }
-

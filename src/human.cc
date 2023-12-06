@@ -6,7 +6,8 @@
 
 using namespace std;
 
-Human::Human(string team) : Player(team) {}
+Human::Human(string team, bool isCpu, bool myTurn) : 
+    Player(team, isCpu, myTurn) {}
 
 Human::~Human() {}
 
@@ -14,10 +15,10 @@ pair<int, int> Human::convertToCoord(string notation) {
     char letter = notation[0];
     char number = notation[1];
 
-    int y = letter - 'a'; 
-    int x = number - '1';
+    int col = letter - 'a'; 
+    int row = 7 - (number - '1');
 
-    return make_pair(x, y);
+    return make_pair(row, col);
 }
 
 vector<pair<int, int>> Human::makeMove(string current, string newCoordString)  {
@@ -27,4 +28,8 @@ vector<pair<int, int>> Human::makeMove(string current, string newCoordString)  {
     move.emplace_back(currentCoord);
     move.emplace_back(newCoord);
     return move;
+}
+
+vector<pair<int, int>> Human::makeComputerMove(Board& b, int level)  {
+    return vector<pair<int, int>>();
 }

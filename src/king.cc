@@ -23,87 +23,162 @@ void King::setMoved(bool moved) {
 vector<pair<int, int>> King::calculatePossibleMoves() {
     vector<pair<int, int>> moves;
 
-    int y = getRow();
-    int x = getCol();
-    bool moved = getMoved(); // not used yet. used for castling
+    int row = getRow();
+    int col = getCol();
 
     // check if the king can move up
-    if (y > 0) {
-        if (this->getBoard()->getPiece(y-1, x)->isBlank()) {
-            moves.emplace_back(make_pair(x, y-1));
-        } else if (this->getBoard()->getPiece(y-1, x)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x, y-1));
+    if (row > 0) {
+        if (this->getBoard()->getPiece(row-1, col)->isBlank()) {
+            moves.emplace_back(make_pair(row-1, col));
+        } else if (this->getBoard()->getPiece(row-1, col)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row-1, col));
         }
     }
 
     // check if the king can move down
-    if (y < 7) {
-        if (this->getBoard()->getPiece(y+1, x)->isBlank()) {
-            moves.emplace_back(make_pair(x, y+1));
-        } else if (this->getBoard()->getPiece(y+1, x)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x, y+1));
+    if (row < 7) {
+        if (this->getBoard()->getPiece(row+1, col)->isBlank()) {
+            moves.emplace_back(make_pair(row+1, col));
+        } else if (this->getBoard()->getPiece(row+1, col)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row+1, col));
         }
     }
 
     // check if the king can move left
-    if (x > 0) {
-        if (this->getBoard()->getPiece(y, x-1)->isBlank()) {
-            moves.emplace_back(make_pair(x-1, y));
-        } else if (this->getBoard()->getPiece(y, x-1)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x-1, y));
+    if (col > 0) {
+        if (this->getBoard()->getPiece(row, col-1)->isBlank()) {
+            moves.emplace_back(make_pair(row, col-1));
+        } else if (this->getBoard()->getPiece(row, col-1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row, col-1));
         }
     }
 
     // check if the king can move right
-    if (x < 7) {
-        if (this->getBoard()->getPiece(y, x+1)->isBlank()) {
-            moves.emplace_back(make_pair(x+1, y));
-        } else if (this->getBoard()->getPiece(y, x+1)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x+1, y));
+    if (col < 7) {
+        if (this->getBoard()->getPiece(row, col+1)->isBlank()) {
+            moves.emplace_back(make_pair(row, col+1));
+        } else if (this->getBoard()->getPiece(row, col+1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row, col+1));
         }
     }
 
     // check if the king can move up and left
-    if ((y > 0) && (x > 0)) {
-        if (this->getBoard()->getPiece(y-1, x-1)->isBlank()) {
-            moves.emplace_back(make_pair(x-1, y-1));
-        } else if (this->getBoard()->getPiece(y-1, x-1)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x-1, y-1));
+    if ((row > 0) && (col > 0)) {
+        if (this->getBoard()->getPiece(row-1, col-1)->isBlank()) {
+            moves.emplace_back(make_pair(row-1, col-1));
+        } else if (this->getBoard()->getPiece(row-1, col-1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row-1, col-1));
         }
     }
 
     // check if the king can move up and right 
-    if ((y > 0) && (x < 7)) {
-        if (this->getBoard()->getPiece(y-1, x+1)->isBlank()) {
-            moves.emplace_back(make_pair(x+1, y-1));
-        } else if (this->getBoard()->getPiece(y-1, x+1)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x+1, y-1));
+    if ((row > 0) && (col < 7)) {
+        if (this->getBoard()->getPiece(row-1, col+1)->isBlank()) {
+            moves.emplace_back(make_pair(row-1, col+1));
+        } else if (this->getBoard()->getPiece(row-1, col+1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row-1, col+1));
         }
     }
 
     // check if the king can move down and left
-    if ((y < 7) && (x > 0)) {
-        if (this->getBoard()->getPiece(y+1, x-1)->isBlank()) {
-            moves.emplace_back(make_pair(x-1, y+1));
-        } else if (this->getBoard()->getPiece(y+1, x-1)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x-1, y+1));
+    if ((row < 7) && (col > 0)) {
+        if (this->getBoard()->getPiece(row+1, col-1)->isBlank()) {
+            moves.emplace_back(make_pair(row+1, col-1));
+        } else if (this->getBoard()->getPiece(row+1, col-1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row+1, col-1));
         }
     }
 
     // check if the king can move down and right
-    if ((y < 7) && (x < 7)) {
-        if (this->getBoard()->getPiece(y+1, x+1)->isBlank()) {
-            moves.emplace_back(make_pair(x+1, y+1));
-        } else if (this->getBoard()->getPiece(y+1, x+1)->getTeam() != this->getTeam()) {
-            moves.emplace_back(make_pair(x+1, y+1));
+    if ((row < 7) && (col < 7)) {
+        if (this->getBoard()->getPiece(row+1, col+1)->isBlank()) {
+            moves.emplace_back(make_pair(row+1, col+1));
+        } else if (this->getBoard()->getPiece(row+1, col+1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row+1, col+1));
         }
     }
 
-    for (auto &move : moves) {
-        int temp = move.first;
-        move.first = move.second;
-        move.second = temp;
+    // castling
+    
+    if(this->getMoved() ==  false) {
+        if (this->getCol() == 4) {
+            // check if the king can castle left
+            if (this->getBoard()->getPiece(row, col-1)->isBlank() && this->getBoard()->getPiece(row, col-2)->isBlank() && this->getBoard()->getPiece(row, col-3)->isBlank()) {
+                    moves.emplace_back(make_pair(row, col-2));
+            }
+
+            // check if the king can castle right
+            if (this->getBoard()->getPiece(row, col+1)->isBlank() && this->getBoard()->getPiece(row, col+2)->isBlank()) {
+                    moves.emplace_back(make_pair(row, col+2));
+            }
+        }
     }
 
     return moves;
 }
+
+vector<pair<int, int>> King::capturingMoves() {
+    vector<pair<int, int>> moves;
+
+    int row = getRow();
+    int col = getCol();
+
+    // check if the king can move up
+    if (row > 0) {
+        if (this->getBoard()->getPiece(row-1, col)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row-1, col));
+        }
+    }
+
+    // check if the king can move down
+    if (row < 7) {
+        if (this->getBoard()->getPiece(row+1, col)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row+1, col));
+        }
+    }
+
+    // check if the king can move left
+    if (col > 0) {
+        if (this->getBoard()->getPiece(row, col-1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row, col-1));
+        }
+    }
+
+    // check if the king can move right
+    if (col < 7) {
+        if (this->getBoard()->getPiece(row, col+1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row, col+1));
+        }
+    }
+
+    // check if the king can move up and left
+    if ((row > 0) && (col > 0)) {
+        if (this->getBoard()->getPiece(row-1, col-1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row-1, col-1));
+        }
+    }
+
+    // check if the king can move up and right 
+    if ((row > 0) && (col < 7)) {
+        if (this->getBoard()->getPiece(row-1, col+1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row-1, col+1));
+        }
+    }
+
+    // check if the king can move down and left
+    if ((row < 7) && (col > 0)) {
+        if (this->getBoard()->getPiece(row+1, col-1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row+1, col-1));
+        }
+    }
+
+    // check if the king can move down and right
+    if ((row < 7) && (col < 7)) {
+        if (this->getBoard()->getPiece(row+1, col+1)->getTeam() != this->getTeam()) {
+            moves.emplace_back(make_pair(row+1, col+1));
+        }
+    }
+
+    return moves;
+}
+

@@ -23,95 +23,159 @@ void Rook::setMoved(bool moved) {
 vector<pair<int, int>> Rook::calculatePossibleMoves() {
     vector<pair<int, int>> moves;
 
-    int y = getRow();
-    int x = getCol();
-    bool moved = getMoved();
+    int row = getRow();
+    int col = getCol();
 
-    // move up until a piece is encountered or the edge of the board is reached or an opponent's piece is encountered
-    for (int i = y-1; i >= 0; --i) {
-        if (this->getBoard()->getPiece(i, x)->isBlank()) {
-            moves.emplace_back(make_pair(x, i));
-        } else {
-            if (this->getBoard()->getPiece(i, x)->getTeam() != getTeam()) {
-                moves.emplace_back(make_pair(x, i));
+    // move up until a piece is encountered or the edge of the board is reached or 
+    // an opponent's piece is encountered
+    for (int i = 1; i < 8; ++i) {
+        if (row-i >= 0) {
+            if (this->getBoard()->getPiece(row-i, col)->isBlank()) {
+                moves.emplace_back(make_pair(row-i, col));
+            } 
+            else if (this->getBoard()->getPiece(row-i, col)->getTeam() != getTeam()) {
+                moves.emplace_back(make_pair(row-i, col));
+                break;
             }
+            else {
+                break;
+            }
+        }
+        else {
             break;
         }
     }
 
     // move down until a piece is encountered or the edge of the board is reached or an opponent's piece is encountered
-    for (int i = y+1; i < 8; ++i) {
-        if (this->getBoard()->getPiece(i, x)->isBlank()) {
-            moves.emplace_back(make_pair(x, i));
-        } else {
-            if (this->getBoard()->getPiece(i, x)->getTeam() != getTeam()) {
-                moves.emplace_back(make_pair(x, i));
+    for (int i = 1; i < 8; ++i) {
+        if (row+i < 8) {
+            if (this->getBoard()->getPiece(row+i, col)->isBlank()) {
+                moves.emplace_back(make_pair(row+i, col));
+            } 
+            else if (this->getBoard()->getPiece(row+i, col)->getTeam() != getTeam()) {
+                moves.emplace_back(make_pair(row+i, col));
+                break;
             }
+            else {
+                break;
+            }
+        }
+        else {
             break;
         }
     }
 
     // move left until a piece is encountered or the edge of the board is reached or an opponent's piece is encountered
-    for (int i = x-1; i >= 0; --i) {
-        if (this->getBoard()->getPiece(y, i)->isBlank()) {
-            moves.emplace_back(make_pair(i, y));
-        } else {
-            if (this->getBoard()->getPiece(y, i)->getTeam() != getTeam()) {
-                moves.emplace_back(make_pair(i, y));
+    for (int i = 1; i < 8; ++i) {
+        if (col-i >= 0) {
+            if (this->getBoard()->getPiece(row, col-i)->isBlank()) {
+                moves.emplace_back(make_pair(row, col-i));
+            } 
+            else if (this->getBoard()->getPiece(row, col-i)->getTeam() != getTeam()) {
+                moves.emplace_back(make_pair(row, col-i));
+                break;
             }
+            else {
+                break;
+            }
+        }
+        else {
             break;
         }
     }
 
     // move right until a piece is encountered or the edge of the board is reached or an opponent's piece is encountered
-    for (int i = x+1; i < 8; ++i) {
-        if (this->getBoard()->getPiece(y, i)->isBlank()) {
-            moves.emplace_back(make_pair(i, y));
-        } else {
-            if (this->getBoard()->getPiece(y, i)->getTeam() != getTeam()) {
-                moves.emplace_back(make_pair(i, y));
+    for (int i = 1; i < 8; ++i) {
+        if (col+i < 8) {
+            if (this->getBoard()->getPiece(row, col+i)->isBlank()) {
+                moves.emplace_back(make_pair(row, col+i));
+            } 
+            else if (this->getBoard()->getPiece(row, col+i)->getTeam() != getTeam()) {
+                moves.emplace_back(make_pair(row, col+i));
+                break;
             }
+            else {
+                break;
+            }
+        }
+        else {
             break;
         }
     }
 
-    /*
+    return moves;
+}
 
-    // if the rook hasn't moved yet, check if it can castle
-    if (!moved) {
-        // check if the king is in check
+vector<pair<int, int>> Rook::capturingMoves() {
+    vector<pair<int, int>> moves;
 
-        // check if the squares between the rook and king are blank
-        if (this->getBoard()->getPiece(y, x+1)->isBlank() && this->getBoard()->getPiece(y, x+2)->isBlank()) {
-            if (this->getBoard()->getPiece(y, x+3)->getSymbol() == 'K') {
-                if (this->getBoard()->getPiece(y, x+3)->getTeam() == getTeam()) {
-                    if (!this->getBoard()->getPiece(y, x+3)->getMoved()) { // check if the king has moved
-                        moves.emplace_back(make_pair(x+2, y));
-                    }
-                }
+    int row = getRow();
+    int col = getCol();
+
+    // move up until a piece is encountered or the edge of the board is reached or 
+    // an opponent's piece is encountered
+    for (int i = 1; i < 8; ++i) {
+        if (row-i >= 0) {
+            if (this->getBoard()->getPiece(row-i, col)->getTeam() != getTeam()) {
+                moves.emplace_back(make_pair(row-i, col));
+                break;
+            }
+            else {
+                break;
             }
         }
-
-        // check if the squares between the rook and king are blank
-        if (this->getBoard()->getPiece(y, x-1)->isBlank() && this->getBoard()->getPiece(y, x-2)->isBlank() && this->getBoard()->getPiece(y, x-3)->isBlank()) {
-            if (this->getBoard()->getPiece(y, x-4)->getSymbol() == 'K') {
-                if (this->getBoard()->getPiece(y, x-4)->getTeam() == getTeam()) {
-                    if (!this->getBoard()->getPiece(y, x-4)->getMoved()) { // check if the king has moved
-                        moves.emplace_back(make_pair(x-2, y));
-                    }
-                }
-            }
+        else {
+            break;
         }
     }
 
-    */
+    // move down until a piece is encountered or the edge of the board is reached or an opponent's piece is encountered
+    for (int i = 1; i < 8; ++i) {
+        if (row+i < 8) {
+            if (this->getBoard()->getPiece(row+i, col)->getTeam() != getTeam()) {
+                moves.emplace_back(make_pair(row+i, col));
+                break;
+            }
+            else {
+                break;
+            }
+        }
+        else {
+            break;
+        }
+    }
 
-   for (auto &move : moves) {
-        int temp = move.first;
-        move.first = move.second;
-        move.second = temp;
+    // move left until a piece is encountered or the edge of the board is reached or an opponent's piece is encountered
+    for (int i = 1; i < 8; ++i) {
+        if (col-i >= 0) {
+            if (this->getBoard()->getPiece(row, col-i)->getTeam() != getTeam()) {
+                moves.emplace_back(make_pair(row, col-i));
+                break;
+            }
+            else {
+                break;
+            }
+        }
+        else {
+            break;
+        }
+    }
+
+    // move right until a piece is encountered or the edge of the board is reached or an opponent's piece is encountered
+    for (int i = 1; i < 8; ++i) {
+        if (col+i < 8) {
+            if (this->getBoard()->getPiece(row, col+i)->getTeam() != getTeam()) {
+                moves.emplace_back(make_pair(row, col+i));
+                break;
+            }
+            else {
+                break;
+            }
+        }
+        else {
+            break;
+        }
     }
 
     return moves;
-
 }
