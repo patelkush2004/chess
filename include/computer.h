@@ -21,7 +21,7 @@ class Computer : public Player {
         vector<pair<int, int>> levelFour(Board& b);
         vector<pair<int, int>> levelFive(Board& b);
 
-        // Minimax functions
+        // Minimax Functions
         int eval(Board& b, string team);
         vector<pair<pair<int, int>, pair<int, int>>>  getMoves(Board &b, string team);
         pair<vector<pair<int, int>>, int> minimax(Board &b, int depth, string maximizing_player_color, bool maximize);
