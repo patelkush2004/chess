@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+//
 using namespace std;
 
 Bishop::Bishop(Board *theBoard, string team, char symbol, int row, int col, bool blank)
